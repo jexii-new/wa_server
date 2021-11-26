@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  br
+  div(class="container-fluid")
+    form(action='/broadcast',method='post')
+      div(class="form-group form-check")
+        -for(var i = 0;i<groups.length;i++){
+          input(type="checkbox", class="form-check-input", value="#{groups[i]['id']}", name="groups") 
+          label(for='group', class="form-check-label") #{groups[i]['nama']}
+          br
+        -}
+        label(for='message') Pesan
+           textarea(id='messages',type='text',name='messages') @sapaan @nama
+             | 
+             |[PESAN ANDA DI SINI]
+
+             |----------
+
+             | 
+             |Anda menerima pesan ini karena telah terdaftar di *@grup*, Anda dapat berhenti kapan saja dengan mengetikkan *@unsubscribe#@code*.  
+          br
+        label Detik
+          input(type="text", name="second", value="30") 
+        button(class="btn btn-primary", type='submit', data-transition='fade', data-theme='c') Buat Siaran
+
+
+
+

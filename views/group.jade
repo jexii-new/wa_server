@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  div(class="container-fluid")
+    form(action='/group',method='post')
+      label(for='name') Nama Grup
+         input(id='name',type='text',value='',name='name' class="form-label")
+      label(for='grup') Kode Grup
+         input(id='grup',type='text',value='',name='code')
+      label(for='desc') Deskripsi
+         input(id='desc',type='text',value='',name='desc')
+        button(type='submit', class="btn btn-primary") Buat Grup
+  br
+  br  
+  
+  div(class="container-fluid")
+    if groups
+      table(class="table table-striped table-light table-bordered")
+        thead
+          tr
+            th(scope="col") Nama
+            th(scope="col") Kode Grup
+            th(scope="col") Deskripsi
+            th(scope="col" class="w-20") Detail
+            th(scope="col") Aksi
+        tbody
+          each group in groups
+            tr
+              td #{group.nama}
+              td #{group.code}
+              td #{group.deskripsi}
+              td 
+                a(class="btn btn-primary" style="margin-right:4px"  href="/setting/group/#{group.id}") Setting Grup
+                a(class="btn btn-primary" style="margin-right:4px" href="/groups/detail/#{group.id}") Detail Member
+                a(class="btn btn-primary" style="margin-right:4px" href="/campaign/#{group.id}") Detail Kampanye
+                  
+              td  
+                a(class="btn btn-primary" href="/group/delete/#{group.id}") Hapus
+
+
