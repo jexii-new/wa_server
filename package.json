@@ -7,7 +7,6 @@
   },
   "dependencies": {
     "@adiwajshing/baileys": "^3.5.3",
-    "@open-wa/wa-automate": "^4.23.9",
     "axios": "^0.24.0",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
