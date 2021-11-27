@@ -13,6 +13,8 @@ var fs = require('fs')
 var app = express();
 var {getProfile, removeProfile} = require('./controllers/setting')
 var {connect} = require('./conn')
+var authMiddleware = require('./middleware')
+var session = require('express-session')
 __dirname = path.resolve();
 
 // coonect
@@ -28,14 +30,16 @@ async function runWa(){
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(cors())
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 * 24 * 30 }}))
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload());
-app.use('/', indexRouter);
 app.use('/wa', usersRouter.router);
+app.use(authMiddleware)
+app.use('/', indexRouter,);
 app.use('/start', async (req, res, next) => {
   await removeProfile( async () => {
     usersRouter.run()

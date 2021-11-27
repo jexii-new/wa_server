@@ -1,14 +1,14 @@
 const PouchDB =  require('pouchdb')
-
 let {connection} = require('../conn')
 const uuidAPIKey = require('uuid-apikey');
+const bcrypt = require('bcrypt');
 
-const postProfile = async (data, cb) => {
+const postProfile = async (data,id, cb) => {
 	let api_key = await uuidAPIKey.create()
 
 	const {username, wa_number, subscribe, unsubscribe, session} = await data
-	const post = await {nama:username, nomor:wa_number, status:true, subscribe:'daftar', unsubscribe:'stop', session, api_key:api_key.apiKey}
-	var query = connection.query('INSERT INTO owner SET ?', post, function (error, results, fields) {
+
+	var query = connection.query(`UPDATE owner SET session='${session}', api_key='${api_key.apiKey}' WHERE id=${id}`, function (error, results, fields) {
 	  	if (error) throw error;
 	  	cb(results)
 	});
@@ -32,7 +32,7 @@ const removeProfile = async (cb) => {
 	await getProfile(async res => {
 		
 		if(res != undefined){
-			await connection.query(`DELETE FROM owner WHERE id=${res.id}`, (err, results, field) => {
+			await connection.query(`UPDATE owner SET session='' WHERE id=${res.id}`, (err, results, field) => {
 				cb(results)
 			})
 		}
@@ -61,6 +61,34 @@ const isApiExist = async (api_key, cb) => {
 	});
 }
 
-module.exports = {postProfile, getProfile, getProfileById, removeProfile, putProfile, isApiExist};
+const login = async (username, password, cb) => {
+	
+	
+    	// result == true
+	let query = connection.query(`SELECT * FROM owner WHERE nama='${username}'`, function (error, results, fields) {
+	  	if (error) throw error;
+	  	console.log(results[0]['password'], 'passworddddddddddddddddddddddddddddddddd')
+	  	if(results.length == 0){
+	  		return cb('failed')
+	  	}
+		bcrypt.compare(password, results[0]['password'], function(err, result) {
+			cb(result)
+		});  	
+
+	});	
+}
+
+const register = async (username, nomor, password, cb) => {
+		bcrypt.genSalt(10, function(err, salt) {
+		    bcrypt.hash(password, salt, function(err, hash) {
+			let query = connection.query(`INSERT INTO owner SET ?`,{nama:username, nomor, password:hash, subscribe:'dafar', unsubscribe:'stop'}, function (error, results, fields) {
+			  	if (error) throw error;	
+			  	cb(results)
+		    });
+		});
+	});	
+}
+
+module.exports = {register, postProfile, getProfile, getProfileById, removeProfile, putProfile, isApiExist, login};
 
 

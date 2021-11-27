@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var {postContact, getContact, removeContact} = require('../controllers/contact')
 var {postBroadcast} = require('../controllers/broadcast')
-var {postProfile, putProfile, getProfile} = require('../controllers/setting')
+var {postProfile, putProfile, getProfile, login, register} = require('../controllers/setting')
 var {postCampaign, removeContentOfCampaignDetail, getCampaign,getCampaignByGroupId, postCampaignDetail,editCampaignById, isCampaignExistWithGroup, getCampaignDetailWithContact, removeCampaign,removeContentOfCampaign, isCampaignDetailexist} = require('../controllers/campaign')
 var {postGroup, getGroupByCode,getGroupsDetailWithContact, editGroupById, removeSettingGroupById, putSubGroup, getGroupsDetailsById,getSettingGroupById, removeContactInGroupDetail, getGroupById, getGroup, getGroupsDetails, postGroupsDetails, getDetailsGroup, removeGroup, removeGroupDetail} = require('../controllers/group')
 var axios = require('axios')
@@ -297,6 +297,45 @@ router.post('/group/sub', async (req, res, next) => await putSubGroup(req.body, 
 router.get("/daftar/:code", (req, res) => {
 	getGroupByCode(req.params.code, (result) => {
 		
+	})
+})
+
+
+//  router auth
+router.get('/login', (req, res, next) => {
+	if(req.session.login == undefined){
+		res.render('login')
+	} else {
+		res.redirect('/')
+	}
+})
+router.get('/logout', (req, res, next) => {
+	req.session.destroy(() => {
+		res.redirect('/login')
+	})
+})
+router.post('/login', (req, res, next) => {
+	login(req.body.username, req.body.password, (result) => {
+		if(result == 'failed'){
+			res.redirect('/login')
+		} else {
+			req.session.login = true
+			res.redirect('/')
+		}
+	})
+})
+router.get('/register', (req, res, next) => {
+	getProfile((result) => {
+		if(result != undefined){
+			res.redirect('/login')
+		} else {
+			res.render('register')
+		}
+	})
+})
+router.post('/register', (req, res, next) => {
+	register(req.body.username, `${req.body.nomor}@whatsapp.net`, req.body.password, (result) => {
+		res.redirect('/login')
 	})
 })
 

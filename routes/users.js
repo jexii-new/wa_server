@@ -49,8 +49,8 @@ async function run () {
 	    const authInfo = await conn.base64EncodedAuthInfo() // get all the auth info we need to restore this session
 	    let user = await conn.user
 	    await getProfile(async(result) => {
-	    	if(result == undefined){
-			    await postProfile({wa_number:user.jid, username:user.name, address:'null', status:true,  subscribe:'daftar', unsubscribe:'stop', session:JSON.stringify(authInfo, null, '\t')}, async (result) => {
+	    	if(result != undefined){
+			    await postProfile({wa_number:user.jid, username:user.name, address:'null', status:true,  subscribe:'daftar', unsubscribe:'stop', session:JSON.stringify(authInfo, null, '\t')},result['id'], async (result) => {
 				    await console.log(result)
 				})
 	    	} 
@@ -59,7 +59,7 @@ async function run () {
 	})
    	
  	await getProfile(async (result) => {
- 		if(result != undefined){
+ 		if(result.session != undefined){
  			await conn.loadAuthInfo(JSON.parse(result.session))
  		}
  	})
@@ -184,24 +184,25 @@ async function run () {
 		    
         } else console.log (chatUpdate.messages) // see updates (can be archived, pinned etc.)
     })
-    router.post('/send', async (req, res, next) => {  
-    	getProfile((result) => {
-    		if(result == undefined){
-    			res.send('gagal')
-    		} else {
-    			isApiExist(req.body.key, async (res) => {
-    				if(res.length > 0){
-						if(req.body.contact != undefined){
-						    await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`, req.body.message, MessageType.text);
-						    return res.send(req.body.contact);
-						}
-    				} 
-    				else {
-    					res.send('api key tidak cocok')    					
-    				}
-    			})
-    		}
-    	})
+    router.get('/send', async (req, res, next) => {  
+    	// getProfile((result) => {
+    	// 	if(result == undefined){
+    	// 		res.send('gagal')
+    	// 	} else {
+    	// 		isApiExist(req.body.key, async (res) => {
+    	// 			if(res.length > 0){
+					// 	if(req.body.contact != undefined){
+					// 	    await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`, req.body.message, MessageType.text);
+					// 	    return res.send(req.body.contact);
+					// 	}
+    	// 			} 
+    	// 			else {
+    	// 				res.send('api key tidak cocok')    					
+    	// 			}
+    	// 		})
+    	// 	}
+    	// })
+  		await conn.sendMessage(`6285882843337@s.whatsapp.net`, 'connect', MessageType.text);
 	})
 
 	router.post('/send-bulk', async (req, res, next) => {  
