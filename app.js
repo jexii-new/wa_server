@@ -74,5 +74,4 @@ app.use(function(err, req, res, next) {
 runWa()
 job()
 
-
-module.exports = app;
+app.listen(process.env.PORT || 5000, () => console.log('running'))
