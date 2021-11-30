@@ -290,13 +290,13 @@ router.get('/broadcast/:group_id', (req, res, next) => getGroupById(req.params.g
 	})
 }))
 router.post('/broadcast', async (req, res, next) => {
-	if(Array.isArray(req.body.groups)){
-		await req.body.groups.filter(val => {
-			postBroadcast({groups:val, messages:req.body.messages, url:req.headers.host, second:req.body.second}, (result) => result)
-		})
-	} else {
+	// if(Array.isArray(req.body.groups)){
+	// 	await req.body.groups.filter(val => {
+	// 		postBroadcast({groups:val, messages:req.body.messages, url:req.headers.host, second:req.body.second}, (result) => result)
+	// 	})
+	// } else {
 		await postBroadcast({groups:req.body.groups, messages:req.body.messages, url:req.headers.host, second:req.body.second}, (result) => result)
-	}
+	// }
 
 	await res.redirect('back')
 })
