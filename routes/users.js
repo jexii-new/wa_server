@@ -63,8 +63,10 @@ async function run () {
 	})
    	
  	await getProfile(async (result) => {
- 		if(result.session.length > 0){
- 			await conn.loadAuthInfo(JSON.parse(result.session))
+ 		if(result != undefined){
+	 		if(result.session != undefined && result.session.length > 0){
+	 			await conn.loadAuthInfo(JSON.parse(result.session))
+	 		}
  		}
  	})
 
@@ -98,7 +100,9 @@ async function run () {
 	    console.log(  "Disconnected because " + reason + ", reconnecting: " + isReconnecting )
 	    if (!isReconnecting && reason == "invalid_session") {
 	      	await removeProfile((res) => console.log('profile has been removed'))
-	      	await axios.get('https://wa.autoresponder.my.id/start')
+	      	getProfile( async ({domain}) => {
+	      		await axios.get(`${domain}/start`)
+	      	})
 	      	conn.clearAuthInfo();
 	    }
   	});

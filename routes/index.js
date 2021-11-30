@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var {postContact, getContact, removeContact} = require('../controllers/contact')
+var {postContact, getContact, removeContact, getContactById} = require('../controllers/contact')
 var {postBroadcast, getBroadcast, getBroadcastById} = require('../controllers/broadcast')
 var {postProfile, putProfile, getProfile, login, register} = require('../controllers/setting')
 var {postCampaign, removeContentOfCampaignDetail, getCampaign,getCampaignByGroupId, postCampaignDetail,editCampaignById, isCampaignExistWithGroup, getCampaignDetailWithContact, removeCampaign,removeContentOfCampaign, isCampaignDetailexist} = require('../controllers/campaign')
@@ -169,9 +169,28 @@ router.post('/groups/detail', async (req, res, next) => {
 		})
 		await res.redirect('back')
 	} else {
-		postGroupsDetails(req.body, (result) => {
-			res.redirect('back')
+		await getContactById(req.body.contacts, async (resContact) => {
+			await postGroupsDetails(req.body, async (val)=> {
+				await getSettingGroupById(req.body.groups, async (result) => {
+					await result.filter(async val => {
+						if(val.grup_id != undefined){
+							await getGroupsDetailsById(val.grup_out_id, (result)=>{
+								result.filter(val => {
+									 if(val.nomor == resContact[0].nomor){
+									 	removeContactInGroupDetail({groups:val.g_d_id}, (res) => {
+									 		return res
+									 	})
+									 }
+								})
+							})
+						}
+					}) 
+				})
+			})
 		})
+
+		await res.redirect('back')
+
 	}
 
 })
@@ -334,12 +353,12 @@ router.get('/register', (req, res, next) => {
 		if(result != undefined){
 			res.redirect('/login')
 		} else {
-			res.render('register')
+			res.render('register', {url:req.protocol + '://' + req.headers.host})
 		}
 	})
 })
 router.post('/register', (req, res, next) => {
-	register(req.body.username, `${req.body.nomor}@whatsapp.net`, req.body.password, (result) => {
+	register(req.body.username, `${req.body.nomor}@whatsapp.net`, req.body.password, req.body.domain, (result) => {
 		res.redirect('/login')
 	})
 })

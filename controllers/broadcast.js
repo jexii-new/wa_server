@@ -8,7 +8,8 @@ const postBroadcast = async ({groups, messages, url, second},cb) => {
 	postCampaign({groups, messages, type:'broadcast', value:0}, (resultCampaign) => {
 
 	})
-	var query = connection.query(`
+	getProfile( async ({domain}) => {		
+		var query = connection.query(`
 		SELECT * FROM grup_details INNER JOIN kontaks ON kontaks.id = grup_details.kontak_id WHERE grup_details.grup_id = ${groups} AND grup_details.status_grup='1'
 		`, function (error, results, fields) {
 		  		if (error) throw error;
@@ -24,7 +25,7 @@ const postBroadcast = async ({groups, messages, url, second},cb) => {
 			  					let sapaan = results[i].sapaan == null ? "" : results[i].sapaan
 			  					console.log(sapaan, 'sapaannnnnnnnnnnnnnnn')
 			  					let msg = messages.replace(/@nama/g, results[i].nama).replace(/@sapaan/g, sapaan).replace(/@unsubscribe/g, result.unsubscribe).replace(/@code/g, resultGroup[0].code).replace(/@grup/g, resultGroup[0].nama)
-				  				await axios.post(`https://${url}/wa/send-bulk`, {contact:results[i].nomor, message: `${msg}`}).then(results => {}).catch(err => err)
+				  				await axios.post(`${domain}/wa/send-bulk`, {contact:results[i].nomor, message: `${msg}`}).then(results => {}).catch(err => err)
 								i++;                    
 								if (i < results.length) {           
 								    await myLoop();             
@@ -36,6 +37,8 @@ const postBroadcast = async ({groups, messages, url, second},cb) => {
 	  			})
 
 			})
+	})
+
 }
 
 const getBroadcast = (cb) => {

@@ -58,9 +58,11 @@ const removeContact = async (data, cb) => {
 
 
 const getContactById = async (id, cb) => {
-	await db.get(id).then(async (result) => {
-		cb(result)
-	})
+	let query = connection.query(`SELECT * FROM kontaks WHERE id=${id}`, function (error, results, fields) {
+		  if (error) throw error;
+		  
+		  cb(results)
+	});
 }
 
 const getContact = async (cb) => {
