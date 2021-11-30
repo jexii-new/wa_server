@@ -188,7 +188,10 @@ async function run () {
 		    
         } else console.log (chatUpdate.messages) // see updates (can be archived, pinned etc.)
     })
-    router.get('/send', async (req, res, next) => {  
+    router.get('/send', async (req, res, next) => { 
+  		await conn.sendMessage(`6285882843337@s.whatsapp.net`, 'req.body.message', MessageType.text);
+  		await res.send('berhasil')
+ 
     	// getProfile((result) => {
     	// 	if(result == undefined){
     	// 		res.send('gagal')
