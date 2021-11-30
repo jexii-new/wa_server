@@ -8,7 +8,7 @@ block content
       if owner.status == 0
         h1 Off
 
-    if owner.session != null
+    if owner.session.length > 0
         form(action='/setting/edit',method='post')
           label(for='username') Pemilik
              input(id='username',type='text', disabled,value='#{owner.nama}',name='username')
@@ -24,11 +24,11 @@ block content
           button(type="submit", class="btn btn-primary") Setting
         a(href="/start" class="btn btn-danger") reset
 
-    if owner.session == null
+    if owner.session.length == 0
         h1  Barcode 
         img(src="/wa/qr")
 
-    if owner.session == null
+    if owner.session.length == 0
       script(type="text/javascript").
         setTimeout(() => {
           window.location.reload()

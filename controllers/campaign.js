@@ -12,7 +12,7 @@ const removeCampaign = async (data, cb) => {
 }
 
 const postCampaign = async ({groups, messages, type, value},cb) => {
-	let post = {grup_id:groups, pesan:messages, tipe:type, nilai:value}
+	let post = {grup_id:groups, pesan:messages, tipe:type, nilai:value, createdAt:new Date()}
 	var query = connection.query('INSERT INTO kampanyes SET ?', post, function (error, results, fields) {
 	  	if (error) throw error;
 	  	cb(results)
@@ -30,7 +30,7 @@ const isCampaignExistWithGroup = (groups, nilai,tipe, cb) => {
 }
 
 const getCampaign = async (cb) => {
-	var query = connection.query('SELECT *, grups.id as g_id, kampanyes.id as k_id FROM kampanyes INNER JOIN grups ON grups.id = kampanyes.grup_id', function (error, results, fields) {
+	var query = connection.query('SELECT *, grups.id as g_id, kampanyes.id as k_id FROM kampanyes INNER JOIN grups ON grups.id = kampanyes.grup_id WHERE kampanyes.tipe != "broadcast"', function (error, results, fields) {
 	  	if (error) throw error;
 	  	cb(results)
 	});

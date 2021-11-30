@@ -20,6 +20,10 @@ router.get('/qr', (req, res) => {
     return res.sendFile(__dirname + '/public/images/qr_code.png')
 })
 
+router.get('/logo', (req, res) => {
+    return res.sendFile(__dirname + '/public/images/rds.png')
+})
+
 async function run () {
     const conn = new WAConnection() 
 
@@ -59,7 +63,7 @@ async function run () {
 	})
    	
  	await getProfile(async (result) => {
- 		if(result.session != undefined){
+ 		if(result.session.length > 0){
  			await conn.loadAuthInfo(JSON.parse(result.session))
  		}
  	})

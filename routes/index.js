@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var {postContact, getContact, removeContact} = require('../controllers/contact')
-var {postBroadcast} = require('../controllers/broadcast')
+var {postBroadcast, getBroadcast, getBroadcastById} = require('../controllers/broadcast')
 var {postProfile, putProfile, getProfile, login, register} = require('../controllers/setting')
 var {postCampaign, removeContentOfCampaignDetail, getCampaign,getCampaignByGroupId, postCampaignDetail,editCampaignById, isCampaignExistWithGroup, getCampaignDetailWithContact, removeCampaign,removeContentOfCampaign, isCampaignDetailexist} = require('../controllers/campaign')
 var {postGroup, getGroupByCode,getGroupsDetailWithContact, editGroupById, removeSettingGroupById, putSubGroup, getGroupsDetailsById,getSettingGroupById, removeContactInGroupDetail, getGroupById, getGroup, getGroupsDetails, postGroupsDetails, getDetailsGroup, removeGroup, removeGroupDetail} = require('../controllers/group')
@@ -261,8 +261,13 @@ router.get('/campaign/content/delete/:content_id', (req, res, next) => removeCon
 // broadcast 
 
 router.get('/broadcast', ({body}, res, next) => getGroup(async (result) => {
-	getCampaign(async (resCampaign) => {
-		await res.render('broadcast', {groups:result})
+	getBroadcast(async (resBroadcast) => {
+		await res.render('broadcast', {groups:result, broadcasts:resBroadcast})
+	})
+}))
+router.get('/broadcast/:group_id', (req, res, next) => getGroupById(req.params.group_id, async (result) => {
+	getBroadcastById(req.params.group_id, async (resBroadcast) => {
+		await res.render('detail_broadcast', {groups:result, broadcasts:resBroadcast})
 	})
 }))
 router.post('/broadcast', async (req, res, next) => {
@@ -274,7 +279,7 @@ router.post('/broadcast', async (req, res, next) => {
 		await postBroadcast({groups:req.body.groups, messages:req.body.messages, url:req.headers.host, second:req.body.second}, (result) => result)
 	}
 
-	await res.redirect('/broadcast')
+	await res.redirect('back')
 })
 
 // owner

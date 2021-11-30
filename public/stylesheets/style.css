@@ -101,19 +101,28 @@ input[type=submit]:hover {
 }
 
 html,
-body {
+body.login {
   height: 100%;
+
 }
 body.login {
   display: flex;
   justify-content: center;
   align-items: center;
+  height:70%;
+  margin: auto;
+  width:80%;
+
 }
 .form-signin {
   width: 100%;
-  max-width: 330px;
-  padding: 15px;
-
+  padding:30px;
+}
+body.login .img {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .form-signin .checkbox {
   font-weight: 400;

@@ -5,11 +5,7 @@ block content
   div(class="container-fluid")
     form(action='/broadcast',method='post')
       div(class="form-group form-check")
-        -for(var i = 0;i<groups.length;i++){
-          input(type="checkbox", class="form-check-input", value="#{groups[i]['id']}", name="groups") 
-          label(for='group', class="form-check-label") #{groups[i]['nama']}
-          br
-        -}
+        input(type="hidden", name="groups", value="#{groups[0]['id']}")
         label(for='message') Pesan
            textarea(id='messages',type='text',name='messages') @sapaan @nama
              | 
@@ -29,22 +25,18 @@ block content
         table(class="table table-striped table-light table-bordered")
           thead
             tr
-              th(scope="col") Nilai
-              th(scope="col") Waktu
+              th(scope="col") Tipe
               th(scope="col") Pesan
+              th(scope="col") TGL
               th(scope="col") Aksi
           tbody
             each broadcast in broadcasts
               tr
-                td #{broadcast.nilai}
                 td #{broadcast.tipe}
+                td #{broadcast.pesan}
+                td #{broadcast.createdAt.toLocaleString()}
                 td 
-                  form(action="/broadcast/edit", method="post")
-                    textarea(type="text", name="pesan") #{broadcast.pesan}
-                    input(type="hidden", name="id", value="#{broadcast.k_id}")
-                    button(type="submit", class="btn btn-primary") Ubah
-                td 
-                  a(class="btn btn-primary", href="/broadcast/content/delete/#{broadcast.k_id}") Hapus
+                  a(class="btn btn-primary", href="/campaign/content/delete/#{broadcast.k_id}") Hapus
 
 
 
