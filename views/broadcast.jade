@@ -29,20 +29,16 @@ block content
         table(class="table table-striped table-light table-bordered")
           thead
             tr
-              th(scope="col") Nilai
-              th(scope="col") Waktu
+              th(scope="col") Tipe
               th(scope="col") Pesan
+              th(scope="col") TGL
               th(scope="col") Aksi
           tbody
             each broadcast in broadcasts
               tr
-                td #{broadcast.nilai}
                 td #{broadcast.tipe}
-                td 
-                  form(action="/broadcast/edit", method="post")
-                    textarea(type="text", name="pesan") #{broadcast.pesan}
-                    input(type="hidden", name="id", value="#{broadcast.k_id}")
-                    button(type="submit", class="btn btn-primary") Ubah
+                td #{broadcast.pesan}
+                td #{broadcast.createdAt.toLocaleString()}
                 td 
                   a(class="btn btn-primary", href="/campaign/content/delete/#{broadcast.k_id}") Hapus
 

@@ -9,10 +9,12 @@ block content
             -for(var i = 0;i<contacts.length;i++){
               option(value="#{contacts[i]['id']}") #{contacts[i]['nama']}
             -}
-      label(for='kontak')
-        input(type='file', name="file")
-      br
       button(type='submit',class="mb-4 btn btn-primary") Submit
+    br
+    form(action='/groups/detail',method='post', enctype="multipart/form-data")
+      label(for='kontak')
+          input(type='file', name="file")
+      button(type='submit',class="mb-4 btn btn-primary") Import Excel
   
   div(class="container-fluid")
     if groups_detail

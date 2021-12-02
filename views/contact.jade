@@ -16,8 +16,11 @@ block content
           -for(var i = 0;i<groups.length;i++){
               option(value="#{groups[i]['id']}") #{groups[i]['nama']}
           -} 
+      button(type='submit', class="btn btn-primary") Submit
+    br
+    form(action='/kontak',method='post',  enctype="multipart/form-data")
       label(for='file') Upload Excel
-         input(id='file',type='file',value='',name='file')
+        input(id='file',type='file',value='',name='file')
       button(type='submit', class="btn btn-primary") Submit
   br
   div(class="container-fluid")
