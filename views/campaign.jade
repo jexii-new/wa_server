@@ -26,26 +26,33 @@ block content
       br
       button(class="btn btn-primary", type='submit') Buat Kampanye
     br
-    div(class="container-fluid")
-      if campaigns
-        table(class="table table-striped table-light table-bordered")
-          thead
-            tr
-              th(scope="col") Nilai
-              th(scope="col") Waktu
-              th(scope="col") Pesan
-              th(scope="col") Aksi
-          tbody
-            each campaign in campaigns
-              tr
-                td #{campaign.nilai}
-                td #{campaign.tipe}
-                td 
-                  form(action="/campaign/edit", method="post")
-                    textarea(type="text", name="pesan") #{campaign.pesan}
-                    input(type="hidden", name="id", value="#{campaign.k_id}")
-                    button(type="submit", class="btn btn-primary") Ubah
-                td 
-                  a(class="btn btn-primary", href="/campaign/content/delete/#{campaign.k_id}") Hapus
-
+  if campaigns
+    div.container-fluid
+      script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+      script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js')
+      script(src='//cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js')
+      script.
+          $(document).ready(function() {
+              $('#resultTable').DataTable();
+          });
+      div#dataToShow
+          table#resultTable.table.table-hover.datatables
+             thead
+                tr
+                  th(scope="col") Nilai
+                  th(scope="col") Waktu
+                  th(scope="col") Pesan
+                  th(scope="col") Aksi
+              tbody
+                for campaign in campaigns
+                  tr
+                    td #{campaign.nilai}
+                    td #{campaign.tipe}
+                    td 
+                      form(action="/campaign/edit", method="post")
+                        textarea(type="text", name="pesan") #{campaign.pesan}
+                        input(type="hidden", name="id", value="#{campaign.k_id}")
+                        button(type="submit", class="btn btn-primary") Ubah
+                    td 
+                      a(class="btn btn-primary", href="/campaign/content/delete/#{campaign.k_id}") Hapus
 

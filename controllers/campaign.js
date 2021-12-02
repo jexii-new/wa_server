@@ -38,7 +38,7 @@ const getCampaign = async (cb) => {
 }
 
 const getCampaignByGroupId = async (id, cb) => {
-	var query = connection.query(`SELECT *, grups.id as g_id, kampanyes.id as k_id FROM kampanyes INNER JOIN grups ON grups.id = '${id}' AND kampanyes.grup_id = '${id}'`, function (error, results, fields) {
+	var query = connection.query(`SELECT *, grups.id as g_id, kampanyes.id as k_id FROM kampanyes INNER JOIN grups ON grups.id = '${id}' AND kampanyes.grup_id = '${id}' WHERE kampanyes.tipe != "broadcast"`, function (error, results, fields) {
 	  	if (error) throw error;
 	  	cb(results)
 	});

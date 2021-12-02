@@ -6,12 +6,13 @@ block content
     form(action='/broadcast',method='post')
       div(class="form-group form-check")
         -for(var i = 0;i<groups.length;i++){
-          input(type="checkbox", class="form-check-input", value="#{groups[i]['id']}", name="groups") 
+          input(type="checkbox", class="form-check-input", value="#{groups[i]['id']}", name="groups", style="display:inline-block") 
           label(for='group', class="form-check-label") #{groups[i]['nama']}
           br
         -}
         label(for='message') Pesan
-           textarea(id='messages',type='text',name='messages') @sapaan @nama
+           br
+           textarea(id='messages',type='text',name='messages', style="width:800px; height:200px") @sapaan @nama
              | 
              |[PESAN ANDA DI SINI]
 
@@ -29,16 +30,14 @@ block content
         table(class="table table-striped table-light table-bordered")
           thead
             tr
-              th(scope="col") Tipe
               th(scope="col") Pesan
-              th(scope="col") TGL
               th(scope="col") Aksi
+              th(scope="col") TGL
           tbody
             each broadcast in broadcasts
               tr
-                td #{broadcast.tipe}
-                td #{broadcast.pesan}
                 td #{broadcast.createdAt.toLocaleString()}
+                td #{broadcast.pesan}
                 td 
                   a(class="btn btn-primary", href="/campaign/content/delete/#{broadcast.k_id}") Hapus
 
