@@ -339,13 +339,15 @@ router.get("/daftar/:code", (req, res) => {
 //  router auth
 router.get('/login', async (req, res, next) => {
 	if(req.session.login == undefined){
-		await getProfile((result) => {
+		await getProfile(async(result) => {
 			if(result == undefined){
-				res.redirect('/register')
+				await res.redirect('/register')
+			} else {
+				await res.render('login')
 			}
 		})
 
-		await res.render('login')
+		
 	} else {
 		res.redirect('/')
 	}
