@@ -3,7 +3,7 @@ var router = express.Router();
 var {postContact, getContact, removeContact, getContactById} = require('../controllers/contact')
 var {postBroadcast, getBroadcast, getBroadcastById} = require('../controllers/broadcast')
 var {postProfile, putProfile, getProfile, login, register} = require('../controllers/setting')
-var {postCampaign, removeContentOfCampaignDetail, getCampaign,getCampaignByGroupId, postCampaignDetail,editCampaignById, isCampaignExistWithGroup, getCampaignDetailWithContact, removeCampaign,removeContentOfCampaign, isCampaignDetailexist} = require('../controllers/campaign')
+var {postCampaign, getBroadcastByGroupId, removeContentOfCampaignDetail, getCampaign,getCampaignByGroupId, postCampaignDetail,editCampaignById, isCampaignExistWithGroup, getCampaignDetailWithContact, removeCampaign,removeContentOfCampaign, isCampaignDetailexist} = require('../controllers/campaign')
 var {postGroup, getGroupByCode,getGroupsDetailWithContact, editGroupById, removeSettingGroupById, putSubGroup, getGroupsDetailsById,getSettingGroupById, removeContactInGroupDetail, getGroupById, getGroup, getGroupsDetails, postGroupsDetails, getDetailsGroup, removeGroup, removeGroupDetail} = require('../controllers/group')
 var axios = require('axios')
 var differenceInMinutes = require('date-fns/differenceInMinutes')
@@ -121,9 +121,17 @@ router.get('/group/delete/:id', async (req, res, next) => {
 		}) 
 	})
 
+	await getBroadcastByGroupId(req.params.id, async (result) => {
+		await result.filter(async val => {
+			await removeContentOfCampaign({campaign : val.k_id}, async (result) => {
+				return result
+			})
+		}) 
+	})
+
 	await getSettingGroupById(req.params.id, async(result) => {
 		console.log(result, '123123123')
-		if(result == []){
+		if(result.length > 0){
 			await result.filter(async val => {
 				await removeSettingGroupById({setting_group_id:val.s_g_id}, async (result) => {
 					await removeGroup({id:req.params.id}, async() => {
