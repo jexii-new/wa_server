@@ -319,7 +319,9 @@ router.post('/setting/edit', (req, res, next) => putProfile(4, req.body, ()=>res
 // setting group
 router.get('/setting/group/:group_id', async (req, res, next) => getGroup(async (result, val) => {
 	getGroupById(req.params.group_id, (resultGroupId) => {
-		getSettingGroupById(resultGroupId[0].id, (resGroupsDetail) => res.render('setting_group', {setting_groups:resGroupsDetail, groups:result, group:resultGroupId[0]}))
+		getProfile((resProf) => {
+			getSettingGroupById(resultGroupId[0].id, (resGroupsDetail) => res.render('setting_group', {setting_groups:resGroupsDetail, groups:result,url:resProf.domain, group:resultGroupId[0]}))
+		})
 	})
 }))
 router.get('/setting/group/delete/:setting_group_id/:group_id', (req, res, next) => removeSettingGroupById({setting_group_id:req.params.setting_group_id}, (result) =>  res.redirect(`/setting/group/${req.params.group_id}`)))
@@ -335,9 +337,15 @@ router.get("/daftar/:code", (req, res) => {
 
 
 //  router auth
-router.get('/login', (req, res, next) => {
+router.get('/login', async (req, res, next) => {
 	if(req.session.login == undefined){
-		res.render('login')
+		await getProfile((result) => {
+			if(result == undefined){
+				res.redirect('/register')
+			}
+		})
+
+		await res.render('login')
 	} else {
 		res.redirect('/')
 	}

@@ -68,7 +68,7 @@ const login = async (username, password, cb) => {
 	let query = connection.query(`SELECT * FROM owner WHERE username='${username}'`, function (error, results, fields) {
 	  	if (error) throw error;
 	  	if(results.length == 0){
-	  		return cb('failed')
+	  		return cb(false)
 	  	}
 		bcrypt.compare(password, results[0]['password'], function(err, result) {
 			console.log(result)

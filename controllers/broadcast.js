@@ -19,8 +19,8 @@ const postBroadcast = async ({groups, messages, url, second},cb) => {
 	getProfile( async ({domain}) => {	
 		groups = [...groups]
 		var query = connection.query(`
-		SELECT *, grups.code as code, grups.nama as nama_grup FROM grup_details INNER JOIN kontaks ON kontaks.id = grup_details.kontak_id INNER JOIN grups ON grups.id = grup_details.grup_id WHERE grup_details.grup_id IN (${groups}) AND grup_details.status_grup='1'
-		GROUP BY grup_details.kontak_id`, async function (error, results, fields) {
+		SELECT *, grups.code as code, grups.nama as nama_grup, kontaks.nama as c_nama FROM grup_details INNER JOIN kontaks ON kontaks.id = grup_details.kontak_id INNER JOIN grups ON grups.id = grup_details.grup_id WHERE grup_details.grup_id IN (${groups}) AND grup_details.status_grup='1'
+		 GROUP BY grup_details.kontak_id`, async function (error, results, fields) {
 		  		if (error) throw error;
 		  		await getProfile( async (result) => {
 			  			var i = 0;              
@@ -28,7 +28,7 @@ const postBroadcast = async ({groups, messages, url, second},cb) => {
 			  				await setTimeout(async function() {   
 			  					let sapaan = results[i].sapaan == null ? "" : results[i].sapaan
 			  					console.log(sapaan, 'sapaannnnnnnnnnnnnnnn')
-			  					let msg = messages.replace(/@nama/g, results[i].nama).replace(/@sapaan/g, sapaan).replace(/@unsubscribe/g, result.unsubscribe).replace(/@code/g, results[i].code).replace(/@grup/g, results[i].nama_grup)
+			  					let msg = messages.replace(/@nama/g, results[i].c_nama).replace(/@sapaan/g, sapaan).replace(/@unsubscribe/g, result.unsubscribe).replace(/@code/g, results[i].code).replace(/@grup/g, results[i].nama_grup)
 				  				await axios.post(`${domain}/wa/send-bulk`, {contact:results[i].nomor, message: `${msg}`}).then(results => {}).catch(err => err)
 								i++;                    
 								if (i < results.length) {           

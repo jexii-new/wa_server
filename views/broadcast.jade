@@ -3,8 +3,15 @@ extends layout
 block content
   br
   div(class="container-fluid")
+    h4 Pesan Siaran / Broadcast
+    br
     form(action='/broadcast',method='post')
       div(class="form-group form-check")
+        b Grup Penerima Siaran
+        br
+        i Silakan centrang grup yang akan dipilih sebagai penerima siaran
+        br
+        br
         -for(var i = 0;i<groups.length;i++){
           input(type="checkbox", class="form-check-input", value="#{groups[i]['id']}", name="groups", style="display:inline-block") 
           label(for='group', class="form-check-label") #{groups[i]['nama']}
@@ -21,7 +28,7 @@ block content
              | 
              |Anda menerima pesan ini karena telah terdaftar di *@grup*, Anda dapat berhenti kapan saja dengan mengetikkan *@unsubscribe#@code*.  
           br
-        label Detik
+        label Jeda Waktu Antar Pesan (dalam detik)
           input(type="text", name="second", value="30") 
         button(class="btn btn-primary", type='submit', data-transition='fade', data-theme='c') Buat Siaran
 
@@ -30,9 +37,9 @@ block content
         table(class="table table-striped table-light table-bordered")
           thead
             tr
+              th(scope="col") TGL
               th(scope="col") Pesan
               th(scope="col") Aksi
-              th(scope="col") TGL
           tbody
             each broadcast in broadcasts
               tr
