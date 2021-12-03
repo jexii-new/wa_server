@@ -3,7 +3,7 @@ extends layout
 block content
   div(class="container-fluid")
     br
-    h4 #{groups[0].nama}
+    h4 Member #{groups[0].nama}
 
     form(action='/groups/detail',method='post', enctype="multipart/form-data")
       input(type='hidden', name="groups", value="#{groups[0].id}")

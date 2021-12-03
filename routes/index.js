@@ -292,11 +292,13 @@ router.get('/broadcast', ({body}, res, next) => getGroup(async (result) => {
 		await res.render('broadcast', {groups:result, broadcasts:resBroadcast})
 	})
 }))
+
 router.get('/broadcast/:group_id', (req, res, next) => getGroupById(req.params.group_id, async (result) => {
 	getBroadcastById(req.params.group_id, async (resBroadcast) => {
 		await res.render('detail_broadcast', {groups:result, broadcasts:resBroadcast})
 	})
 }))
+
 router.post('/broadcast', async (req, res, next) => {
 	// if(Array.isArray(req.body.groups)){
 	// 	await req.body.groups.filter(val => {
@@ -310,7 +312,6 @@ router.post('/broadcast', async (req, res, next) => {
 })
 
 // owner
-
 router.get('/setting', (req, res, next) => getProfile((result) =>  res.render('setting', {owner:result})))
 router.post('/setting', (req, res, next) => postProfile(req.body, ()=>res.redirect('/setting')))
 router.post('/setting/edit', (req, res, next) => putProfile(4, req.body, ()=>res.redirect('/setting')))
@@ -348,7 +349,7 @@ router.get('/logout', (req, res, next) => {
 })
 router.post('/login', (req, res, next) => {
 	login(req.body.username, req.body.password, (result) => {
-		if(result == 'failed'){
+		if(result == false){
 			res.redirect('/login')
 		} else {
 			req.session.login = true

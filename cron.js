@@ -9,7 +9,7 @@ async function job(url){
     var task = cron.schedule('*/1 * * * *', () =>  {    	
     	let time = {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}
     	getProfile(async ({domain}) => {
-
+    		domain = domain == undefined ? 'null' : domain
 			getCampaign((resCamp)=> {
 				resCamp.filter(val => {		
 						

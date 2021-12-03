@@ -4,7 +4,7 @@ block content
 
   div(class="container-fluid")
     br
-    h4 #{group.nama}
+    h4 Setting #{group.nama}
     form(action='/group/edit',method='post')
       label(for='name') Nama 
          input(id='name',type='text',value='#{group.nama}',name='name' class="form-label")

@@ -1,5 +1,6 @@
 var session = require('express-session')
 
+
 const auth = (req, res, next) => {
 	if(req.originalUrl == '/send-bulk' || req.originalUrl == '/logo'){
 		return next()

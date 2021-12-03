@@ -8,7 +8,7 @@ const postProfile = async (data,id, cb) => {
 
 	const {username, wa_number, subscribe, unsubscribe, session} = await data
 
-	var query = connection.query(`UPDATE owner SET session='${session}', api_key='${api_key.apiKey}' WHERE id=${id}`, function (error, results, fields) {
+	var query = connection.query(`UPDATE owner SET nomor='${wa_number}', nama='${username}', session='${session}', api_key='${api_key.apiKey}' WHERE id=${id}`, function (error, results, fields) {
 	  	if (error) throw error;
 	  	cb(results)
 	});
@@ -32,7 +32,7 @@ const removeProfile = async (cb) => {
 	await getProfile(async res => {
 		
 		if(res != undefined){
-			await connection.query(`UPDATE owner SET session='' WHERE id=${res.id}`, (err, results, field) => {
+			await connection.query(`UPDATE owner SET session='', nama='', nomor='' WHERE id=${res.id}`, (err, results, field) => {
 				cb(results)
 			})
 		}
@@ -65,13 +65,13 @@ const login = async (username, password, cb) => {
 	
 	
     	// result == true
-	let query = connection.query(`SELECT * FROM owner WHERE nama='${username}'`, function (error, results, fields) {
+	let query = connection.query(`SELECT * FROM owner WHERE username='${username}'`, function (error, results, fields) {
 	  	if (error) throw error;
-	  	console.log(results[0]['password'], 'passworddddddddddddddddddddddddddddddddd')
 	  	if(results.length == 0){
 	  		return cb('failed')
 	  	}
 		bcrypt.compare(password, results[0]['password'], function(err, result) {
+			console.log(result)
 			cb(result)
 		});  	
 
@@ -81,7 +81,7 @@ const login = async (username, password, cb) => {
 const register = async (username, nomor, password,domain, cb) => {
 		bcrypt.genSalt(10, function(err, salt) {
 		    bcrypt.hash(password, salt, function(err, hash) {
-			let query = connection.query(`INSERT INTO owner SET ?`,{nama:username, nomor, password:hash, subscribe:'daftar', unsubscribe:'stop', domain}, function (error, results, fields) {
+			let query = connection.query(`INSERT INTO owner SET ?`,{username:username, nomor, password:hash, subscribe:'daftar', unsubscribe:'stop', domain}, function (error, results, fields) {
 			  	if (error) throw error;	
 			  	cb(results)
 		    });
