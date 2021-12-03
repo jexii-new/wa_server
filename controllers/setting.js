@@ -81,7 +81,7 @@ const login = async (username, password, cb) => {
 const register = async (username, nomor, password,domain, cb) => {
 		bcrypt.genSalt(10, function(err, salt) {
 		    bcrypt.hash(password, salt, function(err, hash) {
-			let query = connection.query(`INSERT INTO owner SET ?`,{nama:username, nomor, password:hash, subscribe:'dafar', unsubscribe:'stop', domain}, function (error, results, fields) {
+			let query = connection.query(`INSERT INTO owner SET ?`,{nama:username, nomor, password:hash, subscribe:'daftar', unsubscribe:'stop', domain}, function (error, results, fields) {
 			  	if (error) throw error;	
 			  	cb(results)
 		    });
