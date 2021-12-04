@@ -225,7 +225,8 @@ router.post('/campaign/edit',async (req, res, next) => {
 		await res.redirect('back')
 	})
 })
-router.post('/campaign', ({body}, res, next) => {
+router.post('/campaign', (req, res, next) => {
+	const body = req.body
 	isCampaignExistWithGroup(body.groups, body.value, body.type, async (isCampaignExist) => {
 		if(isCampaignExist.length == 0){
 			await postCampaign(body, async (resultPostCampaign) => {
@@ -243,7 +244,7 @@ router.post('/campaign', ({body}, res, next) => {
 								})
 
 								if((body.value - parseInt(sort[sort.length - 1]['nilai'])) < 1){
-									await axios.post('http://localhost:7000/wa/send-bulk', {contact:val.nomor, message})
+									await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor, message})
 									await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId}, () => {
 										
 									})
@@ -253,14 +254,14 @@ router.post('/campaign', ({body}, res, next) => {
 									await calculateDate(val.g_d_date,  async (distanceMinute, distanceDays) => {
 										console.log(distanceMinute)
 										if(distanceMinute > body.value && body.type == 'minutes'){
-											await axios.post('http://localhost:7000/wa/send-bulk', {contact:val.nomor, message})
+											await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor, message})
 											await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId}, () => {
 												
 											})	
 										}
 
 										if(distanceDays > body.value && body.type == 'days'){
-											await axios.post('http://localhost:7000/wa/send-bulk', {contact:val.nomor, message})
+											await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor, message})
 											await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId}, () => {
 												
 											})	
@@ -269,6 +270,24 @@ router.post('/campaign', ({body}, res, next) => {
 								}
 
 							} else {
+								await calculateDate(val.g_d_date,  async (distanceMinute, distanceDays) => {
+									console.log(distanceMinute)
+									let message = body.messages.replace(/@nama/g, val.nama).replace(/@sapaan/g, val.sapaan)
+									console.log(`${req.protocol}://${req.headers.host}/wa/send-bulk`)
+									if(distanceMinute > body.value && body.type == 'minutes'){
+										await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor, message})
+										await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId}, () => {
+											
+										})	
+									}
+
+									if(distanceDays > body.value && body.type == 'days'){
+										await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor, message})
+										await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId}, () => {
+											
+										})	
+									}
+								})
 								await res.redirect('back')	
 
 							}

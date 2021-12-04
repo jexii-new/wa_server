@@ -17,11 +17,12 @@ const postBroadcast = async ({groups, messages, url, second},cb) => {
 		})
 	}
 	getProfile( async ({domain}) => {	
-		groups = [...groups]
+		groups = [groups]
 		var query = connection.query(`
 		SELECT *, grups.code as code, grups.nama as nama_grup, kontaks.nama as c_nama FROM grup_details INNER JOIN kontaks ON kontaks.id = grup_details.kontak_id INNER JOIN grups ON grups.id = grup_details.grup_id WHERE grup_details.grup_id IN (${groups}) AND grup_details.status_grup='1'
 		 GROUP BY grup_details.kontak_id`, async function (error, results, fields) {
 		  		if (error) throw error;
+		  		console.log(results)
 		  		await getProfile( async (result) => {
 			  			var i = 0;              
 						async function myLoop() {         
@@ -41,7 +42,7 @@ const postBroadcast = async ({groups, messages, url, second},cb) => {
 		  			})
 	  			})
 			})
-	}
+		}
 
 const getBroadcast = (cb) => {
 	var query = connection.query('SELECT *, grups.id as g_id, kampanyes.id as k_id FROM kampanyes INNER JOIN grups ON grups.id = kampanyes.grup_id WHERE kampanyes.tipe = "broadcast"', function (error, results, fields) {

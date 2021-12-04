@@ -21,7 +21,8 @@ block content
     form(action='/kontak',method='post',  enctype="multipart/form-data")
       label(for='file') Upload Excel
         input(id='file',type='file',value='',name='file')
-      button(type='submit', class="btn btn-primary") Submit
+      button(type='submit', class="btn btn-primary", style="margin-right:10px") Submit
+      a(class="btn btn-danger", href="/example") Lihat Contoh
   br
   div(class="container-fluid")
     if contacts

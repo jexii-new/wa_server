@@ -2,6 +2,9 @@ extends layout
 
 block content
   div(class="container-fluid")
+    br
+    h4 Kampanye #{groups[0].nama}
+    br
     form(action='/campaign',method='post')
       input(type='hidden',value="#{groups[0]['id']}", name='groups')
     
@@ -55,4 +58,9 @@ block content
                         button(type="submit", class="btn btn-primary") Ubah
                     td 
                       a(class="btn btn-primary", href="/campaign/content/delete/#{campaign.k_id}") Hapus
+      br
+      b Informasi Template / Shortcode: 
+      br
+      li @nama => Nama
+      li @sapaan => Sapaan
 
