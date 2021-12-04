@@ -1,6 +1,6 @@
 "# wa_server" 
 
-git clone 
-npm install
-import sql
-node index.js
+git clone__ 
+npm install__
+import sql__
+node app.js / npm start__
