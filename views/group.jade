@@ -21,6 +21,7 @@ block content
             th(scope="col") Nama
             th(scope="col") Kode Grup
             th(scope="col") Deskripsi
+            th(scope="col") Jumlah Member
             th(scope="col" class="w-20") Detail
             th(scope="col") Aksi
         tbody
@@ -29,13 +30,14 @@ block content
               td #{group.nama}
               td #{group.code}
               td #{group.deskripsi}
+              td #{group.jumlah_kontak != null ? group.jumlah_kontak.split(',').length : 0}
               td 
-                a(class="btn btn-primary" style="margin-right:4px"  href="/setting/group/#{group.id}") Setting
-                a(class="btn btn-primary" style="margin-right:4px" href="/groups/detail/#{group.id}") Member
-                a(class="btn btn-primary" style="margin-right:4px" href="/campaign/#{group.id}") Kampanye
-                a(class="btn btn-primary" style="margin-right:4px" href="/broadcast/#{group.id}") Broadcast
+                a(class="btn btn-primary" style="margin-right:4px"  href="/setting/group/#{group.g_id}") Setting
+                a(class="btn btn-primary" style="margin-right:4px" href="/groups/detail/#{group.g_id}") Member
+                a(class="btn btn-primary" style="margin-right:4px" href="/campaign/#{group.g_id}") Kampanye
+                a(class="btn btn-primary" style="margin-right:4px" href="/broadcast/#{group.g_id}") Broadcast
                   
               td  
-                a(class="btn btn-primary" href="/group/delete/#{group.id}") Hapus
+                a(class="btn btn-primary" href="/group/delete/#{group.g_id}") Hapus
 
 

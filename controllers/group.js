@@ -40,9 +40,9 @@ const removeGroupDetail = async (data, cb) => {
 }
 
 const getGroup = async (cb) => {
-	var query = connection.query('SELECT * FROM grups', function (error, results, fields) {
+	var query = connection.query('SELECT *, grups.id as g_id, GROUP_CONCAT(grup_details.id) as jumlah_kontak FROM grups LEFT JOIN grup_details ON grup_details.grup_id = grups.id GROUP BY grup_id', function (error, results, fields) {
 	  	if (error) throw error;
-	  	
+	  	console.log(results)
 	  	cb(results)
 	});
 }

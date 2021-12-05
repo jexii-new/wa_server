@@ -37,8 +37,8 @@ block content
       label(for='group') Pilih Group
          select(id="xxx", name="sub_group")
             -for(var i = 0;i<groups.length;i++){
-              if groups[i]['id'] != group.id
-                option(value="#{groups[i]['id']}") #{groups[i]['nama']}
+              if groups[i]['g_id'] != group.id
+                option(value="#{groups[i]['g_id']}") #{groups[i]['nama']}
             -}
               input(id='sapaan',type='hidden',value='#{group.id}',name='groups')
         button(type='submit', class="btn btn-primary") Submit

@@ -34,7 +34,7 @@ router.post('/kontak', async (req, res, next) =>{
 						await postContact({username:val[1], called:val[2], address:val[3], wa_number:val[0]}, async resPostContact => {
 							if(resPostContact != false){
 								await postGroupsDetails({contacts:resPostContact.insertId, groups:resultCode[0]['id'], date:new Date(new Date().setMinutes(new Date().getMinutes() + index ))}, async () => {
-									return res
+									return res.redirect('back')
 								})
 							} 
 						})
@@ -295,6 +295,7 @@ router.post('/campaign', (req, res, next) => {
 					})
 				})
 			})
+			await res.redirect('back')
 		} else {
 			await res.redirect('back')
 		}
