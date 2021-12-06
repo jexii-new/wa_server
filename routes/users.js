@@ -9,7 +9,7 @@ var axios = require('axios')
 var { WAConnection, MessageType, ReconnectMode } = require('@adiwajshing/baileys')
 __dirname = path.resolve();
 
-const {getProfile, putProfile, postProfile, removeProfile, isApiExist} = require('../controllers/setting')
+const {getProfile, putProfile, postProfile, removeProfile, isApiExist, reconnectProfile} = require('../controllers/setting')
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -29,11 +29,11 @@ async function run () {
 
     conn.connectOptions = {
     /** fails the connection if no data is received for X seconds */
-    maxIdleTimeMs: 10_000,
+    maxIdleTimeMs: 5_000,
     /** maximum attempts to connect */
     maxRetries: 10,
     /** max time for the phone to respond to a connectivity test */
-    phoneResponseTime: 90_000,
+    phoneResponseTime: 5_000,
     /** minimum time between new connections */
     connectCooldownMs: 4000,
     /** agent used for WS connections (could be a proxy agent) */
@@ -100,10 +100,12 @@ async function run () {
 	    console.log(  "Disconnected because " + reason + ", reconnecting: " + isReconnecting )
 	    if (!isReconnecting && reason == "invalid_session") {
 	      	await removeProfile((res) => console.log('profile has been removed'))
-	      	getProfile( async ({domain}) => {
+	      	await getProfile( async ({domain}) => {
 	      		await axios.get(`${domain}/start`)
 	      	})
 	      	conn.clearAuthInfo();
+	    } else {
+	    	await reconnectProfile((val) => {})
 	    }
   	});
 
@@ -192,6 +194,11 @@ async function run () {
 		    
         } else console.log (chatUpdate.messages) // see updates (can be archived, pinned etc.)
     })
+
+    router.get('/check', async (req, res, next) => {
+    	return res.send(conn.user)
+    })
+
     router.get('/send', async (req, res, next) => { 
   		await conn.sendMessage(`6285882843337@s.whatsapp.net`, 'req.body.message', MessageType.text);
   		await res.send('berhasil')

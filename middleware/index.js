@@ -3,13 +3,17 @@ var {getProfile, deleteProfile} = require('../controllers/setting')
 var axios = require('axios')
 
 const auth = async (req, res, next) => {
+	if(req.originalUrl == '/send-bulk' || req.originalUrl == '/logo' || req.originalUrl == '/start'){
+		return next()
+	}
+
 	if(req.session.login == true){
 
 		await getProfile((results) => {
 			if(results != undefined){
 				const {product_code, lisensi, domain} = results
 				axios.get(`https://lisensi.ruasdigital.id/api/checking?product_code=${product_code}&licence=${lisensi}&domain=${domain}`)
-				.then(result => {
+				.then(async result => {
 					console.log(result, 'rerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr')
 				})
 				.catch((err) => {
@@ -22,9 +26,6 @@ const auth = async (req, res, next) => {
 		})
 	}
 
-	if(req.originalUrl == '/send-bulk' || req.originalUrl == '/logo'){
-		return next()
-	}
 
 	if(req.session.login == undefined && req.originalUrl == '/login' || req.originalUrl == '/register'){
 		return next()
