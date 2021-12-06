@@ -41,9 +41,12 @@ block content
                 a(class="btn btn-primary" href="/group/delete/#{group.g_id}") Hapus
 
     script(type="text/javascript").
-      setTimeout(() => {
-        window.location.reload(true)
-      }, 500)
+      window.onload = function() {
+        if(!window.location.hash) {
+          window.location = window.location + '#loaded';
+          window.location.reload();
+        }
+      }
       
 
 
