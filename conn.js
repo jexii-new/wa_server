@@ -11,9 +11,9 @@ var connection = mysql.createConnection({
 });
 
 
-const connect = ()=>{
+const connect = async ()=>{
 
-	connection.connect(function(err) {
+	await connection.connect( async function(err) {
   	if (err) {
     	console.error('error connecting: ' + err.stack);
     	return;
