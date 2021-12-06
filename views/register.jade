@@ -5,10 +5,12 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css", rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1", crossorigin="anonymous")
   body(class="login")
-   div(class="img")
-    img(class="mb-4", src="/wa/logo", width="120", height="72")
+
    form(class="form-signin", action="/register", method="post")
-       h1(class="h3 mb-3, font-weight-normal") Daftar
+       div(style="display:flex; justify-content:space-between; align-items:center; width:100%;")
+         h1(class="h3 mb-3, font-weight-normal", style="display:block" ) Daftar
+         img(class="mb-4", src="/wa/logo", width="120", height="72", style="display:block")
+       br
        label(for="inputEmail" , class="sr-only") username whatsapp
        input(type="text" ,id="inputEmail", class="form-control", placeholder="Username", name="username")
        label(for="inputEmail" , class="sr-only") Nomor whatsapp
@@ -16,6 +18,11 @@ html
        label(for="inputPassword" ,class="sr-only") Password
        input(type="password", id="inputPassword", class="form-control", placeholder="Password", name="password", required)
        input(type="hidden", class="form-control", value="#{url}" placeholder="URL", name="domain")
+       label Kode Produk
+       input(type="text" ,id="inputCode", class="form-control", placeholder="Kode Produk", name="product_code")
+       label Lisensi
+       input(type="text" ,id="inputLisensi", class="form-control", placeholder="Lisensi", name="lisensi")
+
        br
        button(class="btn btn-lg btn-primary btn-block", type="submit") Daftar
        p(class="mt-5 mb-3 text-muted") &copy; 2021-2022 

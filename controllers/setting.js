@@ -39,6 +39,17 @@ const removeProfile = async (cb) => {
 	})
 }
 
+const deleteProfile = async (cb) => {
+	await getProfile(async res => {
+		
+		if(res != undefined){
+			await connection.query(`DELETE FROM owner WHERE id=${res.id}`, (err, results, field) => {
+				cb(results)
+			})
+		}
+	})
+}
+
 const getProfileById = async (id, cb) => {
 	await db.get(id).then(async (result) => {
 		cb(result)
@@ -78,10 +89,10 @@ const login = async (username, password, cb) => {
 	});	
 }
 
-const register = async (username, nomor, password,domain, cb) => {
+const register = async (username, nomor, password,domain, lisensi, code, cb) => {
 		bcrypt.genSalt(10, function(err, salt) {
 		    bcrypt.hash(password, salt, function(err, hash) {
-			let query = connection.query(`INSERT INTO owner SET ?`,{username:username, nomor, password:hash, subscribe:'daftar', unsubscribe:'stop', domain}, function (error, results, fields) {
+			let query = connection.query(`INSERT INTO owner SET ?`,{product_code:code, lisensi, username:username, nomor, password:hash, subscribe:'daftar', unsubscribe:'stop', domain}, function (error, results, fields) {
 			  	if (error) throw error;	
 			  	cb(results)
 		    });
@@ -89,6 +100,6 @@ const register = async (username, nomor, password,domain, cb) => {
 	});	
 }
 
-module.exports = {register, postProfile, getProfile, getProfileById, removeProfile, putProfile, isApiExist, login};
+module.exports = {register, deleteProfile, postProfile, getProfile, getProfileById, removeProfile, putProfile, isApiExist, login};
 
 

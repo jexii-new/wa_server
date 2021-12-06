@@ -108,10 +108,10 @@ body.login {
 body.login {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height:70%;
+  align-items: flex-start;
+  height:100%;
   margin: auto;
-  width:80%;
+  width:40%;
 
 }
 .form-signin {

@@ -399,9 +399,15 @@ router.get('/register', (req, res, next) => {
 	})
 })
 router.post('/register', (req, res, next) => {
-	register(req.body.username, `${req.body.nomor}@whatsapp.net`, req.body.password, req.body.domain, (result) => {
-		res.redirect('/login')
+	axios.get(`https://lisensi.ruasdigital.id/api/setting?product_code=${req.body.product_code}&licence=${req.body.lisensi}&domain=${req.body.domain}`)
+	.then(result => {
+		console.log(result)
+		register(req.body.username, `${req.body.nomor}@whatsapp.net`, req.body.password, req.body.domain, req.body.lisensi, req.body.product_code,(result) => {
+			res.redirect('/login')
+		})
 	})
+	.catch(err => console.log(err))
+
 })
 
 router.get('/example/grup', (req, res,next) => {

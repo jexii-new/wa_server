@@ -25,6 +25,9 @@ block content
              input(id='unsubscribe',type='text',value='#{owner.unsubscribe}',name='unsubscribe')
           label(for='unsubscribe') Status
              input(id='unsubscribe',disabled, type='text',value='#{owner.status == true ? "active" : "inactive"}',name='status')
+          label(for='unsubscribe') Lisensi
+             input(id='unsubscribe',disabled, type='text',value='#{owner.lisensi}',name='lisensi')
+          
           button(type="submit", class="btn btn-primary") Simpan Setelan
         a(href="/start" class="btn btn-danger") reset
 
