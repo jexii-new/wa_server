@@ -41,10 +41,14 @@ app.use('/wa', usersRouter.router);
 app.use(authMiddleware)
 app.use('/', indexRouter,);
 app.use('/start', async (req, res, next) => {
-  await removeProfile( async () => {
-    usersRouter.run()
+  await getProfile(async ({domain}) => {
+    await axios.get(`${domain}/wa/close`).then(async res => {
+      })
+    await removeProfile( async () => {
+      usersRouter.run()
+    })
     await res.redirect('/setting')
-  })
+    })
 
 });
 

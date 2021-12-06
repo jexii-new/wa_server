@@ -13,13 +13,13 @@ block content
         br
         br
         -for(var i = 0;i<groups.length;i++){
-          input(type="checkbox", class="form-check-input", value="#{groups[i]['g_id']}", name="groups", style="display:inline-block") 
+          input(type="checkbox", class="form-check-input", value="#{groups[i]['g_id']}", name="groups", style="display:inline-block", required="true") 
           label(for='group', class="form-check-label") #{groups[i]['nama']}
           br
         -}
         label(for='message', STYLE="display:inline-block") Pesan
            br
-           textarea(id='messages',type='text',name='messages', style="width:500px; height:200px") @sapaan @nama
+           textarea(required="true", id='messages',type='text',name='messages', style="width:500px; height:200px") @sapaan @nama
              | 
              |[PESAN ANDA DI SINI]
 
@@ -36,7 +36,7 @@ block content
         li(style="font-size:12px") @code => Kode Grup
         br
         label Jeda Waktu Antar Pesan (dalam detik)
-          input(type="text", name="second", value="30") 
+          input(type="text", name="second", value="30", required="true") 
         button(class="btn btn-primary", type='submit', data-transition='fade', data-theme='c') Buat Siaran
 
   div(class="container-fluid")

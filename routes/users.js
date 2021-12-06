@@ -29,13 +29,13 @@ async function run () {
 
     conn.connectOptions = {
     /** fails the connection if no data is received for X seconds */
-    maxIdleTimeMs: 5_000,
+    maxIdleTimeMs: 10_000,
     /** maximum attempts to connect */
-    maxRetries: 10,
+    maxRetries: 100,
     /** max time for the phone to respond to a connectivity test */
-    phoneResponseTime: 5_000,
+    phoneResponseTime: 1000,
     /** minimum time between new connections */
-    connectCooldownMs: 4000,
+    connectCooldownMs: 1000,
     /** agent used for WS connections (could be a proxy agent) */
     agent: Agent = undefined,
     /** agent used for fetch requests -- uploading/downloading media */
@@ -195,8 +195,8 @@ async function run () {
         } else console.log (chatUpdate.messages) // see updates (can be archived, pinned etc.)
     })
 
-    router.get('/check', async (req, res, next) => {
-    	return res.send(conn.user)
+    router.get('/status', async (req, res, next) => {
+    	return res.send(conn.phoneConnected)
     })
 
     router.get('/send', async (req, res, next) => { 
@@ -225,6 +225,7 @@ async function run () {
 
 	router.get('/close', async (req, res,next) => {
 		conn.close()
+		return res.send('berhasil close')
 	})
 
 	router.post('/send-bulk', async (req, res, next) => {  
