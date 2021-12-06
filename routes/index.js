@@ -9,6 +9,8 @@ var axios = require('axios')
 var differenceInMinutes = require('date-fns/differenceInMinutes')
 var {calculateDate} = require('../helper/date')
 var xlsx =require('node-xlsx')
+var path = require('path')
+__dirname = path.resolve();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -400,6 +402,15 @@ router.post('/register', (req, res, next) => {
 	register(req.body.username, `${req.body.nomor}@whatsapp.net`, req.body.password, req.body.domain, (result) => {
 		res.redirect('/login')
 	})
+})
+
+router.get('/example/grup', (req, res,next) => {
+	res.sendFile(__dirname + '/public/example/grup_kontak_import.xlsx')
+})
+
+
+router.get('/example/kontak', (req, res,next) => {
+	res.sendFile(__dirname + '/public/example/kontak-import.xlsx')
 })
 
 module.exports = router;
