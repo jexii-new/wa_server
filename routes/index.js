@@ -103,7 +103,7 @@ router.get('/kontak/delete/:id', async (req, res, next) => {
 router.get('/group', (req, res, next) => getGroup(async (result) => await res.render('group', {groups:result})))
 router.post('/group', async (req, res, next) => await postGroup(req.body, async (val) =>  
 {
-	return res.redirect('/group')
+	return res.render('group', {refresh:true})
 }
 ))
 router.get('/group/delete/:id', async (req, res, next) => {
