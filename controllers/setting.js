@@ -8,7 +8,7 @@ const postProfile = async (data,id, cb) => {
 
 	const {username, wa_number, subscribe, unsubscribe, session} = await data
 
-	var query = connection.query(`UPDATE owner SET nomor='${wa_number}', nama='${username}', session='${session}', api_key='${api_key.apiKey}' WHERE id=${id}`, function (error, results, fields) {
+	var query = connection.query(`UPDATE owner SET status=true, nomor='${wa_number}', nama='${username}', session='${session}', api_key='${api_key.apiKey}' WHERE id=${id}`, function (error, results, fields) {
 	  	if (error) throw error;
 	  	cb(results)
 	});
@@ -32,7 +32,7 @@ const removeProfile = async (cb) => {
 	await getProfile(async res => {
 		
 		if(res != undefined){
-			await connection.query(`UPDATE owner SET session='', nama='', nomor='' WHERE id=${res.id}`, (err, results, field) => {
+			await connection.query(`UPDATE owner SET status=false, session='', nama='', nomor='' WHERE id=${res.id}`, (err, results, field) => {
 				cb(results)
 			})
 		}

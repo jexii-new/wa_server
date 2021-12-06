@@ -13,7 +13,7 @@ block content
         br
         br
         -for(var i = 0;i<groups.length;i++){
-          input(type="checkbox", class="form-check-input", value="#{groups[i]['id']}", name="groups", style="display:inline-block") 
+          input(type="checkbox", class="form-check-input", value="#{groups[i]['g_id']}", name="groups", style="display:inline-block") 
           label(for='group', class="form-check-label") #{groups[i]['nama']}
           br
         -}
@@ -47,7 +47,7 @@ block content
                 td #{broadcast.pesan}
                 td 
                   a(class="btn btn-primary", href="/campaign/content/delete/#{broadcast.k_id}") Hapus
-                  
+
       b Informasi Template / Shortcode:  
       br
       li @nama => Nama

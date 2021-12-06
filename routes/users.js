@@ -216,6 +216,10 @@ async function run () {
   		await conn.sendMessage(`6285882843337@s.whatsapp.net`, 'connect', MessageType.text);
 	})
 
+	router.get('/close', async (req, res,next) => {
+		conn.close()
+	})
+
 	router.post('/send-bulk', async (req, res, next) => {  
 		if(req.body.contact != undefined){
 		    await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`, req.body.message, MessageType.text);

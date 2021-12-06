@@ -7,7 +7,7 @@ block content
     br
     form(action='/broadcast',method='post')
       div(class="form-group form-check")
-        input(type="hidden", name="groups", value="#{groups[0]['id']}")
+        input(type="hidden", name="groups", value="#{groups[0]['g_id']}")
         label(for='message') Pesan
            textarea(id='messages',type='text',name='messages') @sapaan @nama
              | 

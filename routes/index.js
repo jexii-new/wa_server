@@ -287,8 +287,8 @@ router.post('/campaign', (req, res, next) => {
 											
 										})	
 									}
+									await res.redirect('back')	
 								})
-								await res.redirect('back')	
 
 							}
 						})

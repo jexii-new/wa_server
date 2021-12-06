@@ -15,13 +15,14 @@ var {getProfile, removeProfile} = require('./controllers/setting')
 var {connect} = require('./conn')
 var authMiddleware = require('./middleware')
 var session = require('express-session')
+var axios = require('axios')
 __dirname = path.resolve();
 
 // coonect
 connect()
 
 async function runWa(){
-  await usersRouter.run().catch(async err => {
+  await usersRouter.run('reset').catch(async err => {
     console.log('err')
   } )
 }
@@ -45,6 +46,7 @@ app.use('/start', async (req, res, next) => {
     usersRouter.run()
     await res.redirect('/setting')
   })
+
 });
 
 
