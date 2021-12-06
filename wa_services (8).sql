@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Des 2021 pada 13.09
+-- Waktu pembuatan: 06 Des 2021 pada 14.01
 -- Versi server: 10.4.19-MariaDB
 -- Versi PHP: 7.4.19
 
@@ -39,7 +39,7 @@ CREATE TABLE `grups` (
 --
 
 INSERT INTO `grups` (`id`, `nama`, `deskripsi`, `code`) VALUES
-(9, 'VIP', 'test', '123b');
+(25, 'vip', 'lklj', 'test');
 
 -- --------------------------------------------------------
 
@@ -55,6 +55,13 @@ CREATE TABLE `grup_details` (
   `status_grup` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data untuk tabel `grup_details`
+--
+
+INSERT INTO `grup_details` (`id`, `kontak_id`, `grup_id`, `date`, `status_grup`) VALUES
+(219, 157, 25, '2021-12-06 17:49:43', '1');
+
 -- --------------------------------------------------------
 
 --
@@ -69,6 +76,13 @@ CREATE TABLE `kampanyes` (
   `nilai` varchar(255) NOT NULL,
   `createdAt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `kampanyes`
+--
+
+INSERT INTO `kampanyes` (`id`, `grup_id`, `pesan`, `tipe`, `nilai`, `createdAt`) VALUES
+(229, 25, '@sapaan @nama\r\n \r\n[PESAN ANDA DI SINI]\r\n----------\r\n \r\nAnda menerima pesan ini karena telah terdaftar di *@grup*, Anda dapat berhenti kapan saja dengan mengetikkan *@unsubscribe#@code*.  ', 'broadcast', '0', '2021-12-06 16:01:00');
 
 -- --------------------------------------------------------
 
@@ -87,12 +101,11 @@ CREATE TABLE `kampanyes_detail` (
 --
 
 INSERT INTO `kampanyes_detail` (`id`, `kontak_id`, `campaign_id`) VALUES
-(308, 89, 131),
-(309, 89, 132),
-(318, 140, 137),
-(319, 140, 138),
-(320, 141, 137),
-(321, 141, 138);
+(328, 145, 214),
+(329, 147, 214),
+(330, 145, 213),
+(331, 145, 218),
+(332, 145, 217);
 
 -- --------------------------------------------------------
 
@@ -115,8 +128,7 @@ CREATE TABLE `kontaks` (
 --
 
 INSERT INTO `kontaks` (`id`, `nama`, `alamat`, `status`, `nomor`, `date`, `sapaan`) VALUES
-(140, 'imron', 'kendal', 0, '6285882843337', '2021-11-25 20:21:17', 'mas'),
-(141, 'asrofi', 'kendal', 0, '6281311661479', '2021-11-25 20:53:31', 'mas');
+(157, 'imron', 'kendal', 1, '6285882843337', '2021-12-06 17:49:43', 'Pak');
 
 -- --------------------------------------------------------
 
@@ -135,8 +147,17 @@ CREATE TABLE `owner` (
   `api_key` text DEFAULT NULL,
   `password` text DEFAULT NULL,
   `domain` varchar(255) DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL
+  `username` varchar(255) DEFAULT NULL,
+  `product_code` varchar(255) NOT NULL,
+  `lisensi` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `owner`
+--
+
+INSERT INTO `owner` (`id`, `nama`, `nomor`, `status`, `subscribe`, `unsubscribe`, `session`, `api_key`, `password`, `domain`, `username`, `product_code`, `lisensi`) VALUES
+(713, NULL, '6285882843337@whatsapp.net', NULL, 'daftar', 'stop', NULL, NULL, '$2b$10$JQTCc28W5gh/lA1/k3LQJ.Hpp/RkkonLsuxLjPldo3bLqQ0lRMLay', 'http://localhost:5000', 'imron', '0002', 'vzTIlEl57TgXuin');
 
 -- --------------------------------------------------------
 
@@ -209,43 +230,43 @@ ALTER TABLE `setting_grups`
 -- AUTO_INCREMENT untuk tabel `grups`
 --
 ALTER TABLE `grups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT untuk tabel `grup_details`
 --
 ALTER TABLE `grup_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=185;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=220;
 
 --
 -- AUTO_INCREMENT untuk tabel `kampanyes`
 --
 ALTER TABLE `kampanyes`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=230;
 
 --
 -- AUTO_INCREMENT untuk tabel `kampanyes_detail`
 --
 ALTER TABLE `kampanyes_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=322;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=347;
 
 --
 -- AUTO_INCREMENT untuk tabel `kontaks`
 --
 ALTER TABLE `kontaks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
 
 --
 -- AUTO_INCREMENT untuk tabel `owner`
 --
 ALTER TABLE `owner`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=702;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=714;
 
 --
 -- AUTO_INCREMENT untuk tabel `setting_grups`
 --
 ALTER TABLE `setting_grups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
