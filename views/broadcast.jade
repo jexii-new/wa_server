@@ -56,4 +56,12 @@ block content
       li @unsubscribe => Kode Text untuk berhenti berlangganan (unsubscribe)
       li @code => Kode Grup
 
+    script(type="text/javascript").
+        window.onload = function() {
+          if(!window.location.hash) {
+            window.location = window.location + '#loaded';
+            window.location.reload();
+          }
+        }
+
 

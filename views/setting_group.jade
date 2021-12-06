@@ -57,4 +57,10 @@ block content
               td #{set_g.deskripsi}
               td  
                 a(class="btn btn-primary" href="/setting/group/delete/#{set_g.s_g_id}/#{set_g.grup_id}") Hapus
-        
+    script(type="text/javascript").
+      window.onload = function() {
+        if(!window.location.hash) {
+          window.location = window.location + '#loaded';
+          window.location.reload();
+        }
+      }
