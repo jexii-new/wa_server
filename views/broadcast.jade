@@ -17,17 +17,24 @@ block content
           label(for='group', class="form-check-label") #{groups[i]['nama']}
           br
         -}
-        label(for='message') Pesan
+        label(for='message', STYLE="display:inline-block") Pesan
            br
-           textarea(id='messages',type='text',name='messages', style="width:800px; height:200px") @sapaan @nama
+           textarea(id='messages',type='text',name='messages', style="width:500px; height:200px") @sapaan @nama
              | 
              |[PESAN ANDA DI SINI]
 
              |----------
 
              | 
-             |Anda menerima pesan ini karena telah terdaftar di *@grup*, Anda dapat berhenti kapan saja dengan mengetikkan *@unsubscribe#@code*.  
-          br
+             |Anda menerima pesan ini karena telah terdaftar di *@grup*, Anda dapat berhenti kapan saja dengan mengetikkan *@unsubscribe#@code*.
+        br
+        b(style="font-size:12px") Informasi Template / Shortcode:  
+        li(style="font-size:12px") @nama => Nama
+        li(style="font-size:12px") @sapaan => Sapaan 
+        li(style="font-size:12px") @grup => Nama Grup
+        li(style="font-size:12px") @unsubscribe => Kode Text untuk berhenti berlangganan (unsubscribe)
+        li(style="font-size:12px") @code => Kode Grup
+        br
         label Jeda Waktu Antar Pesan (dalam detik)
           input(type="text", name="second", value="30") 
         button(class="btn btn-primary", type='submit', data-transition='fade', data-theme='c') Buat Siaran
@@ -47,14 +54,6 @@ block content
                 td #{broadcast.pesan}
                 td 
                   a(class="btn btn-primary", href="/campaign/content/delete/#{broadcast.k_id}") Hapus
-
-      b Informasi Template / Shortcode:  
-      br
-      li @nama => Nama
-      li @sapaan => Sapaan 
-      li @grup => Nama Grup
-      li @unsubscribe => Kode Text untuk berhenti berlangganan (unsubscribe)
-      li @code => Kode Grup
 
     script(type="text/javascript").
         window.onload = function() {

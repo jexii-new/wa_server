@@ -27,6 +27,11 @@ block content
         | 
         |Anda menerima pesan ini karena telah terdaftar di *#{groups[0]['nama']}*, Anda dapat berhenti kapan saja dengan mengetikkan *#{unsub}##{groups[0]['code']}*.                                   
       br
+      b(style="font-size:12px") Informasi Template / Shortcode: 
+      br
+      li(style="font-size:12px") @nama => Nama
+      li(style="font-size:12px") @sapaan => Sapaan
+      br
       button(class="btn btn-primary", type='submit') Buat Kampanye
     br
   if campaigns
@@ -58,12 +63,7 @@ block content
                         button(type="submit", class="btn btn-primary") Ubah
                     td 
                       a(class="btn btn-primary", href="/campaign/content/delete/#{campaign.k_id}") Hapus
-      br
-      b Informasi Template / Shortcode: 
-      br
-      li @nama => Nama
-      li @sapaan => Sapaan
-      
+
   script(type="text/javascript").
       window.onload = function() {
         if(!window.location.hash) {
