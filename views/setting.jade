@@ -54,8 +54,10 @@ block content
             a(style="width:98%",href="/start" class="btn btn-danger") reset
 
     if owner.session == null || owner.session == ''
-        h1  Barcode 
-        img(src="/wa/qr")
+      div(style="margin:8px; display:flex; flex-direction:column; align-items:center; justify-content:space-between")
+        h1  QR Code 
+        img(src="/wa/qr", width="300px")
+        b agar dapat terhubung scan qr tersebut 
 
     if owner.session == null || owner.session == ''
       script(type="text/javascript").
