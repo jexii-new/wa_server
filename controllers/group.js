@@ -9,9 +9,9 @@ const postGroup = async (data, cb) => {
 	const {name, desc, code} = await data
 
 	const post = await {nama:name, deskripsi:desc, code}
-	var query = connection.query('INSERT INTO grups SET ?', post, function (error, results, fields) {
+	var query = await connection.query('INSERT INTO grups SET ?', post, async function (error, results, fields) {
 	  	if (error) throw error;
-	  	cb(results)
+	  	await cb(results)
 	});
 }
 
