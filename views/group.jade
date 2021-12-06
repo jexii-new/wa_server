@@ -40,8 +40,8 @@ block content
               td  
                 a(class="btn btn-primary" href="/group/delete/#{group.g_id}") Hapus
 
-    if refresh != undefined 
-      script(type="text/javascript").
-        window.location.reload()
+    script(type="text/javascript").
+      window.location.reload();
+      window.stop();
 
 
