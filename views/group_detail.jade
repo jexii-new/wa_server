@@ -14,6 +14,8 @@ block content
               option(value="#{contacts[i]['id']}") #{contacts[i]['nama']}
             -}
       button(type='submit',class="mb-4 btn btn-primary") Tambah
+        i(class="fas fa-paper-plane m-2")
+
     br
     form(action='/groups/detail',method='post', enctype="multipart/form-data")
       label(for='kontak') import kontak dari excel ke group ini
@@ -21,7 +23,11 @@ block content
           br
           input(type='file', name="file")
       button(type='submit',class="btn btn-primary", style="margin-right:3px") Import Excel
+        i(class="fas fa-file-upload m-2")
+
       a(class="btn btn-danger", href="/example/grup") Unduh Template
+        i(class="fas fa-download m-2")
+
 
   
   div(class="container-fluid")
@@ -47,6 +53,8 @@ block content
               td #{detail.status_grup == 0 ? 'inactive' : 'active'}
               td  
                 a(class="btn btn-primary", href="/group_detail/contact/#{detail.g_d_id}") Hapus
+                  i(class="fas fa-trash-alt m-2")
+
 
 
             

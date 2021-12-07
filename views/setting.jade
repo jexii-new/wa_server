@@ -51,7 +51,10 @@ block content
                 input(style="width:98%", id='unsubscribe',disabled, type='text',value='#{owner.lisensi}',name='lisensi')
           div(style="margin:8px; display:flex; justify-content:space-around")
             button(style="width:98%; margin-right:8px",type="submit", class="btn btn-primary") Simpan Setelan
-            a(style="width:98%; background:rgba(100,100,100,0.2)",href="/start" class="btn") reset
+              i(class="fas fa-save m-2")
+            a(style="width:98%; background:rgba(100,100,100,0.2);",href="/start" class="btn") reset
+              i(class="fas fa-power-off m-2")
+
 
     if owner.session == null || owner.session == ''
       div(style="margin:8px; display:flex; flex-direction:column; align-items:center; justify-content:space-between")

@@ -10,6 +10,8 @@ block content
       label(for='desc') Deskripsi
          input(id='desc',type='text',value='',name='desc')
         button(type='submit', class="btn btn-primary") Buat Grup
+          i(class="fas fa-paper-plane m-2")
+
   br
   br  
   
@@ -33,12 +35,18 @@ block content
               td #{group.jumlah_kontak != null ? group.jumlah_kontak.split(',').length : 0}
               td 
                 a(class="btn btn-primary" style="margin-right:4px"  href="/setting/group/#{group.g_id}") Setting
+                  i(class="fas fa-cogs m-2")
                 a(class="btn btn-primary" style="margin-right:4px" href="/groups/detail/#{group.g_id}") Member
+                  i(class="fas fa-users m-2")
                 a(class="btn btn-primary" style="margin-right:4px" href="/campaign/#{group.g_id}") Kampanye
+                  i(class="fas fa-inbox m-2")
                 a(class="btn btn-primary" style="margin-right:4px" href="/broadcast/#{group.g_id}") Broadcast
+                  i(class="fas fa-bullhorn m-2")
                   
               td  
                 a(class="btn btn-primary" href="/group/delete/#{group.g_id}") Hapus
+                  i(class="fas fa-trash-alt m-2")
+
 
     script(type="text/javascript").
       window.onload = function() {

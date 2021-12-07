@@ -20,12 +20,17 @@ block content
               option(value="#{groups[i]['g_id']}") #{groups[i]['nama']}
           -} 
       button(type='submit', class="btn btn-primary") Submit
+        i(class="fas fa-paper-plane m-2")
+
     br
     form(action='/kontak',method='post',  enctype="multipart/form-data")
       label(for='file') Upload Excel
         input(id='file',type='file',value='',name='file')
       button(type='submit', class="btn btn-primary", style="margin-right:10px") Submit
+        i(class="fas fa-file-upload m-2")
       a(class="btn btn-danger", href="/example/kontak") Unduh Template
+        i(class="fas fa-download m-2")
+
   br
   div(class="container-fluid")
     if contacts
@@ -45,6 +50,7 @@ block content
               td #{contact.alamat}
               td  
                 a(class="btn btn-primary" href="/kontak/delete/#{contact.id}") Hapus
+                  i(class="fas fa-trash-alt m-2")
   script(type="text/javascript").
       window.onload = function() {
         if(!window.location.hash) {

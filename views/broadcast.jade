@@ -38,6 +38,8 @@ block content
         label Jeda Waktu Antar Pesan (dalam detik)
           input(type="text", name="second", value="30", required="true") 
         button(class="btn btn-primary", type='submit', data-transition='fade', data-theme='c') Buat Siaran
+          i(class="fas fa-paper-plane m-2")
+
 
   div(class="container-fluid")
       if broadcasts
@@ -54,6 +56,8 @@ block content
                 td #{broadcast.pesan}
                 td 
                   a(class="btn btn-primary", href="/campaign/content/delete/#{broadcast.k_id}") Hapus
+                    i(class="fas fa-trash-alt m-2")
+
 
     script(type="text/javascript").
         window.onload = function() {

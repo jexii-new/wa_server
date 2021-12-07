@@ -33,6 +33,8 @@ block content
       li(style="font-size:12px") @sapaan => Sapaan
       br
       button(class="btn btn-primary", type='submit') Buat Kampanye
+        i(class="fas fa-paper-plane m-2")
+
     br
   if campaigns
     div.container-fluid
@@ -61,8 +63,12 @@ block content
                         textarea(type="text", name="pesan") #{campaign.pesan}
                         input(type="hidden", name="id", value="#{campaign.k_id}")
                         button(type="submit", class="btn btn-primary") Ubah
+                          i(class="fas fa-edit m-2")
+
                     td 
                       a(class="btn btn-primary", href="/campaign/content/delete/#{campaign.k_id}") Hapus
+                        i(class="fas fa-trash-alt m-2")
+
 
   script(type="text/javascript").
       window.onload = function() {
