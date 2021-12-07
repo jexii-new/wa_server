@@ -3,7 +3,7 @@ var {getProfile, deleteProfile} = require('../controllers/setting')
 var axios = require('axios')
 
 const auth = async (req, res, next) => {
-	if(req.originalUrl == '/send-bulk' || req.originalUrl == '/logo' || req.originalUrl == '/start'){
+	if(req.originalUrl == '/send-bulk' || req.originalUrl == '/logo' || req.originalUrl == '/start' || req.originalUrl == '/wa/status'){
 		return next()
 	}
 

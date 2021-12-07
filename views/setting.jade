@@ -12,12 +12,12 @@ block content
         form(action='/setting/edit',method='post', style="margin:8px; width:60%; display:flex; justify-content:center; flex-direction:column; flex-wrap:wrap")
           div(style="margin:8px; display:flex; justify-content:space-around")
             div(style="width:100%")
-              label Nama
-              br
-              input(style="width:98%", id='username',type='text', disabled,value='#{owner.nama}',name='username')
-            div(style="width:100%")
               label Nomor
+              br
               input(style="width:98%", id='wa_number',type='text', disabled, value='#{owner.nomor}',name='wa_number')
+            div(style="width:100%")
+              label Nama
+              input(style="width:98%", id='username',type='text', disabled,value='#{owner.nama}',name='username')
               input(style="width:98%", id='wa_number',type='hidden',value='#{owner.id}',name='id')
           div(style="margin:8px; display:flex; justify-content:space-around")
             div(style="width:100%")
@@ -42,7 +42,7 @@ block content
             div(style="width:100%")
               label Lisensi
               input(style="width:98%", id='unsubscribe',disabled, type='text',value='#{owner.lisensi}',name='lisensi')
-            if owner.status == false && owner.session != null 
+            if owner.status == false && owner.session 
               div(style="width:100%")
                 label Session
                 input(style="width:98%", id='unsubscribe',disabled, type='text',value='offline',name='status')
@@ -51,7 +51,7 @@ block content
                 input(style="width:98%", id='unsubscribe',disabled, type='text',value='#{owner.lisensi}',name='lisensi')
           div(style="margin:8px; display:flex; justify-content:space-around")
             button(style="width:98%; margin-right:8px",type="submit", class="btn btn-primary") Simpan Setelan
-            a(style="width:98%",href="/start" class="btn btn-danger") reset
+            a(style="width:98%; background:rgba(100,100,100,0.2)",href="/start" class="btn") reset
 
     if owner.session == null || owner.session == ''
       div(style="margin:8px; display:flex; flex-direction:column; align-items:center; justify-content:space-between")

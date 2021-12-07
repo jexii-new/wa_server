@@ -1,15 +1,21 @@
 var cron = require('node-cron');
 var {getCampaign, postCampaignDetail, isCampaignDetailExist} = require('./controllers/campaign')
 var {getGroupsDetailsById} = require('./controllers/group')
-var {getProfile} = require('./controllers/setting')
+var {getProfile, reconnectProfile} = require('./controllers/setting')
 var moment = require('moment')
 var axios = require('axios')
 async function job(url){
 	
-    var task = cron.schedule('*/1 * * * *', () =>  {    	
+    var task = cron.schedule('*/ * * * *', () =>  {   
     	let time = {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}
     	getProfile(async ({domain}) => {
     		domain = domain == undefined ? 'null' : domain
+    		axios.get(`${domain}/wa/status`).then(status => {
+    			console.log(status, 'statusssssssssssssssssssssssssss')
+    			if(!status){
+    				reconnectProfile(() => {})
+    			}
+    		}) 	
 			getCampaign((resCamp)=> {
 				resCamp.filter(val => {		
 						

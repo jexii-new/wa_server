@@ -29,13 +29,13 @@ async function run () {
 
     conn.connectOptions = {
     /** fails the connection if no data is received for X seconds */
-    maxIdleTimeMs: 10_000,
+    maxIdleTimeMs: 5_000,
     /** maximum attempts to connect */
-    maxRetries: 100,
+    maxRetries: 1000,
     /** max time for the phone to respond to a connectivity test */
-    phoneResponseTime: 1000,
+    phoneResponseTime: 5_000,
     /** minimum time between new connections */
-    connectCooldownMs: 1000,
+    connectCooldownMs: 4000,
     /** agent used for WS connections (could be a proxy agent) */
     agent: Agent = undefined,
     /** agent used for fetch requests -- uploading/downloading media */
@@ -69,6 +69,9 @@ async function run () {
 	 		}
  		}
  	})
+
+ 	await reconnectProfile((val) => {})
+
 
     await conn.on('chats-received', async ({ hasNewChats }) => {
         console.log(`you have ${conn.chats.length} chats, new chats available: ${hasNewChats}`)
@@ -104,9 +107,7 @@ async function run () {
 	      		await axios.get(`${domain}/start`)
 	      	})
 	      	conn.clearAuthInfo();
-	    } else {
-	    	await reconnectProfile((val) => {})
-	    }
+	    } 
   	});
 
 
@@ -196,7 +197,12 @@ async function run () {
     })
 
     router.get('/status', async (req, res, next) => {
-    	return res.send(conn.phoneConnected)
+    	 await conn.on('CB:action,,battery', json => {
+	        const batteryLevelStr = json[2][0][1].value
+	        const batterylevel = parseInt(batteryLevelStr)
+	        console.log('battery level: ' + batterylevel)
+	    })
+    	await res.send('test')
     })
 
     router.get('/send', async (req, res, next) => { 
