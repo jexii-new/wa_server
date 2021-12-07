@@ -5,6 +5,7 @@ var {verifyContact, checkIfContactExist, postContact} = require('../controllers/
 var {getGroupByCode, postGroupsDetails, getGroupsDetailWithContact, editGroupDetails, removeContactInGroupDetail, isGroupExist, getGroupsDetailWithId} = require('../controllers/group')
 var fs = require('fs')
 var qrcode = require('qrcode')
+const uuidAPIKey = require('uuid-apikey');
 var axios = require('axios')
 var { WAConnection, MessageType, ReconnectMode } = require('@adiwajshing/baileys')
 __dirname = path.resolve();
@@ -63,6 +64,7 @@ async function run () {
 	})
    	
  	await getProfile(async (result) => {
+ 		console.log(result, 'getProfile((result')
  		if(result != undefined){
 	 		if(result.session != undefined && result.session.length > 0){
 	 			await conn.loadAuthInfo(JSON.parse(result.session))
@@ -70,7 +72,7 @@ async function run () {
  		}
  	})
 
- 	await reconnectProfile((val) => {})
+ 	// await reconnectProfile((val) => {})
 
 
     await conn.on('chats-received', async ({ hasNewChats }) => {
@@ -96,7 +98,7 @@ async function run () {
 		  })
 	})
 
-    conn.clearAuthInfo();
+    // conn.clearAuthInfo();
     await conn.connect ()
     conn.autoReconnect = ReconnectMode.onConnectionLost
 	conn.on("close", async ({ reason, isReconnecting }) => {
@@ -196,14 +198,14 @@ async function run () {
         } else console.log (chatUpdate.messages) // see updates (can be archived, pinned etc.)
     })
 
-    router.get('/status', async (req, res, next) => {
-    	 await conn.on('CB:action,,battery', json => {
-	        const batteryLevelStr = json[2][0][1].value
-	        const batterylevel = parseInt(batteryLevelStr)
-	        console.log('battery level: ' + batterylevel)
-	    })
-    	await res.send('test')
-    })
+    // router.get('/status', async (req, res, next) => {
+    // 	 await conn.on('CB:action,,battery', json => {
+	   //      const batteryLevelStr = json[2][0][1].value
+	   //      const batterylevel = parseInt(batteryLevelStr)
+	   //      console.log('battery level: ' + batterylevel)
+	   //  })
+    // 	await res.send('test')
+    // })
 
     router.get('/send', async (req, res, next) => { 
   		await conn.sendMessage(`6285882843337@s.whatsapp.net`, 'req.body.message', MessageType.text);
@@ -230,8 +232,40 @@ async function run () {
 	})
 
 	router.get('/close', async (req, res,next) => {
-		conn.close()
-		return res.send('berhasil close')
+		console.log(conn.user)
+		await conn.close()
+		await conn.clearAuthInfo();
+
+		await conn.on ('open', async () => {
+		    // save credentials whenever updated
+		    console.log (`credentials updated!`)
+		    const authInfo = await conn.base64EncodedAuthInfo() // get all the auth info we need to restore this session
+		    let user = await conn.user
+		    await getProfile(async(result) => {
+		    	if(result != undefined){
+				    await postProfile({wa_number:user.jid, username:user.name, address:'null', status:true,  subscribe:'daftar', unsubscribe:'stop', session:JSON.stringify(authInfo, null, '\t')},result['id'], async (result) => {
+					    await console.log(result)
+					})
+		    	} 
+		    })
+		   
+		})
+
+		await conn.on('qr', qr => {
+	    // Now, use the 'qr' string to display in QR UI or send somewhere
+	    	qrcode.toDataURL(qr)
+			  .then(url => {
+			      const imageBuffer = Buffer.from(
+			    url.replace('data:image/png;base64,', ''),
+			    'base64');
+			  	fs.writeFileSync('./public/images/qr_code.png', imageBuffer);
+			  })
+		})
+
+		await conn.connect()
+		res.send('berhasil')
+	   	
+		
 	})
 
 	router.post('/send-bulk', async (req, res, next) => {  

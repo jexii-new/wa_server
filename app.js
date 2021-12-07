@@ -26,6 +26,10 @@ async function runWa(){
     console.log('err')
   } )
 }
+app.use('/reconnect', async (req, res, next) => {
+	await runWa()
+	res.redirect('/setting')
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -42,10 +46,10 @@ app.use(authMiddleware)
 app.use('/', indexRouter,);
 app.use('/start', async (req, res, next) => {
   await getProfile(async ({domain}) => {
-    await axios.get(`${domain}/wa/close`).then(async res => {
-      })
     await removeProfile( async () => {
-      usersRouter.run()
+      await axios.get(`${domain}/wa/close`).then(async res => {
+        console.log(res.data)
+        })
     })
     await res.redirect('/setting')
     })
@@ -53,10 +57,6 @@ app.use('/start', async (req, res, next) => {
 });
 
 
-app.use('/reconnect', (req, res, next) => {
-	usersRouter.run()
-	res.redirect('/setting')
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
