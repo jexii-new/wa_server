@@ -4,12 +4,18 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css", rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1", crossorigin="anonymous")
-  body(class="login")
+  body(class="login", class=" w-75", style="justify-content:center; align-content:center; padding:10px; height:110vh")
 
+   div
+     img(class="mb-4", src="/wa/logo", width="100", height="52", style="display:block; top:20px; left:20px")
+     h5 RUAS WA AUTO FOLLOWUP 
+     p Selamat datang
+     p Terimakasih telah membeli produk RUAS WA AUTO FOLLOWUP,
+     p  Untuk dapat menggunakan aplikasi ini Anda harus membuat username dan password terlebih dahulu
    form(class="form-signin", action="/register", method="post")
+
        div(style="display:flex; justify-content:space-between; align-items:center; width:100%;")
          h1(class="h3 mb-3, font-weight-normal", style="display:block" ) Daftar
-         img(class="mb-4", src="/wa/logo", width="120", height="72", style="display:block")
        br
        label(for="inputEmail" , class="sr-only") username whatsapp
        input(type="text" ,id="inputEmail", class="form-control", placeholder="Username", name="username")
@@ -24,7 +30,7 @@ html
        input(type="text" ,id="inputLisensi", class="form-control", placeholder="Lisensi", name="lisensi")
 
        br
-       button(class="btn btn-lg btn-primary btn-block", type="submit") Daftar
+       button(class="btn btn-lg btn-primary w-100 btn-block", type="submit") Daftar
        p(class="mt-5 mb-3 text-muted") &copy; 2021-2022 
 
 
