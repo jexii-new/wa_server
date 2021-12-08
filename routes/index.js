@@ -66,11 +66,14 @@ router.post('/kontak/group', async (req, res, next) => await postContact(req.bod
 						result.filter(val => {
 							 if(val.nomor == req.body.wa_number){
 							 	removeContactInGroupDetail({groups:val.g_d_id}, (res) => {
+							 		res.redirect('back')
 							 		return res
 							 	})
 							 	removeContact({id:val.kontak_id}, (res) => {
 							 		return res
 							 	})
+							 } else {
+							 	return res.redirect('back')
 							 }
 						})
 					})
@@ -79,7 +82,8 @@ router.post('/kontak/group', async (req, res, next) => await postContact(req.bod
 		})
 	})
 	
-	await res.redirect('/kontak')
+	return await res.redirect('back')
+	
 }))
 router.get('/kontak/delete/:id', async (req, res, next) => {
 	await getGroupsDetailWithContact({c_id:req.params.id}, async (result) => {
