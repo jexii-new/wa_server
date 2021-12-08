@@ -41,7 +41,7 @@ block content
                   a(class="btn btn-primary", href="/campaign/content/delete/#{broadcast.k_id}") Hapus
                     i(class="fas fa-trash-alt m-2")
 
-
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
     script(type="text/javascript").
       window.onload = function() {
         if(!window.location.hash) {
@@ -49,5 +49,15 @@ block content
           window.location.reload();
         }
       }
+      $(document).ready(function () {
+        $('#checkBtn').click(function() {
+          checked = $("input[type=checkbox]:checked").length;
+
+          if(!checked) {
+            alert("You must check at least one checkbox.");
+            return false;
+          }
+        });
+      });
 
 

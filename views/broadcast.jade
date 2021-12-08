@@ -13,7 +13,7 @@ block content
         br
         br
         -for(var i = 0;i<groups.length;i++){
-          input(type="checkbox", class="form-check-input", value="#{groups[i]['g_id']}", name="groups", style="display:inline-block", required="true") 
+          input(type="checkbox", class="form-check-input", value="#{groups[i]['g_id']}", name="groups", style="display:inline-block") 
           label(for='group', class="form-check-label") #{groups[i]['nama']}
           br
         -}
@@ -37,7 +37,7 @@ block content
         br
         label Jeda Waktu Antar Pesan (dalam detik)
           input(type="text", name="second", value="30", required="true") 
-        button(class="btn btn-primary", type='submit', data-transition='fade', data-theme='c') Buat Siaran
+        button(class="btn btn-primary", type='submit', data-transition='fade', data-theme='c', id="checkBtn") Buat Siaran
           i(class="fas fa-paper-plane m-2")
 
 
@@ -59,13 +59,25 @@ block content
                     i(class="fas fa-trash-alt m-2")
 
 
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
     script(type="text/javascript").
-      
+
+        $(document).ready(function () {
+          $('#checkBtn').click(function() {
+            checked = $("input[type=checkbox]:checked").length;
+
+            if(!checked) {
+              alert("You must check at least one checkbox.");
+              return false;
+            }
+          });
+        });
         window.onload = function() {
           if(!window.location.hash) {
             window.location = window.location + '#loaded';
             window.location.reload();
           }
         }
+
 
 
