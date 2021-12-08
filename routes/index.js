@@ -58,6 +58,7 @@ router.post('/kontak', async (req, res, next) =>{
 	}
 })
 router.post('/kontak/group', async (req, res, next) => await postContact(req.body, async (valContact) =>  {
+	console.log(req.headers.host, 'llllllllllllll')
 	await postGroupsDetails({groups:req.body.group, contacts:valContact.insertId, validate:true}, async (val)=> {
 		await getSettingGroupById(req.body.group, async (result) => {
 			await result.filter(async val => {
@@ -70,6 +71,7 @@ router.post('/kontak/group', async (req, res, next) => await postContact(req.bod
 							 		return res
 							 	})
 							 	removeContact({id:val.kontak_id}, (res) => {
+							 		res.redirect('back')
 							 		return res
 							 	})
 							 } else {

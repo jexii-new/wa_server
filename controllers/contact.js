@@ -5,6 +5,7 @@ var axios = require('axios')
 
 let {connection} = require('../conn');
 var {getGroupsDetailWithContact, editGroupDetails} = require('./group')
+var {getProfile} = require('./setting')
 
 const postContact = async (data, cb) => {
 	console.log(data)
@@ -74,7 +75,9 @@ const getContact = async (cb) => {
 }
 
 const sendContactVerify=async (number, cb)=> {
-	await axios.post('http://localhost:7000/wa/send-bulk', {contact:`${number}`, message:'silahkan ketik daftar untuk menverifikasi'}).then(results => cb(results)).catch(err => err)
+	getProfile(async({domain}) => {
+		await axios.post(`${domain}/wa/send-bulk`, {contact:`${number}`, message:'silahkan ketik daftar untuk menverifikasi'}).then(results => cb(results)).catch(err => err)
+	})
 }
 
 const verifyContact=async(number, cb)=>{
