@@ -8,10 +8,10 @@ async function job(url){
 	
     var task = cron.schedule('*/ * * * *', () =>  {   
     	let time = {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}
-    	getProfile(async ({domain, active}) => {
-    		if(domain != undefined){
+    	getProfile(async (result) => {
+    		if(result != undefined){
 
-	    		domain = domain == undefined ? 'null' : domain
+	    		let domain = result == undefined ? 'null' : result.domain
 	    		axios.get(`${domain}/wa/status`).then(status => {
 	    			
 	    			if(!status){
