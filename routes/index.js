@@ -329,7 +329,11 @@ router.get('/broadcast/:group_id', (req, res, next) => getGroupById(req.params.g
 
 router.post('/broadcast', async (req, res, next) => {
 	if(req.body.groups == undefined || null){
-		return res.redirect('back')
+		getGroup(async (result) => {
+			getBroadcast(async (resBroadcast) => {
+				return await res.render('broadcast', {status:403, message:'Wajib Memilih Grup', groups:result, broadcasts:resBroadcast})
+			})
+		})
 	}
 	// if(Array.isArray(req.body.groups)){
 	// 	await req.body.groups.filter(val => {
