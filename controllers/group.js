@@ -103,7 +103,7 @@ const getGroupsDetailWithContact = async ({c_id}, cb) => {
 }
 
 const getGroupsDetailsById = async (id,cb) => {
-	var query = connection.query(`SELECT *,grup_details.date as g_d_date, grups.nama AS nama_grup, grup_details.id as g_d_id, grups.id AS g_id, kontaks.id AS k_id FROM grups INNER JOIN grup_details ON grups.id = grup_id INNER JOIN kontaks ON grup_details.kontak_id = kontaks.id WHERE grups.id = ${id}`, function (error, results, fields) {
+	var query = connection.query(`SELECT *,grup_details.date as g_d_date, grups.nama AS nama_grup, grup_details.id as g_d_id, grups.id AS g_id, kontaks.id AS k_id FROM grups INNER JOIN grup_details ON grups.id = grup_id INNER JOIN kontaks ON grup_details.kontak_id = kontaks.id WHERE grups.id = ${id} AND status_grup=true`, function (error, results, fields) {
 	  	if (error) throw error;
 	  	
 	  	cb(results)
