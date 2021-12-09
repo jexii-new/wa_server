@@ -25,18 +25,21 @@ async function job(url){
 								getGroupsDetailsById(val.grup_id, async (res) => {
 									if(res.length > 0) {
 									    await res.filter(async(vals) => {
-								  			let sapaan = vals.sapaan == null || undefined ? " " : vals.sapaan
-								  			let message = val['pesan'].replace(/@nama/g, vals.nama).replace(/@sapaan/g, sapaan)
-											let userDate = new Date(vals.g_d_date)
-											let userDateFuture  = userDate.setHours(userDate.getHours() + parseInt(val['nilai']))
-											let userDateForChecking = new Date(userDateFuture).toLocaleTimeString([],time)
-											let dateNow = new Date().toLocaleTimeString([], time)
-									    	
-									    	if(dateNow == userDateForChecking){
-							  					
+									    	if(vals.status_grup == true){
 									    		
-									  			await axios.post(`${domain}/wa/send-bulk`, {contact:vals.nomor, message}).then(results => {}).catch(err => err)
-									  		}
+									  			let sapaan = vals.sapaan == null || undefined ? " " : vals.sapaan
+									  			let message = val['pesan'].replace(/@nama/g, vals.nama).replace(/@sapaan/g, sapaan)
+												let userDate = new Date(vals.g_d_date)
+												let userDateFuture  = userDate.setHours(userDate.getHours() + parseInt(val['nilai']))
+												let userDateForChecking = new Date(userDateFuture).toLocaleTimeString([],time)
+												let dateNow = new Date().toLocaleTimeString([], time)
+										    	
+										    	if(dateNow == userDateForChecking){
+								  					
+										    		
+										  			await axios.post(`${domain}/wa/send-bulk`, {contact:vals.nomor, message}).then(results => {}).catch(err => err)
+										  		}
+									    	}
 									    })
 									}
 								})
@@ -48,24 +51,27 @@ async function job(url){
 
 									if(res.length > 0) {
 									    await res.filter(async(vals) => {
+									    	if(vals.status_grup == true){
+									    		
+									  			let sapaan = vals.sapaan == null || undefined ? " " : vals.sapaan
+									  			let message = val['pesan'].replace(/@nama/g, vals.nama).replace(/@sapaan/g, sapaan)
+												let userDate = new Date(vals.g_d_date)
+												let userDateFuture  = userDate.setMinutes(userDate.getMinutes() + parseInt(val['nilai']))
+												let userDateForChecking = new Date(userDateFuture).toLocaleTimeString([],time)
+												let dateNow = new Date().toLocaleTimeString([], time)
+												
+										    	if(dateNow == userDateForChecking){
+										    		
+										    		
+										  			await axios.post(`${domain}/wa/send-bulk`, {contact:vals.nomor, message}).then(results => {}).catch(err => err)
+								  					
+								  					await postCampaignDetail({kontak_id:vals.kontak_id, campaign_id:val.k_id}, (res) => {
+								  						
+								  					})
+										  		} 
+									    	}
 											
 
-								  			let sapaan = vals.sapaan == null || undefined ? " " : vals.sapaan
-								  			let message = val['pesan'].replace(/@nama/g, vals.nama).replace(/@sapaan/g, sapaan)
-											let userDate = new Date(vals.g_d_date)
-											let userDateFuture  = userDate.setMinutes(userDate.getMinutes() + parseInt(val['nilai']))
-											let userDateForChecking = new Date(userDateFuture).toLocaleTimeString([],time)
-											let dateNow = new Date().toLocaleTimeString([], time)
-											
-									    	if(dateNow == userDateForChecking){
-									    		
-									    		
-									  			await axios.post(`${domain}/wa/send-bulk`, {contact:vals.nomor, message}).then(results => {}).catch(err => err)
-							  					
-							  					await postCampaignDetail({kontak_id:vals.kontak_id, campaign_id:val.k_id}, (res) => {
-							  						
-							  					})
-									  		} 
 									    })
 									}
 								})
@@ -75,18 +81,21 @@ async function job(url){
 								getGroupsDetailsById(val.grup_id, async (res) => {
 									if(res.length > 0) {
 									    await res.filter(async(vals) => {
-									    	let sapaan = vals.sapaan == null || undefined ? "" : vals.sapaan
-									    	let message = val['pesan'].replace(/@nama/g, vals.nama).replace(/@sapaan/g, sapaan)
-											let userDate = new Date(vals.g_d_date)
-											let userDateFuture  = userDate.setDate(userDate.getDate() + parseInt(val['nilai']))
-											let userDateForChecking = new Date(userDateFuture).toLocaleTimeString([],time)
-											let dateNow = new Date().toLocaleTimeString([], time)
-									    	
-									    	if(dateNow == userDateForChecking){
-							  					
+									    	if(vals.status_grup == true){
+									    		
+										    	let sapaan = vals.sapaan == null || undefined ? "" : vals.sapaan
+										    	let message = val['pesan'].replace(/@nama/g, vals.nama).replace(/@sapaan/g, sapaan)
+												let userDate = new Date(vals.g_d_date)
+												let userDateFuture  = userDate.setDate(userDate.getDate() + parseInt(val['nilai']))
+												let userDateForChecking = new Date(userDateFuture).toLocaleTimeString([],time)
+												let dateNow = new Date().toLocaleTimeString([], time)
+										    	
+										    	if(dateNow == userDateForChecking){
+								  					
 
-									  			await axios.post(`${domain}/wa/send-bulk`, {contact:vals.nomor, message}).then(results => {}).catch(err => err)
-									  		}
+										  			await axios.post(`${domain}/wa/send-bulk`, {contact:vals.nomor, message}).then(results => {}).catch(err => err)
+										  		}
+									    	}
 									    })
 									}
 								})
