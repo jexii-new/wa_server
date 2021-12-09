@@ -26,8 +26,8 @@ async function job(url){
 									if(res.length > 0) {
 									    await res.filter(async(vals) => {
 									    	if(vals.status_grup == true){
-									    		
-									  			let sapaan = vals.sapaan == null || undefined ? " " : vals.sapaan
+
+									  			let sapaan = vals.sapaan == null || undefined ? "." : vals.sapaan
 									  			let message = val['pesan'].replace(/@nama/g, vals.nama).replace(/@sapaan/g, sapaan)
 												let userDate = new Date(vals.g_d_date)
 												let userDateFuture  = userDate.setHours(userDate.getHours() + parseInt(val['nilai']))
@@ -52,8 +52,8 @@ async function job(url){
 									if(res.length > 0) {
 									    await res.filter(async(vals) => {
 									    	if(vals.status_grup == true){
-									    		
-									  			let sapaan = vals.sapaan == null || undefined ? " " : vals.sapaan
+
+									  			let sapaan = vals.sapaan == null || undefined ? "." : vals.sapaan
 									  			let message = val['pesan'].replace(/@nama/g, vals.nama).replace(/@sapaan/g, sapaan)
 												let userDate = new Date(vals.g_d_date)
 												let userDateFuture  = userDate.setMinutes(userDate.getMinutes() + parseInt(val['nilai']))
@@ -82,8 +82,8 @@ async function job(url){
 									if(res.length > 0) {
 									    await res.filter(async(vals) => {
 									    	if(vals.status_grup == true){
-									    		
-										    	let sapaan = vals.sapaan == null || undefined ? "" : vals.sapaan
+
+										    	let sapaan = vals.sapaan == null || undefined ? "." : vals.sapaan
 										    	let message = val['pesan'].replace(/@nama/g, vals.nama).replace(/@sapaan/g, sapaan)
 												let userDate = new Date(vals.g_d_date)
 												let userDateFuture  = userDate.setDate(userDate.getDate() + parseInt(val['nilai']))
