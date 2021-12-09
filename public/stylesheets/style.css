@@ -105,7 +105,11 @@ input[type=submit]:hover {
   body.login {
     width: 100% !important;
     }
+  .form-profile {
+    width: 100% !important;
   }
+
+}
 
 html,
 body.login {
