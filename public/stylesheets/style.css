@@ -1,3 +1,17 @@
+html,
+body.login {
+  height: 100%;
+
+}
+body.login {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height:100%;
+  margin: auto;
+  width:40%;
+
+}
 * {
   box-sizing: border-box;
 }
@@ -107,6 +121,7 @@ input[type=submit]:hover {
     padding:0 !important;
     margin:0 !important;
     }
+    
   .form-profile {
     width: 100% !important;
   }
@@ -120,20 +135,6 @@ input[type=submit]:hover {
 
 }
 
-html,
-body.login {
-  height: 100%;
-
-}
-body.login {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  height:100%;
-  margin: auto;
-  width:40%;
-
-}
 .form-signin {
   width: 100%;
   padding:30px;
