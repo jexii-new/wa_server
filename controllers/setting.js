@@ -90,11 +90,10 @@ const login = async (username, password, cb) => {
 	let query = connection.query(`SELECT * FROM owner WHERE username='${username}'`, function (error, results, fields) {
 	  	if (error) throw error;
 	  	if(results.length == 0){
-	  		return cb(false)
+	  		return cb({status:403, success:false, message:'Username / password yang anda masukan salah'})
 	  	}
 		bcrypt.compare(password, results[0]['password'], function(err, result) {
-			console.log(result)
-			cb(result)
+	  		return cb({status:403, success:false, message:'Username / password yang anda masukan salah'})
 		});  	
 
 	});	

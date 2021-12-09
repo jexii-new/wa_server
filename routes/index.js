@@ -387,8 +387,9 @@ router.get('/logout', (req, res, next) => {
 })
 router.post('/login', (req, res, next) => {
 	login(req.body.username, req.body.password, (result) => {
-		if(result == false){
-			res.redirect('/login')
+		console.log(result,'resutllllll')
+		if(result.success == false){
+			res.render('login', {status:403, message:result.message})
 		} else {
 			req.session.login = true
 			res.redirect('/')
@@ -404,15 +405,18 @@ router.get('/register', (req, res, next) => {
 		}
 	})
 })
+
 router.post('/register', (req, res, next) => {
 	axios.get(`https://lisensi.ruasdigital.id/api/setting?product_code=${req.body.product_code}&licence=${req.body.lisensi}&domain=${req.body.domain}`)
 	.then(result => {
-		console.log(result)
 		register(req.body.username, `${req.body.nomor}@whatsapp.net`, req.body.password, req.body.domain, req.body.lisensi, req.body.product_code,(result) => {
+		console.log(result, 'rrrrrr')
 			res.redirect('/login')
 		})
 	})
-	.catch(err => console.log(err))
+	.catch(err => {
+		res.render('register', {url:req.protocol + '://' + req.headers.host, status:401, message:err.response.data.errors.check})
+	})
 
 })
 
