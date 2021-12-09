@@ -415,6 +415,9 @@ router.post('/register', (req, res, next) => {
 		})
 	})
 	.catch(err => {
+		if(err.response.data.errors.check == undefined){
+			res.render('register', {url:req.protocol + '://' + req.headers.host, status:401, message:'Kode Lisensi Tidak Terdaftar'})
+		}
 		res.render('register', {url:req.protocol + '://' + req.headers.host, status:401, message:err.response.data.errors.check})
 	})
 
