@@ -40,3 +40,17 @@ html
        p(class="mt-5 mb-3 text-muted") &copy; 2021-2022 
 
 
+    script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
+    script(type="text/javascript").
+      if (window.matchMedia('(max-width: 768px)').matches)
+      {
+          $('#login').css('width','100%')
+          $('.form-signin').css('margin-top','190px')
+          $('.form-signin').css('padding','0px')
+          $('.form-signin').css('border','none')
+      } else {
+          $('#login').css('width','40%')
+          $('.form-signin').css('margin-top','0px')
+      }
+
+
