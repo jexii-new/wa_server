@@ -93,7 +93,11 @@ const login = async (username, password, cb) => {
 	  		return cb({status:403, success:false, message:'Username / password yang anda masukan salah'})
 	  	}
 		bcrypt.compare(password, results[0]['password'], function(err, result) {
-	  		return cb({status:403, success:false, message:'Username / password yang anda masukan salah'})
+			if(result == false){
+	  			return cb({status:403, success:false, message:'Username / password yang anda masukan salah'})
+			} else {
+	  			return cb({status:200, success:true, message:'Berhasil Login'})
+			}
 		});  	
 
 	});	
