@@ -98,7 +98,7 @@ async function run () {
 		  })
 	})
 
-    // conn.clearAuthInfo();
+    conn.clearAuthInfo();
     await conn.connect ()
     conn.autoReconnect = ReconnectMode.onConnectionLost
 	conn.on("close", async ({ reason, isReconnecting }) => {
