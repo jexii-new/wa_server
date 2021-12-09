@@ -328,22 +328,25 @@ router.get('/broadcast/:group_id', (req, res, next) => getGroupById(req.params.g
 }))
 
 router.post('/broadcast', async (req, res, next) => {
+	console.log(req.body.groups)
 	if(req.body.groups == undefined || null){
-		getGroup(async (result) => {
-			getBroadcast(async (resBroadcast) => {
+		await getGroup(async (result) => {
+			await getBroadcast(async (resBroadcast) => {
 				return await res.render('broadcast', {status:403, message:'Wajib Memilih Grup', groups:result, broadcasts:resBroadcast})
 			})
 		})
+	} else {
+		await postBroadcast({groups:req.body.groups, messages:req.body.messages, url:req.headers.host, second:req.body.second}, (result) => result)
+	// }
+
+	await res.redirect('back')
+		
 	}
 	// if(Array.isArray(req.body.groups)){
 	// 	await req.body.groups.filter(val => {
 	// 		postBroadcast({groups:val, messages:req.body.messages, url:req.headers.host, second:req.body.second}, (result) => result)
 	// 	})
 	// } else {
-		await postBroadcast({groups:req.body.groups, messages:req.body.messages, url:req.headers.host, second:req.body.second}, (result) => result)
-	// }
-
-	await res.redirect('back')
 })
 
 // owner
