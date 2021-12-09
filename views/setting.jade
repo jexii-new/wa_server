@@ -64,14 +64,14 @@ block content
     if owner.session == null || owner.session == ''
       div(style="margin:8px; display:flex; flex-direction:column; align-items:center; justify-content:space-between")
         h1  QR Code 
-        img(src="/wa/qr", width=300px")
+        img(src="/wa/qr", width="300px")
         b agar dapat terhubung scan qr tersebut 
 
     if owner.session == null || owner.session == ''
       script(type="text/javascript").
         setTimeout(() => {
           window.location.reload()
-        }, 5000)
+        }, 4000)
 
 
 
