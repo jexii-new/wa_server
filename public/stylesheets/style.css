@@ -104,11 +104,14 @@ input[type=submit]:hover {
 @media (max-width: 576px) { 
   body.login {
     width: 100% !important;
-    margin-top:20px !important;
     }
   .form-profile {
     width: 100% !important;
+  }
 
+  .form-signin {
+    margin-top:20px !important;
+    width: 100% !important;
   }
 
 }
