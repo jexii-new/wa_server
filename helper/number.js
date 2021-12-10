@@ -1,6 +1,7 @@
 
 
 const numberVerify = (val, char, cb) => {
+    val = val.replace(/-/g, '').replace(/ /g, '')
     const valSplit = val.split('')
     let res = []
     if(valSplit[0] == '6'){
@@ -23,5 +24,6 @@ const numberVerify = (val, char, cb) => {
     }
     
 }
+
  
 module.exports = numberVerify
