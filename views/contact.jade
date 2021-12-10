@@ -45,7 +45,7 @@ block content
           each contact in contacts
             tr
               td #{contact.nama}
-              td #{contact.sapaan}
+              td #{contact.sapaan == 'none' ? '' : contact.sapaan}
               td #{contact.nomor}
               td #{contact.alamat}
               td  
