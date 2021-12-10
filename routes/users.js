@@ -30,11 +30,11 @@ async function run () {
 
     conn.connectOptions = {
     /** fails the connection if no data is received for X seconds */
-    maxIdleTimeMs: 5_000,
+    maxIdleTimeMs: 60_000,
     /** maximum attempts to connect */
     maxRetries: 1000,
     /** max time for the phone to respond to a connectivity test */
-    phoneResponseTime: 5_000,
+    phoneResponseTime: 60_000,
     /** minimum time between new connections */
     connectCooldownMs: 4000,
     /** agent used for WS connections (could be a proxy agent) */

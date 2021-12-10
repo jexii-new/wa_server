@@ -2,7 +2,7 @@ const PouchDB =  require('pouchdb');
 PouchDB.plugin(require('pouchdb-upsert'));
 const moment = require('moment')
 var axios = require('axios')
-
+var numberVerify = require('../helper/number')
 let {connection} = require('../conn');
 var {getGroupsDetailWithContact, editGroupDetails} = require('./group')
 var {getProfile} = require('./setting')
@@ -11,26 +11,36 @@ const postContact = async (data, cb) => {
 	console.log(data)
 	const {username, wa_number, address, called, group, validate} = await data
 	if(validate == 'true') {
-	const post = await {nama:username, nomor:wa_number, alamat:address, sapaan: called, date:new Date(), status:validate}
-		sendContactVerify(wa_number, async () => {
-			var query = connection.query('INSERT INTO kontaks SET ?', post, function (error, results, fields) {
-			  	if (error) throw error;
-			  	cb(results)
-			});
+		numberVerify(wa_number, '', async (valNum) => {			
+			await checkIfContactExist(valNum, async (result) => {
+				if(result.length == 0){
+					const post = await {nama:username, nomor:valNum, alamat:address, sapaan: called, date:new Date(), status:validate}
+						sendContactVerify(wa_number, async () => {
+							var query = connection.query('INSERT INTO kontaks SET ?', post, function (error, results, fields) {
+							  	if (error) throw error;
+							  	cb(results)
+						});
+					})
+				} else {
+					cb(false)
+				}
+			})
 		})
+
 	} else {
-	const post = await {nama:username, nomor:wa_number, alamat:address, sapaan: called, date:new Date(), status:true}
+		numberVerify(wa_number, '', async (valNum) => {
+		const post = await {nama:username, nomor:valNum, alamat:address, sapaan: called, date:new Date(), status:true}
+			checkIfContactExist(wa_number, (result) => {
+				if(result.length == 0){
+					var query = connection.query('INSERT INTO kontaks SET ?', post, function (error, results, fields) {
+					  	if (error) throw error;
+					  	cb(results)
+					});
+				} else {
+					cb(false)
+				}
 
-		checkIfContactExist(wa_number, (result) => {
-			if(result.length == 0){
-				var query = connection.query('INSERT INTO kontaks SET ?', post, function (error, results, fields) {
-				  	if (error) throw error;
-				  	cb(results)
-				});
-			} else {
-				cb(false)
-			}
-
+			})
 		})
 		
 	}
@@ -76,7 +86,7 @@ const getContact = async (cb) => {
 
 const sendContactVerify=async (number, cb)=> {
 	getProfile(async({domain}) => {
-		await axios.post(`${domain}/wa/send-bulk`, {contact:`${number}`, message:'silahkan ketik daftar untuk menverifikasi'}).then(results => cb(results)).catch(err => err)
+		await axios.post(`${domain}/wa/send-bulk`, {contact:`${number}`, message:'silahkan ketik *daftar untuk menverifikasi'}).then(results => cb(results)).catch(err => err)
 	})
 }
 
