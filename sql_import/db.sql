@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 06 Des 2021 pada 14.01
+-- Waktu pembuatan: 10 Des 2021 pada 18.09
 -- Versi server: 10.4.19-MariaDB
 -- Versi PHP: 7.4.19
 
@@ -39,7 +39,7 @@ CREATE TABLE `grups` (
 --
 
 INSERT INTO `grups` (`id`, `nama`, `deskripsi`, `code`) VALUES
-(25, 'vip', 'lklj', 'test');
+(25, 'Grup1', 'contoh grup', 'g1');
 
 -- --------------------------------------------------------
 
@@ -55,13 +55,6 @@ CREATE TABLE `grup_details` (
   `status_grup` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data untuk tabel `grup_details`
---
-
-INSERT INTO `grup_details` (`id`, `kontak_id`, `grup_id`, `date`, `status_grup`) VALUES
-(219, 157, 25, '2021-12-06 17:49:43', '1');
-
 -- --------------------------------------------------------
 
 --
@@ -76,13 +69,6 @@ CREATE TABLE `kampanyes` (
   `nilai` varchar(255) NOT NULL,
   `createdAt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `kampanyes`
---
-
-INSERT INTO `kampanyes` (`id`, `grup_id`, `pesan`, `tipe`, `nilai`, `createdAt`) VALUES
-(229, 25, '@sapaan @nama\r\n \r\n[PESAN ANDA DI SINI]\r\n----------\r\n \r\nAnda menerima pesan ini karena telah terdaftar di *@grup*, Anda dapat berhenti kapan saja dengan mengetikkan *@unsubscribe#@code*.  ', 'broadcast', '0', '2021-12-06 16:01:00');
 
 -- --------------------------------------------------------
 
@@ -123,13 +109,6 @@ CREATE TABLE `kontaks` (
   `sapaan` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data untuk tabel `kontaks`
---
-
-INSERT INTO `kontaks` (`id`, `nama`, `alamat`, `status`, `nomor`, `date`, `sapaan`) VALUES
-(157, 'imron', 'kendal', 1, '6285882843337', '2021-12-06 17:49:43', 'Pak');
-
 -- --------------------------------------------------------
 
 --
@@ -151,13 +130,6 @@ CREATE TABLE `owner` (
   `product_code` varchar(255) NOT NULL,
   `lisensi` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `owner`
---
-
-INSERT INTO `owner` (`id`, `nama`, `nomor`, `status`, `subscribe`, `unsubscribe`, `session`, `api_key`, `password`, `domain`, `username`, `product_code`, `lisensi`) VALUES
-(713, NULL, '6285882843337@whatsapp.net', NULL, 'daftar', 'stop', NULL, NULL, '$2b$10$JQTCc28W5gh/lA1/k3LQJ.Hpp/RkkonLsuxLjPldo3bLqQ0lRMLay', 'http://localhost:5000', 'imron', '0002', 'vzTIlEl57TgXuin');
 
 -- --------------------------------------------------------
 
@@ -236,7 +208,7 @@ ALTER TABLE `grups`
 -- AUTO_INCREMENT untuk tabel `grup_details`
 --
 ALTER TABLE `grup_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=220;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=222;
 
 --
 -- AUTO_INCREMENT untuk tabel `kampanyes`
@@ -254,13 +226,13 @@ ALTER TABLE `kampanyes_detail`
 -- AUTO_INCREMENT untuk tabel `kontaks`
 --
 ALTER TABLE `kontaks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
 
 --
 -- AUTO_INCREMENT untuk tabel `owner`
 --
 ALTER TABLE `owner`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=714;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `setting_grups`
