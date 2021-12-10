@@ -14,7 +14,9 @@ __dirname = path.resolve();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+	getProfile(({domain}) => {
+  		res.render('index', { title: 'Express', domain });
+	})
 });
 
 // contacts
@@ -433,8 +435,8 @@ router.post('/register', (req, res, next) => {
 		})
 	})
 	.catch(err => {
-		if(err.response.data.errors.check == undefined){
-			res.render('register', {url:req.protocol + '://' + req.headers.host, status:401, message:'Kode Lisensi Tidak Terdaftar'})
+		if(err.response.data.errors == undefined){
+			return res.render('register', {url:req.protocol + '://' + req.headers.host, status:401, message:'Kode Lisensi Tidak Terdaftar'})
 		}
 		res.render('register', {url:req.protocol + '://' + req.headers.host, status:401, message:err.response.data.errors.check})
 	})

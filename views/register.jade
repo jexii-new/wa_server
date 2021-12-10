@@ -7,10 +7,12 @@ html
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
 
   body(class="login", class="w-75", style="justify-content:center; align-content:center; padding:10px; height:110vh")
+    a(href="https://produk.ruasdigital.id/")
      img(class="mb-4 d-xl-none d-md-block", src="/wa/logo", width="100", height="52", style="display:block; position:absolute; top:20px; right:20px")
    div(class="d-none d-xl-block d-md-none")
      br
-     img(class="mb-4", src="/wa/logo", width="100", height="52", style="display:block; top:20px; left:20px")
+     a(href="https://produk.ruasdigital.id/")
+      img(class="mb-4", src="/wa/logo", width="100", height="52", style="display:block; top:20px; left:20px")
      h5 RUAS WA AUTO FOLLOWUP 
      p Selamat datang
      p Terimakasih telah membeli produk RUAS WA AUTO FOLLOWUP,
@@ -30,9 +32,13 @@ html
        label(for="inputPassword" ,class="sr-only") Buat Password
        input(type="password", id="inputPassword", class="form-control", placeholder="Password", name="password", required)
        input(type="hidden", class="form-control", value="#{url}" placeholder="URL", name="domain")
-       label Kode Produk
+       label Kode Produk sebelah 
+        i 
+          a(href="https://produk.ruasdigital.id/") kode produk dapat ditemukan di sini
        input(type="text" ,id="inputCode", class="form-control", placeholder="Kode Produk", name="product_code")
-       label Lisensi
+       label Lisensi 
+       i 
+          a(href="https://produk.ruasdigital.id/") lisensi dapat ditemukan di sini
        input(type="text" ,id="inputLisensi", class="form-control", placeholder="Lisensi", name="lisensi")
 
        br
