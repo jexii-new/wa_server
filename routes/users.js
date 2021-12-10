@@ -124,7 +124,7 @@ async function run () {
 			let a = message.message.conversation.split('#')
 
 			await getProfile(async (profile) => {
-				if(reg == profile.subscribe.toLowerCase()){
+				if(reg == 'daftar'){
 					let contacts = message.key.remoteJid.substr(0, message.key.remoteJid.length - 15);
 					await checkIfContactExist(contacts, async(result) => {
 						if(result.length > 0){
