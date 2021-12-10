@@ -26,17 +26,21 @@ html
          div(class="alert alert-danger",role="alert")
           i(class="fas fa-paper-plane m-2") 
           span #{message}
-       label(for="inputEmail" , class="sr-only") Buat username
+       b
+        label(for="inputEmail" , class="sr-only") Buat username
        input(type="text" ,id="inputEmail", class="form-control", placeholder="Username", name="username")
 
-       label(for="inputPassword" ,class="sr-only") Buat Password
+       b
+        label(for="inputPassword" ,class="sr-only") Buat Password
        input(type="password", id="inputPassword", class="form-control", placeholder="Password", name="password", required)
        input(type="hidden", class="form-control", value="#{url}" placeholder="URL", name="domain")
-       label Kode Produk sebelah 
-        i 
+       b
+        label Kode Produk sebelah 
+       i 
           a(href="https://produk.ruasdigital.id/") kode produk dapat ditemukan di sini
        input(type="text" ,id="inputCode", class="form-control", placeholder="Kode Produk", name="product_code")
-       label Lisensi 
+       b
+        label Lisensi 
        i 
           a(href="https://produk.ruasdigital.id/") lisensi dapat ditemukan di sini
        input(type="text" ,id="inputLisensi", class="form-control", placeholder="Lisensi", name="lisensi")
