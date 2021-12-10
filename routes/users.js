@@ -113,7 +113,7 @@ async function run () {
 	    if(!isReconnecting){
 	    	setTimeout(() => {
 	    		conn.connect()
-	    	}, 60000)
+	    	}, 15 * 60000)
 	    }
   	});
 
