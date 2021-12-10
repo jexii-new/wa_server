@@ -234,6 +234,8 @@ router.get('/campaign/:id', (req, res, next) => getGroupById(req.params.id, asyn
 	})
 }))
 
+router.get('/campaign', (req, res, next) => getGroup(async (result) => await res.render('campaign_detail', {groups:result})))
+
 router.post('/campaign/edit',async (req, res, next) => {
 	await editCampaignById(req.body, async (result) => {
 		await res.redirect('back')

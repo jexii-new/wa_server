@@ -37,7 +37,7 @@ block content
 
     br
   if campaigns
-    div.container-fluid .table-responsive
+    div(class="container-fluid table-responsive")
       script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
       script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js')
       script(src='//cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js')
@@ -62,7 +62,7 @@ block content
                       form(action="/campaign/edit", method="post")
                         textarea(type="text", name="pesan") #{campaign.pesan}
                         input(type="hidden", name="id", value="#{campaign.k_id}")
-                        button(type="submit", class="btn btn-primary") Ubah
+                        button(type="submit", class="btn btn-primary") Simpan
                           i(class="fas fa-edit m-2")
 
                     td 
