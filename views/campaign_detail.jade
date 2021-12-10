@@ -10,7 +10,6 @@ block content
           tr
             th(scope="col") Nama Grup
             th(scope="col" class="w-20") Detail
-            th(scope="col") Aksi
         tbody
           each group in groups
             tr
@@ -18,10 +17,7 @@ block content
               td 
                 a(class="btn btn-primary" style="margin-right:4px" href="/campaign/#{group.g_id}") Kampanye
                   i(class="fas fa-inbox m-2")
-                  
-              td  
-                a(class="btn btn-primary" href="/group/delete/#{group.g_id}") Hapus
-                  i(class="fas fa-trash-alt m-2")
+                
 
 
     script(type="text/javascript").
