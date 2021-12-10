@@ -60,7 +60,7 @@ router.post('/kontak', async (req, res, next) =>{
 router.post('/kontak/group', async (req, res, next) => await postContact(req.body, async (valContact) =>  {
 	console.log(req.body.url)
 	if(valContact == false){
-		return res.redirect(`${req.body.url[0]}?status=failed`)
+		return res.redirect(`${req.body.url}?status=failed`)
 	} else {
 
 		await postGroupsDetails({groups:req.body.group, contacts:valContact.insertId, validate:true}, async (val)=> {
@@ -71,15 +71,15 @@ router.post('/kontak/group', async (req, res, next) => await postContact(req.bod
 							result.filter(val => {
 								 if(val.nomor == req.body.wa_number){
 								 	removeContactInGroupDetail({groups:val.g_d_id}, (res) => {
-								 		res.redirect(`${req.body.url[0]}?status=success`)
+								 		res.redirect(`${req.body.url}?status=success`)
 								 		return res
 								 	})
 								 	removeContact({id:val.kontak_id}, (res) => {
-								 		res.redirect(`${req.body.url[0]}?status=success`)
+								 		res.redirect(`${req.body.url}?status=success`)
 								 		return res
 								 	})
 								 } else {
-								 	return res.redirect(`${req.body.url[0]}?status=success`)
+								 	return res.redirect(`${req.body.url}?status=success`)
 								 }
 							})
 						})
@@ -88,7 +88,7 @@ router.post('/kontak/group', async (req, res, next) => await postContact(req.bod
 			})
 		})
 		
-		return await res.redirect(`${req.body.url[0]}/?status=success`)
+		return await res.redirect(`${req.body.url}/?status=success`)
 	}
 
 	
