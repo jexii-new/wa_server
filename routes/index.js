@@ -364,7 +364,7 @@ router.post('/setting/edit', (req, res, next) => putProfile(4, req.body, ()=>res
 router.get('/setting/group/:group_id', async (req, res, next) => getGroup(async (result, val) => {
 	getGroupById(req.params.group_id, (resultGroupId) => {
 		getProfile((resProf) => {
-			getSettingGroupById(resultGroupId[0].id, (resGroupsDetail) => res.render('setting_group', {setting_groups:resGroupsDetail, groups:result,url:req.protocol + 's://' + req.headers.host, group:resultGroupId[0], grup_id: req.params.grup_id}))
+			getSettingGroupById(resultGroupId[0].id, (resGroupsDetail) => res.render('setting_group', {setting_groups:resGroupsDetail, groups:result,url:req.protocol + 's://' + req.headers.host, group:resultGroupId[0], grup_id: req.params.group_id}))
 		})
 	})
 }))
