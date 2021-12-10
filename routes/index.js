@@ -450,4 +450,7 @@ router.get('/example/kontak', (req, res,next) => {
 	res.sendFile(__dirname + '/public/example/kontak-import.xlsx')
 })
 
+// tutorial
+router.get('/tutorial', (req, res, next) => res.render('tutorial'))
+
 module.exports = router;
