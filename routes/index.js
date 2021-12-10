@@ -62,7 +62,7 @@ router.post('/kontak/group', async (req, res, next) => await postContact(req.bod
 	if(valContact == false){
 		return res.redirect(`${req.body.url[0]}?status=failed`)
 	} else {
-		
+
 		await postGroupsDetails({groups:req.body.group, contacts:valContact.insertId, validate:true}, async (val)=> {
 			await getSettingGroupById(req.body.group, async (result) => {
 				await result.filter(async val => {
@@ -88,7 +88,7 @@ router.post('/kontak/group', async (req, res, next) => await postContact(req.bod
 			})
 		})
 		
-		return await res.redirect(`${req.body.url}/?status=success`)
+		return await res.redirect(`${req.body.url[0]}/?status=success`)
 	}
 
 	
