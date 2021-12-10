@@ -17,10 +17,13 @@ const auth = async (req, res, next) => {
 					// console.log(result, 'rerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr')
 				})
 				.catch((err) => {
-					console.log(err, 'errrrrrrrrrrrrrrrrrrrrrrrrrrrrr')
-					deleteProfile((res) => {})
-					req.session.destroy(() => console.log('lisensi salah'))
 
+					if(err.response.data.status == 401){
+						deleteProfile((res) => {})
+						req.session.destroy(() => console.log('lisensi salah'))
+					} else {
+						next()
+					}
 				})
 			}
 		})
