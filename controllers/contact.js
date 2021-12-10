@@ -15,7 +15,7 @@ const postContact = async (data, cb) => {
 			await checkIfContactExist(valNum, async (result) => {
 				if(result.length == 0){
 					const post = await {nama:username, nomor:valNum, alamat:address, sapaan: called, date:new Date(), status:validate}
-						sendContactVerify(wa_number, async () => {
+						await sendContactVerify(valNum, async () => {
 							var query = connection.query('INSERT INTO kontaks SET ?', post, function (error, results, fields) {
 							  	if (error) throw error;
 							  	cb(results)
@@ -30,7 +30,7 @@ const postContact = async (data, cb) => {
 	} else {
 		numberVerify(wa_number, '', async (valNum) => {
 		const post = await {nama:username, nomor:valNum, alamat:address, sapaan: called, date:new Date(), status:true}
-			checkIfContactExist(wa_number, (result) => {
+			checkIfContactExist(valNum, (result) => {
 				if(result.length == 0){
 					var query = connection.query('INSERT INTO kontaks SET ?', post, function (error, results, fields) {
 					  	if (error) throw error;
@@ -86,7 +86,7 @@ const getContact = async (cb) => {
 
 const sendContactVerify=async (number, cb)=> {
 	getProfile(async({domain}) => {
-		await axios.post(`${domain}/wa/send-bulk`, {contact:`${number}`, message:'silahkan ketik *daftar untuk menverifikasi'}).then(results => cb(results)).catch(err => err)
+		await axios.post(`${domain}/wa/send-bulk`, {contact:`${number}`, message:'silahkan ketik *daftar* untuk menverifikasi'}).then(results => cb(results)).catch(err => err)
 	})
 }
 
