@@ -1,13 +1,19 @@
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
-  // host     : 'localhost',
-  // user     : 'autoresp_wa',
-  // password : 'tahubladak',
-  // database : 'autoresp_wa'
+  // DATABASE
+
+  // HOSTNAME / DATABASE SERVER
   host     : 'localhost',
-  user     : 'root',
+  
+  // NAMA DATABASE
+  database : ''
+  
+  // USERNAME DATABASE
+  user     : '',
+  
+  // PASSWORD DATABASE
   password : '',
-  database : 'wa_services'
+
 });
 
 const connect = async ()=>{
