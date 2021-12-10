@@ -110,6 +110,11 @@ async function run () {
 	      	})
 	      	conn.clearAuthInfo();
 	    } 
+	    if(!isReconnecting){
+	    	setTimeout(() => {
+	    		conn.connect()
+	    	}, 60000)
+	    }
   	});
 
 
