@@ -166,7 +166,7 @@ router.get('/group/delete/:id', async (req, res, next) => {
 router.get('/groups/detail/:id', (req, res, next) => getGroupsDetailsById(req.params.id,async (result, val) => {
 		await getContact(async (contacts) => {
 			await getGroupById(req.params.id, async (resGroupsDetail) => {
-		 		await res.render('group_detail', {groups:resGroupsDetail, contacts, groups_detail:result, url:req.headers.host})
+		 		await res.render('group_detail', {groups:resGroupsDetail, contacts, groups_detail:result, url:req.headers.host, grup_id:req.params.id})
 			})
 		})
 }))
