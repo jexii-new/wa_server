@@ -1,7 +1,6 @@
 const PouchDB =  require('pouchdb')
 let {connection} = require('../conn')
 const uuidAPIKey = require('uuid-apikey');
-const bcrypt = require('bcrypt');
 
 const postProfile = async (data,id, cb) => {
 	let api_key = await uuidAPIKey.create()
@@ -92,27 +91,20 @@ const login = async (username, password, cb) => {
 	  	if(results.length == 0){
 	  		return cb({status:403, success:false, message:'Username / password yang anda masukan salah'})
 	  	}
-		bcrypt.compare(password, results[0]['password'], function(err, result) {
-			if(result == false){
-	  			return cb({status:403, success:false, message:'Username / password yang anda masukan salah'})
-			} else {
-	  			return cb({status:200, success:true, message:'Berhasil Login'})
-			}
-		});  	
-
+		if(results[0]['password'] != password){
+  			return cb({status:403, success:false, message:'Username / password yang anda masukan salah'})
+		} else {
+  			return cb({status:200, success:true, message:'Berhasil Login'})
+		}
 	});	
 }
 
 const register = async (username, nomor, password,domain, lisensi, code, cb) => {
 	nomor = 'kosong'
-		bcrypt.genSalt(10, function(err, salt) {
-		    bcrypt.hash(password, salt, function(err, hash) {
-			let query = connection.query(`INSERT INTO owner SET ?`,{product_code:code, lisensi, username:username, nomor, password:hash, subscribe:'daftar', unsubscribe:'stop', domain}, function (error, results, fields) {
-			  	if (error) throw error;	
-			  	cb(results)
-		    });
-		});
-	});	
+		let query = connection.query(`INSERT INTO owner SET ?`,{product_code:code, lisensi, username:username, nomor, password:password, subscribe:'daftar', unsubscribe:'stop', domain}, function (error, results, fields) {
+		  	if (error) throw error;	
+		  	cb(results)
+	    });	
 }
 
 module.exports = {register, reconnectProfile, deleteProfile, postProfile, getProfile, getProfileById, removeProfile, putProfile, isApiExist, login};
