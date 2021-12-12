@@ -1,0 +1,60 @@
+extends layout
+
+block content
+  div(class="container-fluid")
+    br
+    h4 Member #{groups[0].nama}
+
+    form(action='/groups/detail',method='post', enctype="multipart/form-data")
+      input(type='hidden', name="groups", value="#{groups[0].id}")
+      label(for='kontak') tambahkan kontak yang ada  ke group ini
+         br
+         select(id="xxx", name="contacts")
+            -for(var i = 0;i<contacts.length;i++){
+              option(value="#{contacts[i]['id']}") #{contacts[i]['nama']}
+            -}
+      button(type='submit',class="mb-4 btn btn-primary") Tambah
+        i(class="fas fa-paper-plane m-2")
+
+    br
+    form(action='/groups/detail',method='post', enctype="multipart/form-data")
+      label(for='kontak') import kontak dari excel ke group ini
+          br
+          br
+          input(type='file', name="file")
+      button(type='submit',class="btn btn-primary", style="margin-right:3px") Import Excel
+        i(class="fas fa-file-upload m-2")
+
+      a(class="btn btn-danger", href="/example/grup") Unduh Template
+        i(class="fas fa-download m-2")
+
+
+  
+  div(class="container-fluid table-responsive")
+    if groups_detail
+      table(class="table table-striped table-light table-bordered")
+        thead
+          tr
+            th(scope="col") Nama
+            th(scope="col") Nomor
+            th(scope="col") Sapaan
+            th(scope="col" class="w-20") Alamat
+            th(scope="col" class="w-20") TGL REG
+            th(scope="col" class="w-20") Status
+            th(scope="col") Aksi
+        tbody
+          each detail in groups_detail
+            tr
+              td #{detail.nama}
+              td #{detail.nomor}
+              td #{detail.sapaan}
+              td #{detail.alamat}
+              td #{detail.g_d_date.toLocaleString()}
+              td #{detail.status_grup == 0 ? 'inactive' : 'active'}
+              td  
+                a(class="btn btn-primary", href="/group_detail/contact/#{detail.g_d_id}") Hapus
+                  i(class="fas fa-trash-alt m-2")
+
+
+
+            

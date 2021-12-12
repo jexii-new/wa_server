@@ -1,0 +1,12 @@
+<form style="border: 2px solid rgba(100,100,100,0.2); display: flex; justify-content: center; align-items: center; flex-direction: column; padding: 8px; width: 30%" method="post" action="http://localhost:5000/kontak/group"><div style=" background-color: #dff0d8; border-color: #d6e9c6; color: #3c763d; padding:10px; display: none; width: 96%" id="alert">Terimakasih telah mendaftar, silakan check WA Anda</div><div style="background-color: #fcf8e3; border-color: #faebcc; color: #8a6d3b; padding:10px; width:96%; display:none;" id="alert-red">Gagal, Anda Sudah Terdaftar</div><select name="called" style="width:100%; height:42px; margin:8px; border:none; background: rgba(100,100,100,0.2); text-align: center; border-radius: 4px;"><option value="none" selected>Sapaan</option><option value="Pak">Pak</option><option value="Bu">Bu</option><option value="Kak">Kak</option></select><input style="width:100%; height:42px; margin:8px; border:none; background: rgba(100,100,100,0.2); text-align: center; border-radius: 4px; " placeholder="Nama Anda" name="username"/><input style="width:100%; height:42px; margin:8px; border:none; background: rgba(100,100,100,0.2); text-align: center; border-radius: 4px; " type="hidden" name="group" value="27"/><input style="width:100%; height:42px; margin:8px; border:none; background: rgba(100,100,100,0.2); text-align: center; border-radius: 4px; " placeholder="Nomor Wa" name="wa_number"/><!-- <input style="width:100%; height:42px; margin:8px; border:none; background: rgba(100,100,100,0.2); text-align: center; border-radius: 4px; " placeholder="Alamat" name="address"/>--><input style="width:100%; height:42px; margin:8px; border:none; background: rgba(100,100,100,0.2); text-align: center; border-radius: 4px; " type="hidden" name="validate" value="true"/><br><input type="text" name="url" id="url"><button style="width: 100%; height: 42px; border:none; margin:3px; background:blue; color:white;">Daftar</button>
+	<script type="text/javascript"> 
+		let url = document.getElementById('url'); 
+		url.value = window.location.protocol + '//' + window.location.host; 
+		console.log(url); 
+		const params = new URL(location.href).searchParams;
+		const status = params.get('status'); 
+		console.log(status)
+		if(status == 'success') document.getElementById('alert').style.display = 'block'; 
+		if(status == 'failed') document.getElementById('alert-red').style.display = 'block' 
+	</script>
+</form>

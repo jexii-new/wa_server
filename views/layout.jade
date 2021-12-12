@@ -1,0 +1,40 @@
+doctype html
+html
+  head
+    title= 'Wa Server'
+    link(rel = "icon", href ="/wa/logo", type = "image/x-icon")
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css", rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1", crossorigin="anonymous")
+    link(href="//cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.css", rel="stylesheet")
+    link(rel="stylesheet", href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css", integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p", crossorigin="anonymous")
+    link(rel="preconnect", href="https://fonts.googleapis.com")
+    link(rel="preconnect", href="https://fonts.gstatic.com", crossorigin)
+
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+  body
+  script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js", integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM", crossorigin="anonymous")
+
+  navbar(class="navbar navbar-expand-sm navbar-light bg-primary")
+   div(class="container-fluid")
+    a(href="https://produk.ruasdigital.id/")
+      img(class="navbar-brand", src="/wa/logo", width="100", height="")
+    button(class="navbar-toggler" ,type="button" ,data-bs-toggle="collapse" ,data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" ,aria-expanded="false" ,aria-label="Toggle navigation")
+      span(class="navbar-toggler-icon")
+    div(class="collapse navbar-collapse", id="navbarNavAltMarkup")
+      div(class="navbar-nav")
+        a(style="color:white",href="/group", class="nav-link active" aria-current="page") Grup
+          i(class="fas fa-layer-group p-2")
+        a(style="color:white",href="/kontak", class="nav-link active" aria-current="page") Kontak 
+          i(class="fas fa-users p-2")
+        a(style="color:white",href="/campaign", class="nav-link active" aria-current="page") Kampanye
+          i(class="fas fa-phone-volume p-2")
+        a(style="color:white",href="/broadcast", class="nav-link active" aria-current="page") Siaran
+          i(class="fas fa-bullhorn p-2")
+        a(style="color:white",href="/tutorial", class="nav-link active" aria-current="page") Tutorial
+          i(class="fas fa-basketball-ball p-2")
+        a(style="color:white", href="/setting", class="nav-link active" aria-current="page") Profil
+          i(class="fas fa-id-badge p-2")
+        a(style="color:white", href="/logout", class="nav-link active" aria-current="page") Logout
+          i(class="fas fa-sign-out-alt p-2")
+
+  block content

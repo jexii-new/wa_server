@@ -1,0 +1,41 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css", rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1", crossorigin="anonymous")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+  body(class="login", id="login")
+      a(href="https://produk.ruasdigital.id/")
+         img(class="mb-4", src="/wa/logo", width="100", height="52", style="position:absolute; left:30px; top:30px")
+   form(class="form-signin w-75", style="margin-top:100px; border:1px solid rgba(100,100,100,0.3)", action="/login", method="post")
+       div(style="display:flex; justify-content:space-between; align-items:center; width:100%;")
+         h1(class="h3 mb-3, font-weight-normal", style="display:block" ) Login
+       p(style="font-size:14px") untuk melanjutkan silahkan Login
+       if status
+        div(class="alert alert-danger",role="alert")
+         i(class="fas fa-paper-plane m-2") 
+         span(style="font-size:13px") #{message}
+       label(for="inputEmail" , class="sr-only") username
+       input(type="text" ,id="inputEmail", class="form-control", placeholder="Username", name="username")
+       label(for="inputPassword" ,class="sr-only") Password
+       input(type="password", id="inputPassword", class="form-control", placeholder="Password", name="password", required)
+       br
+       button(class="btn btn-lg btn-success btn-block w-100", type="submit") Masuk
+       p(class="mt-5 mb-3 text-muted") &copy; 2021-2022 
+
+  script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js")
+  script(type="text/javascript").
+    if (window.matchMedia('(max-width: 768px)').matches)
+    {
+        $('#login').css('width','100%')
+        $('.form-signin').css('margin-top','190px')
+        $('.form-signin').css('padding','0px')
+        $('.form-signin').css('border','none')
+    } else {
+        $('#login').css('width','40%')
+
+        $('.form-signin').css('margin-top','60px')
+    }
+
+

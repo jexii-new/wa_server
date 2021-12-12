@@ -1,0 +1,81 @@
+extends layout
+
+block content
+  div(class="container-fluid", style="display:flex; justify-content:center")
+    if owner.session != undefined && owner.session.length > 0
+      if owner.status == 'active'
+        h1 Aktif
+      if owner.status == 'inactive'
+        h1 Off
+
+    if owner.session != undefined && owner.session.length > 0
+        form(action='/setting/edit',method='post', class="form-profile" style="margin:8px; width:60%; display:flex; justify-content:center; flex-direction:column; flex-wrap:wrap")
+          br
+          h4 Profile
+          div(style="margin:8px; display:flex; justify-content:space-around")
+            div(style="width:100%")
+              label Nomor
+              br
+              input(style="width:98%", id='wa_number',type='text', disabled, value='#{owner.nomor}',name='wa_number')
+            div(style="width:100%")
+              label Nama
+              input(style="width:98%", id='username',type='text', disabled,value='#{owner.nama}',name='username')
+              input(style="width:98%", id='wa_number',type='hidden',value='#{owner.id}',name='id')
+          div(style="margin:8px; display:flex; justify-content:space-around")
+            div(style="width:100%")
+              label Domain
+              br
+              input(style="width:98%", id='username',type='text', disabled,value='#{owner.domain}',name='domain')
+            div(style="width:100%")
+              label API Key
+              input(style="width:98%", id='wa_number',type='text', disabled, value='#{owner.api_key}',name='api_key')
+          div(style="margin:8px; display:flex; justify-content:space-around")
+            if owner.status == true 
+            div(style="width:100%")
+              label Status
+              input(style="width:98%", id='unsubscribe',disabled, type='text',value='#{owner.status == true ? "active" : "inactive"}',name='status')
+            div(style="width:100%")
+              label Lisensi
+              input(style="width:98%", id='unsubscribe',disabled, type='text',value='#{owner.lisensi}',name='lisensi')
+          div(style="margin:8px; display:flex; justify-content:flex-start")
+            a(style="width:50%; height:44px;",href="/start" class="btn btn-danger") reset
+              i(class="fas fa-power-off m-2")
+            if owner.status == false && owner.session 
+              div(style="width:100%")
+                label Session
+                input(style="width:98%", id='unsubscribe',disabled, type='text',value='offline',name='status')
+              div(style="width:100%")
+                label Lisensi
+                input(style="width:98%", id='unsubscribe',disabled, type='text',value='#{owner.lisensi}',name='lisensi')
+          br
+          h5 Ubah Kode Daftar dan Kode Berhenti 
+          div(style="margin:8px; display:flex; justify-content:space-around")
+            div(style="width:100%")
+              label Subscribe
+              input(style="width:98%", id='subscribe',type='text',value='#{owner.subscribe}',name='subscribe')  
+            div(style="width:100%")
+              label Unsubscribe
+              input(style="width:98%", id='unsubscribe',type='text',value='#{owner.unsubscribe}',name='unsubscribe')
+          div(style="margin:8px; display:flex; justify-content:flex-start")
+            button(style="width:50%; height:48px; margin-right:8px",type="submit", class="btn btn-primary") Simpan Setelan
+              i(class="fas fa-save m-2")
+
+
+    if owner.session == null || owner.session == ''
+      div(style="margin:8px; display:flex; flex-direction:column; align-items:center; justify-content:space-between")
+        h1  QR Code 
+        img(src="/wa/qr", width="300px")
+        p 1. Silahkan scan barcode tersebut menggunakan Whatsapp Mobile Anda.
+        i(style="color:red") Whatsapp Multi Device Beta tidak dapat dipakai
+        p 2. Tunggu beberapa saat, sampai muncul status active. 
+
+    if owner.session == null || owner.session == ''
+      script(type="text/javascript").
+        setTimeout(() => {
+          window.location.reload()
+        }, 4000)
+
+
+
+
+

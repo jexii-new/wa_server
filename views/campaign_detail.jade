@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  div(class="container-fluid table-responsive")
+    br
+    br
+    if groups
+      table(class="table table-striped table-light table-bordered")
+        thead
+          tr
+            th(scope="col") Nama Grup
+            th(scope="col" class="w-20") Detail
+        tbody
+          each group in groups
+            tr
+              td #{group.nama}
+              td 
+                a(class="btn btn-primary" style="margin-right:4px" href="/campaign/#{group.g_id}") Kampanye
+                  i(class="fas fa-inbox m-2")
+                
+
+
+    script(type="text/javascript").
+      window.onload = function() {
+        if(!window.location.hash) {
+          window.location = window.location + '#loaded';
+          window.location.reload();
+        }
+      }
+      
+
+
