@@ -25,5 +25,5 @@ const numberVerify = (val, char, cb) => {
     }
     
 }
-
+numberVerify('085882843337', '', (val) => console.log(val))
 module.exports = numberVerify
