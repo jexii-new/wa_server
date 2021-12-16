@@ -10,7 +10,7 @@ var axios = require('axios')
 var { WAConnection, MessageType, ReconnectMode } = require('@adiwajshing/baileys')
 __dirname = path.resolve();
 
-const {getProfile, putProfile, postProfile, removeProfile, isApiExist, reconnectProfile} = require('../controllers/setting')
+const {getProfile, putProfile, postProfile, removeProfile, isApiExist, reconnectProfile, connect} = require('../controllers/setting')
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -48,7 +48,7 @@ async function run () {
 	} 
 
 
-   await conn.on ('open', async () => {
+   await conn.on('open', async () => {
 	    // save credentials whenever updated
 	    console.log (`credentials updated!`)
 	    const authInfo = await conn.base64EncodedAuthInfo() // get all the auth info we need to restore this session
@@ -98,9 +98,35 @@ async function run () {
 		  })
 	})
 
+    conn.on('connecting', () => {
+    	console.log('testing');
+    	reconnectProfile((res) => {
+    		console.log(res)
+    	})
+    })
+
+    // conn.on('ws-close', ({state}) => {
+    // 	console.log('connecting');
+    // 	conn.connect()
+    // })
+
+    conn.on('connection-phone-change', ({connected}) => {
+    	console.log('phone changessss')
+    	if(!connected){
+	    	reconnectProfile((res) => {
+	    		console.log(res)
+	    	})
+    	} else {
+    		connect((res) => {
+    			console.log(res)
+    		})
+    	}
+    })
     conn.clearAuthInfo();
     await conn.connect ()
     conn.autoReconnect = ReconnectMode.onConnectionLost
+
+
 	conn.on("close", async ({ reason, isReconnecting }) => {
 	    console.log(  "Disconnected because " + reason + ", reconnecting: " + isReconnecting )
 	    if (!isReconnecting && reason == "invalid_session") {
@@ -110,6 +136,11 @@ async function run () {
 	      	})
 	      	conn.clearAuthInfo();
 	    } 
+	    if(isReconnecting){
+	    	reconnectProfile((res) => {
+	    		console.log(res)
+	    	})
+	    }
 	    if(!isReconnecting){
 	    	setTimeout(() => {
 	    		conn.connect()

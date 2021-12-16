@@ -49,6 +49,17 @@ const reconnectProfile = async (cb) => {
 	})
 }
 
+const connect = async (cb) => {
+	await getProfile(async res => {
+		
+		if(res != undefined){
+			await connection.query(`UPDATE owner SET status=true WHERE id=${res.id}`, (err, results, field) => {
+				cb(results)
+			})
+		}
+	})	
+}
+
 const deleteProfile = async (cb) => {
 	await getProfile(async res => {
 		
@@ -107,6 +118,6 @@ const register = async (username, nomor, password,domain, lisensi, code, cb) => 
 	    });	
 }
 
-module.exports = {register, reconnectProfile, deleteProfile, postProfile, getProfile, getProfileById, removeProfile, putProfile, isApiExist, login};
+module.exports = {register, reconnectProfile, deleteProfile,connect, postProfile, getProfile, getProfileById, removeProfile, putProfile, isApiExist, login};
 
 
