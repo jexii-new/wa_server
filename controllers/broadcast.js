@@ -3,17 +3,29 @@ const {connection} = require('../conn')
 const {getProfile} = require('./setting')
 const {getGroupById} = require('./group')
 const {postCampaign, postDetailCampaign, isCampaignDetailExist} = require('./campaign')
+<<<<<<< HEAD
 const postBroadcast = async ({groups, messages, url, second, judul},cb) => {
 	second =second.split(',').map(x=>+x);
 
 	if(Array.isArray(groups)){
 		groups.filter(val => {
 			postCampaign({groups:val, messages, type:'broadcast', value:0, judul}, (resultCampaign) => {
+=======
+const postBroadcast = async ({groups, messages, url, second},cb) => {
+	
+	if(Array.isArray(groups)){
+		groups.filter(val => {
+			postCampaign({groups:val, messages, type:'broadcast', value:0}, (resultCampaign) => {
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 
 			})
 		})
 	} else {
+<<<<<<< HEAD
 		postCampaign({groups, messages, type:'broadcast', value:0, judul}, (resultCampaign) => {
+=======
+		postCampaign({groups, messages, type:'broadcast', value:0}, (resultCampaign) => {
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 
 		})
 	}
@@ -25,6 +37,7 @@ const postBroadcast = async ({groups, messages, url, second, judul},cb) => {
 		  		if (error) throw error;
 		  		console.log(results)
 		  		await getProfile( async (result) => {
+<<<<<<< HEAD
 			  			var i = 0;      
 			  			var s = 0;        
 						async function myLoop() {         
@@ -42,6 +55,20 @@ const postBroadcast = async ({groups, messages, url, second, judul},cb) => {
 								if(i + 1 == second.length) s = -1;
 								console.log(second.length, s, i)
 							}, second.length > 1 ? second[s] * 1000 : second * 1000 )
+=======
+			  			var i = 0;              
+						async function myLoop() {         
+			  				await setTimeout(async function() {   
+			  					let sapaan = results[i].sapaan == null || undefined || 'none' ? "." : results[i].sapaan
+			  					console.log(sapaan, 'sapaannnnnnnnnnnnnnnn')
+			  					let msg = messages.replace(/@nama/g, results[i].c_nama).replace(/@sapaan/g, sapaan).replace(/@unsubscribe/g, result.unsubscribe).replace(/@code/g, results[i].code).replace(/@grup/g, results[i].nama_grup)
+				  				await axios.post(`${domain}/wa/send-bulk`, {contact:results[i].nomor, message: `${msg}`}).then(results => {}).catch(err => err)
+								i++;                    
+								if (i < results.length) {           
+								    await myLoop();             
+								}                       
+							}, second * 1000)
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 						}
 						myLoop()
 		  				

@@ -7,9 +7,13 @@ block content
     br
     form(action='/broadcast',method='post')
       div(class="form-group form-check")
+<<<<<<< HEAD
         input(type="hidden", name="groups", value="#{groups[0]['id']}")
         label(for='message') Judul
           input(style="",type="text", name="judul")
+=======
+        input(type="hidden", name="groups", value="#{groups[0]['g_id']}")
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
         label(for='message') Pesan
            textarea(id='messages',type='text',name='messages') @sapaan @nama
              | 
@@ -31,14 +35,20 @@ block content
         table(class="table table-striped table-light table-bordered")
           thead
             tr
+<<<<<<< HEAD
               th(scope="col") Judul
+=======
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
               th(scope="col") TGL
               th(scope="col") Pesan
               th(scope="col") Aksi
           tbody
             each broadcast in broadcasts
               tr
+<<<<<<< HEAD
                 td #{broadcast.judul}
+=======
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
                 td #{broadcast.createdAt.toLocaleString()}
                 td #{broadcast.pesan}
                 td 

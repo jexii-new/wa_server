@@ -333,7 +333,10 @@ router.get('/broadcast', ({body}, res, next) => getGroup(async (result) => {
 
 router.get('/broadcast/:group_id', (req, res, next) => getGroupById(req.params.group_id, async (result) => {
 	getBroadcastById(req.params.group_id, async (resBroadcast) => {
+<<<<<<< HEAD
 		console.log(result)
+=======
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 		await res.render('detail_broadcast', {groups:result, broadcasts:resBroadcast})
 	})
 }))
@@ -347,7 +350,11 @@ router.post('/broadcast', async (req, res, next) => {
 			})
 		})
 	} else {
+<<<<<<< HEAD
 		await postBroadcast({groups:req.body.groups, messages:req.body.messages, url:req.headers.host, second:req.body.second, judul:req.body.judul}, (result) => result)
+=======
+		await postBroadcast({groups:req.body.groups, messages:req.body.messages, url:req.headers.host, second:req.body.second}, (result) => result)
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 	// }
 
 	await res.redirect('back')

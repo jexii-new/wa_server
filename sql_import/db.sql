@@ -3,7 +3,11 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+<<<<<<< HEAD
 -- Waktu pembuatan: 21 Des 2021 pada 12.18
+=======
+-- Waktu pembuatan: 10 Des 2021 pada 18.09
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 -- Versi server: 10.4.19-MariaDB
 -- Versi PHP: 7.4.19
 
@@ -39,8 +43,12 @@ CREATE TABLE `grups` (
 --
 
 INSERT INTO `grups` (`id`, `nama`, `deskripsi`, `code`) VALUES
+<<<<<<< HEAD
 (27, 'honey', '....', 'h1'),
 (28, 'test', 'lkjlj', 'test123');
+=======
+(25, 'Grup1', 'contoh grup', 'g1');
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 
 -- --------------------------------------------------------
 
@@ -56,6 +64,7 @@ CREATE TABLE `grup_details` (
   `status_grup` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+<<<<<<< HEAD
 --
 -- Dumping data untuk tabel `grup_details`
 --
@@ -67,6 +76,8 @@ INSERT INTO `grup_details` (`id`, `kontak_id`, `grup_id`, `date`, `status_grup`)
 (231, 165, 28, '2021-12-21 14:42:59', '1'),
 (232, 167, 28, '2021-12-21 14:43:30', '1');
 
+=======
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 -- --------------------------------------------------------
 
 --
@@ -75,7 +86,10 @@ INSERT INTO `grup_details` (`id`, `kontak_id`, `grup_id`, `date`, `status_grup`)
 
 CREATE TABLE `kampanyes` (
   `id` int(2) NOT NULL,
+<<<<<<< HEAD
   `judul` varchar(255) DEFAULT NULL,
+=======
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
   `grup_id` int(11) NOT NULL,
   `pesan` text NOT NULL,
   `tipe` varchar(255) NOT NULL,
@@ -83,6 +97,7 @@ CREATE TABLE `kampanyes` (
   `createdAt` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+<<<<<<< HEAD
 --
 -- Dumping data untuk tabel `kampanyes`
 --
@@ -135,6 +150,8 @@ INSERT INTO `kampanyes` (`id`, `judul`, `grup_id`, `pesan`, `tipe`, `nilai`, `cr
 (309, 'test ', 28, '\r\n[halo,hai,test]\r\n----------\r\n \r\nAnda menerima pesan ini karena telah terdaftar di *@grup*, Anda dapat berhenti kapan saja dengan mengetikkan *@unsubscribe#@code*.', 'broadcast', '0', '2021-12-21 18:11:03'),
 (310, 'test 123', 28, '[halo,hai,test]\r\n----------\r\n \r\nAnda menerima pesan ini karena telah terdaftar di *@grup*, Anda dapat berhenti kapan saja dengan mengetikkan *@unsubscribe#@code*.', 'broadcast', '0', '2021-12-21 18:12:35');
 
+=======
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 -- --------------------------------------------------------
 
 --
@@ -156,6 +173,7 @@ INSERT INTO `kampanyes_detail` (`id`, `kontak_id`, `campaign_id`) VALUES
 (329, 147, 214),
 (330, 145, 213),
 (331, 145, 218),
+<<<<<<< HEAD
 (332, 145, 217),
 (347, 162, 240),
 (348, 162, 241),
@@ -164,6 +182,9 @@ INSERT INTO `kampanyes_detail` (`id`, `kontak_id`, `campaign_id`) VALUES
 (351, 163, 247),
 (352, 163, 245),
 (353, 163, 263);
+=======
+(332, 145, 217);
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 
 -- --------------------------------------------------------
 
@@ -181,6 +202,7 @@ CREATE TABLE `kontaks` (
   `sapaan` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+<<<<<<< HEAD
 --
 -- Dumping data untuk tabel `kontaks`
 --
@@ -192,6 +214,8 @@ INSERT INTO `kontaks` (`id`, `nama`, `alamat`, `status`, `nomor`, `date`, `sapaa
 (166, 'asrofi', 'getas', 1, '6281311661479', '2021-12-21 14:30:05', 'Pak'),
 (167, 'la', 'kendal', 1, '6288216692275', '2021-12-21 14:43:30', 'Pak');
 
+=======
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 -- --------------------------------------------------------
 
 --
@@ -214,6 +238,7 @@ CREATE TABLE `owner` (
   `lisensi` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+<<<<<<< HEAD
 --
 -- Dumping data untuk tabel `owner`
 --
@@ -221,6 +246,8 @@ CREATE TABLE `owner` (
 INSERT INTO `owner` (`id`, `nama`, `nomor`, `status`, `subscribe`, `unsubscribe`, `session`, `api_key`, `password`, `domain`, `username`, `product_code`, `lisensi`) VALUES
 (3, 'Muhamad Imron', '6285882843337@s.whatsapp.net', '1', 'daftar', 'stop', '{\n	\"clientID\": \"JFEZlBLUftYCZHCTPGO+1A==\",\n	\"serverToken\": \"1@qMev7Pv19WxHW5VKP+hQ2OdLejbnOHa1rEUMtPxaxm4eYf23u/+5GiujerphdyE9z8kZSqwl5cQf6g==\",\n	\"clientToken\": \"U9NmNrzsw0kz81pK98AaYfaUTsEVpqSwk8VOCAnzNQw=\",\n	\"encKey\": \"aVRgzVwtcyK7lHBAdoJEHLcw3wIz6wAgEzQW3nJYrkM=\",\n	\"macKey\": \"rmPKng5dObpO3mxgBScxyDyCI/9pFXsP6nS2cxf1jzA=\"\n}', '6GPZQQ1-TN5MQCA-PT4GE98-12K12HT', 'imron123', 'http://localhost:5000', 'imron', '0002', '8OM9HRvTfKIuhqs');
 
+=======
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 -- --------------------------------------------------------
 
 --
@@ -292,37 +319,61 @@ ALTER TABLE `setting_grups`
 -- AUTO_INCREMENT untuk tabel `grups`
 --
 ALTER TABLE `grups`
+<<<<<<< HEAD
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+=======
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 
 --
 -- AUTO_INCREMENT untuk tabel `grup_details`
 --
 ALTER TABLE `grup_details`
+<<<<<<< HEAD
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=233;
+=======
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=222;
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 
 --
 -- AUTO_INCREMENT untuk tabel `kampanyes`
 --
 ALTER TABLE `kampanyes`
+<<<<<<< HEAD
   MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=311;
+=======
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=230;
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 
 --
 -- AUTO_INCREMENT untuk tabel `kampanyes_detail`
 --
 ALTER TABLE `kampanyes_detail`
+<<<<<<< HEAD
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=354;
+=======
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=347;
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 
 --
 -- AUTO_INCREMENT untuk tabel `kontaks`
 --
 ALTER TABLE `kontaks`
+<<<<<<< HEAD
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
+=======
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=160;
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 
 --
 -- AUTO_INCREMENT untuk tabel `owner`
 --
 ALTER TABLE `owner`
+<<<<<<< HEAD
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+=======
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 
 --
 -- AUTO_INCREMENT untuk tabel `setting_grups`

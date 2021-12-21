@@ -18,10 +18,17 @@ const auth = async (req, res, next) => {
 				})
 				.catch((err) => {
 					console.log(err)
+<<<<<<< HEAD
 					// if(err.response.data.status == 401){
 						deleteProfile((res) => {})
 						req.session.destroy(() => console.log('lisensi salah'))
 					// } 
+=======
+					if(err.response.data.status == 401){
+						deleteProfile((res) => {})
+						req.session.destroy(() => console.log('lisensi salah'))
+					}
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 				})
 			}
 		})

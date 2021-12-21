@@ -10,7 +10,11 @@ var axios = require('axios')
 var { WAConnection, MessageType, ReconnectMode } = require('@adiwajshing/baileys')
 __dirname = path.resolve();
 
+<<<<<<< HEAD
 const {getProfile, putProfile, postProfile, removeProfile, isApiExist, reconnectProfile, connect} = require('../controllers/setting')
+=======
+const {getProfile, putProfile, postProfile, removeProfile, isApiExist, reconnectProfile} = require('../controllers/setting')
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -48,7 +52,11 @@ async function run () {
 	} 
 
 
+<<<<<<< HEAD
    await conn.on('open', async () => {
+=======
+   await conn.on ('open', async () => {
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 	    // save credentials whenever updated
 	    console.log (`credentials updated!`)
 	    const authInfo = await conn.base64EncodedAuthInfo() // get all the auth info we need to restore this session
@@ -98,6 +106,7 @@ async function run () {
 		  })
 	})
 
+<<<<<<< HEAD
     conn.on('connecting', () => {
     	console.log('testing');
     	reconnectProfile((res) => {
@@ -127,6 +136,11 @@ async function run () {
     conn.autoReconnect = ReconnectMode.onConnectionLost
 
 
+=======
+    conn.clearAuthInfo();
+    await conn.connect ()
+    conn.autoReconnect = ReconnectMode.onConnectionLost
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 	conn.on("close", async ({ reason, isReconnecting }) => {
 	    console.log(  "Disconnected because " + reason + ", reconnecting: " + isReconnecting )
 	    if (!isReconnecting && reason == "invalid_session") {
@@ -136,11 +150,14 @@ async function run () {
 	      	})
 	      	conn.clearAuthInfo();
 	    } 
+<<<<<<< HEAD
 	    if(isReconnecting){
 	    	reconnectProfile((res) => {
 	    		console.log(res)
 	    	})
 	    }
+=======
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 	    if(!isReconnecting){
 	    	setTimeout(() => {
 	    		conn.connect()

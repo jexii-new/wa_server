@@ -27,7 +27,11 @@ async function job(url){
 									    await res.filter(async(vals) => {
 									    	if(vals.status_grup == true){
 
+<<<<<<< HEAD
 									  			let sapaan = vals.sapaan ==  'none' ? "." : vals.sapaan
+=======
+									  			let sapaan = vals.sapaan == null || undefined || 'none' ? "." : vals.sapaan
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 									  			let message = val['pesan'].replace(/@nama/g, vals.nama).replace(/@sapaan/g, sapaan)
 												let userDate = new Date(vals.g_d_date)
 												let userDateFuture  = userDate.setHours(userDate.getHours() + parseInt(val['nilai']))
@@ -53,7 +57,11 @@ async function job(url){
 									    await res.filter(async(vals) => {
 									    	if(vals.status_grup == true){
 
+<<<<<<< HEAD
 									  			let sapaan = vals.sapaan ==  'none' ? "." : vals.sapaan
+=======
+									  			let sapaan = vals.sapaan == null || undefined || 'none' ? "." : vals.sapaan
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 									  			let message = val['pesan'].replace(/@nama/g, vals.nama).replace(/@sapaan/g, sapaan)
 												let userDate = new Date(vals.g_d_date)
 												let userDateFuture  = userDate.setMinutes(userDate.getMinutes() + parseInt(val['nilai']))
@@ -83,7 +91,11 @@ async function job(url){
 									    await res.filter(async(vals) => {
 									    	if(vals.status_grup == true){
 
+<<<<<<< HEAD
 										    	let sapaan = vals.sapaan ==  'none' ? "." : vals.sapaan
+=======
+										    	let sapaan = vals.sapaan == null || undefined || 'none' ? "." : vals.sapaan
+>>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 										    	let message = val['pesan'].replace(/@nama/g, vals.nama).replace(/@sapaan/g, sapaan)
 												let userDate = new Date(vals.g_d_date)
 												let userDateFuture  = userDate.setDate(userDate.getDate() + parseInt(val['nilai']))
