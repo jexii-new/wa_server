@@ -7,7 +7,9 @@ block content
     br
     form(action='/campaign',method='post')
       input(type='hidden',value="#{groups[0]['id']}", name='groups')
-    
+      label(for='message') Judul
+        input(style="",type="text", name="judul")
+
       label(for='Hari') Waktu
          select(id="xxx", name="type")
           option(value="days") Hari
@@ -49,6 +51,7 @@ block content
           table#resultTable.table.table-hover.datatables
              thead
                 tr
+                  th(scope="col") Judul
                   th(scope="col") Nilai
                   th(scope="col") Waktu
                   th(scope="col") Pesan
@@ -56,6 +59,7 @@ block content
               tbody
                 for campaign in campaigns
                   tr
+                    td #{campaign.judul}
                     td #{campaign.nilai}
                     td #{campaign.tipe}
                     td 

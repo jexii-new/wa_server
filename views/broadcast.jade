@@ -15,12 +15,14 @@ block content
         br
         i Silakan centrang grup yang akan dipilih sebagai penerima siaran
         br
-        br
         -for(var i = 0;i<groups.length;i++){
           input(type="checkbox", class="form-check-input", value="#{groups[i]['g_id']}", name="groups", style="display:inline-block") 
           label(for='group', class="form-check-label") #{groups[i]['nama']}
           br
         -}
+        label Judul
+          input(type="text", name="judul")
+        br
         label(for='message', STYLE="display:inline-block") Pesan
            br
            textarea(required="true", id='messages',type='text',name='messages', style="width:500px; height:200px") @sapaan @nama
@@ -51,12 +53,14 @@ block content
           thead
             tr
               th(scope="col") TGL
+              th(scope="col") Judul
               th(scope="col") Pesan
               th(scope="col") Aksi
           tbody
             each broadcast in broadcasts
               tr
                 td #{broadcast.createdAt.toLocaleString()}
+                td #{broadcast.judul}
                 td #{broadcast.pesan}
                 td 
                   a(class="btn btn-primary", href="/campaign/content/delete/#{broadcast.k_id}") Hapus

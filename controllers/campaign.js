@@ -11,8 +11,8 @@ const removeCampaign = async (data, cb) => {
 	await dbs.remove(_id, _rev).then((res) => cb(res))
 }
 
-const postCampaign = async ({groups, messages, type, value},cb) => {
-	let post = {grup_id:groups, pesan:messages, tipe:type, nilai:value, createdAt:new Date()}
+const postCampaign = async ({groups, messages, type, value, judul},cb) => {
+	let post = {grup_id:groups, judul, pesan:messages, tipe:type, nilai:value, createdAt:new Date()}
 	var query = connection.query('INSERT INTO kampanyes SET ?', post, function (error, results, fields) {
 	  	if (error) throw error;
 	  	cb(results)
