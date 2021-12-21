@@ -6,10 +6,10 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   
   // NAMA DATABASE
-  database : '',
+  database : 'wa_services',
   
   // USERNAME DATABASE
-  user     : '',
+  user     : 'root',
   
   // PASSWORD DATABASE
   password : '',

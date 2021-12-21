@@ -49,7 +49,6 @@ const reconnectProfile = async (cb) => {
 	})
 }
 
-<<<<<<< HEAD
 const connect = async (cb) => {
 	await getProfile(async res => {
 		
@@ -61,8 +60,6 @@ const connect = async (cb) => {
 	})	
 }
 
-=======
->>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
 const deleteProfile = async (cb) => {
 	await getProfile(async res => {
 		
@@ -120,11 +117,7 @@ const register = async (username, nomor, password,domain, lisensi, code, cb) => 
 		  	cb(results)
 	    });	
 }
-
-<<<<<<< HEAD
 module.exports = {register, reconnectProfile, deleteProfile,connect, postProfile, getProfile, getProfileById, removeProfile, putProfile, isApiExist, login};
-=======
-module.exports = {register, reconnectProfile, deleteProfile, postProfile, getProfile, getProfileById, removeProfile, putProfile, isApiExist, login};
->>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
+
 
 

@@ -15,21 +15,15 @@ block content
         br
         i Silakan centrang grup yang akan dipilih sebagai penerima siaran
         br
-<<<<<<< HEAD
-=======
-        br
->>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
         -for(var i = 0;i<groups.length;i++){
           input(type="checkbox", class="form-check-input", value="#{groups[i]['g_id']}", name="groups", style="display:inline-block") 
           label(for='group', class="form-check-label") #{groups[i]['nama']}
           br
         -}
-<<<<<<< HEAD
         label Judul
           input(type="text", name="judul")
         br
-=======
->>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
+
         label(for='message', STYLE="display:inline-block") Pesan
            br
            textarea(required="true", id='messages',type='text',name='messages', style="width:500px; height:200px") @sapaan @nama
@@ -60,20 +54,14 @@ block content
           thead
             tr
               th(scope="col") TGL
-<<<<<<< HEAD
               th(scope="col") Judul
-=======
->>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
               th(scope="col") Pesan
               th(scope="col") Aksi
           tbody
             each broadcast in broadcasts
               tr
                 td #{broadcast.createdAt.toLocaleString()}
-<<<<<<< HEAD
                 td #{broadcast.judul}
-=======
->>>>>>> b778027af5504d6ffe4fb8b234ed4e07bbbe4a07
                 td #{broadcast.pesan}
                 td 
                   a(class="btn btn-primary", href="/campaign/content/delete/#{broadcast.k_id}") Hapus
