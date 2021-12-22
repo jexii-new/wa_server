@@ -11,7 +11,7 @@ block content
         label(for='message') Judul
           input(style="",type="text", name="judul")
         br
-        label(for='message') Pesan
+        label(for='message', style="width:500px") Pesan
            textarea(id='messages',type='text',name='messages') @sapaan @nama
              | 
              |[PESAN ANDA DI SINI]
@@ -22,7 +22,8 @@ block content
              |Anda menerima pesan ini karena telah terdaftar di *@grup*, Anda dapat berhenti kapan saja dengan mengetikkan *@unsubscribe#@code*.  
           br
         label Jeda Waktu Antar Pesan (dalam detik)
-          input(type="text", name="second", value="30") 
+          input(type="text", name="second", value="30", style="width:300px")
+        br 
         button(class="btn btn-primary", type='submit', data-transition='fade', data-theme='c') Buat Siaran
           i(class="fas fa-paper-plane m-2")
 
