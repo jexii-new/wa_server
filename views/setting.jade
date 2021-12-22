@@ -33,7 +33,7 @@ block content
             if owner.status == true 
             div(style="width:100%")
               label Status
-              input(style="width:98%", id='unsubscribe',disabled, type='text',value='#{owner.status == true ? "active" : "inactive"}',name='status')
+              input(style="width:98%; #{owner.status == true ? 'color:blue' : 'color:red'", id='unsubscribe',disabled, type='text',value='#{owner.status == true ? "active" : "Tidak Aktif"}',name='status')
             div(style="width:100%")
               label Lisensi
               input(style="width:98%", id='unsubscribe',disabled, type='text',value='#{owner.lisensi}',name='lisensi')
