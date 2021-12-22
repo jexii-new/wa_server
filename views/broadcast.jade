@@ -42,8 +42,8 @@ block content
         li(style="font-size:12px") @unsubscribe => Kode Text untuk berhenti berlangganan (unsubscribe)
         li(style="font-size:12px") @code => Kode Grup
         br
-        label Jeda Waktu Antar Pesan (dalam detik)
-          input(type="text", name="second", value="30", required="true") 
+        label Jeda Waktu Antar Pesan (dalam detik, gunakan koma untuk menambah variasi waktu)
+          input(type="text", name="second", value="30, 27, 42, 21", required="true") 
         button(class="btn btn-primary", type='submit', data-transition='fade', data-theme='c', id="checkBtn") Buat Siaran
           i(class="fas fa-paper-plane m-2")
 
