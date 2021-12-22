@@ -6,7 +6,7 @@ var moment = require('moment')
 var axios = require('axios')
 async function job(url){
 	
-    var task = cron.schedule('*/ * * * *', () =>  {   
+    var task = cron.schedule('*/1 * * * *', () =>  {   
     	let time = {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'}
     	getProfile(async (result) => {
     		if(result != undefined){
