@@ -12,6 +12,7 @@
     "cors": "^2.8.5",
     "date-fns": "^2.26.0",
     "debug": "~2.6.9",
+    "dns": "^0.2.2",
     "express": "~4.16.1",
     "express-fileupload": "^1.2.1",
     "express-session": "^1.17.2",

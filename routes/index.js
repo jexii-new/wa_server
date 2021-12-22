@@ -455,4 +455,5 @@ router.get('/example/kontak', (req, res,next) => {
 // tutorial
 router.get('/tutorial', (req, res, next) => res.render('tutorial'))
 
+router.get('/connection', (req, res, next) => res.render('no_connection'))
 module.exports = router;

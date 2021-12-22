@@ -3,28 +3,34 @@ var {getProfile, deleteProfile} = require('../controllers/setting')
 var axios = require('axios')
 
 const auth = async (req, res, next) => {
-	if(req.originalUrl == '/send-bulk' || req.originalUrl == '/logo' || req.originalUrl == '/start' || req.originalUrl == '/status' || req.originalUrl == '/kontak/group'){
+	if(req.originalUrl == '/send-bulk' || req.originalUrl == '/connection' || req.originalUrl == '/logo' || req.originalUrl == '/start' || req.originalUrl == '/status' || req.originalUrl == '/kontak/group'){
 		return next()
 	}
 
 	if(req.session.login == true){
-
-		await getProfile((results) => {
-			if(results != undefined){
-				const {product_code, lisensi, domain} = results
-				axios.get(`https://lisensi.ruasdigital.id/api/checking?product_code=${product_code}&licence=${lisensi}&domain=${domain}`)
-				.then(async result => {
-					// console.log(result, 'rerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr')
-				})
-				.catch((err) => {
-					console.log(err)
-					// if(err.response.data.status == 401){
-						deleteProfile((res) => {})
-						req.session.destroy(() => console.log('lisensi salah'))
-					// } 
+		require('dns').resolve('www.google.com', async function(err) {
+		  	if (err) {
+		     	return res.redirect('/connection')
+		  	} else {
+		     console.log("Connected");
+		     	await getProfile((results) => {
+				if(results != undefined){
+						const {product_code, lisensi, domain} = results
+						axios.get(`https://lisensi.ruasdigital.id/api/checking?product_code=${product_code}&licence=${lisensi}&domain=${domain}`)
+						.then(async result => {
+							// console.log(result, 'rerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr')
+						})
+						.catch((err) => {
+							console.log(err)
+							// if(err.response.data.status == 401){
+								deleteProfile((res) => {})
+								req.session.destroy(() => console.log('lisensi salah'))
+							// } 
+						})
+					}
 				})
 			}
-		})
+		});	
 	}
 
 
