@@ -7,7 +7,7 @@ var fs = require('fs')
 var qrcode = require('qrcode')
 const uuidAPIKey = require('uuid-apikey');
 var axios = require('axios')
-var { WAConnection, MessageType, ReconnectMode } = require('@adiwajshing/baileys')
+var { WAConnection, MessageType, ReconnectMode, MessageOptions, Mimetype  } = require('@adiwajshing/baileys')
 __dirname = path.resolve();
 
 const {getProfile, putProfile, postProfile, removeProfile, isApiExist, reconnectProfile, connect} = require('../controllers/setting')
@@ -237,15 +237,6 @@ async function run () {
         } else console.log (chatUpdate.messages) // see updates (can be archived, pinned etc.)
     })
 
-    // router.get('/status', async (req, res, next) => {
-    // 	 await conn.on('CB:action,,battery', json => {
-	   //      const batteryLevelStr = json[2][0][1].value
-	   //      const batterylevel = parseInt(batteryLevelStr)
-	   //      console.log('battery level: ' + batterylevel)
-	   //  })
-    // 	await res.send('test')
-    // })
-
     router.get('/send', async (req, res, next) => { 
   		await conn.sendMessage(`6285882843337@s.whatsapp.net`, 'req.body.message', MessageType.text);
   		await res.send('berhasil')
@@ -308,11 +299,30 @@ async function run () {
 	})
 
 	router.post('/send-bulk', async (req, res, next) => {  
+		if(req.body.lampiran != undefined){
+			const ext = path.extname(__dirname + `/public/campaign/${req.body.lampiran}`)
+			if(ext == '.mp4' || ext == '.3gp'){
+				await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.video, { caption: req.body.message });
+			    return res.send(req.body.contact);
+			} 
+			if(ext.toLowerCase() == '.mp3'){
+				await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.audio, { mimetype: Mimetype.mp4Audio });
+			    return res.send(req.body.contact);	
+			}
+			if(ext.toLowerCase() == '.png' || ext.toLowerCase() == '.jpg' || ext.toLowerCase() == '.jpeg') {
+				await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.image, { caption: req.body.message });
+			    return res.send(req.body.contact);	
+			}
+			if(ext.toLowerCase() == '.pdf' || ext.toLowerCase() == '.doc' || ext.toLowerCase() == '.docx' || ext.toLowerCase() == '.xlsx' || ext.toLowerCase() == '.xls' || ext.toLowerCase() == '.zip' ){
+				await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.document, { mimetype:Mimetype+'.'+ext, caption: req.body.message });
+			    return res.send(req.body.contact);	
+			}
+		}
 		if(req.body.contact != undefined){
 			console.log(req.body)
 		    await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`, req.body.message, MessageType.text);
 		    return res.send(req.body.contact);
-	}
+		}
 		else {
 			console.log('gagal')
 			return res.send('gagal')

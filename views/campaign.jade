@@ -3,41 +3,46 @@ extends layout
 block content
   div(class="container-fluid")
     br
-    h4 Kampanye #{groups[0].nama}
+    h6 Kampanye Grup #{groups[0].nama}
     br
-    form(action='/campaign',method='post')
-      input(type='hidden',value="#{groups[0]['id']}", name='groups')
-      label(for='message') Judul
-        input(style="",type="text", name="judul")    
-      label(for='Hari') Waktu
-         select(id="xxx", name="type")
-          option(value="days") Hari
-          option(value="hour") Jam
-          option(value="minutes") Menit
-      label(for='value') Nilai
-        input(id='value',type='text',value='',name='value')
-      br
-      label(for='message') Pesan
-      br
-      textarea(id='messages',type='text', name='messages', style="width:450px") @sapaan @nama
-        | 
-        |[PESAN ANDA DI SINI]
+    if add == undefined 
+      a(href="/campaign/#{groups[0]['id']}/add")
+        button(class="btn btn-primary") BUAT KAMPANYE
+          i(class="fas fa-edit m-2")
+    if add
+      form(action='/campaign',method='post',  style="border:2px solid rgba(100,100,100,0.2); display:flex; width:50%; position:absolute; transform: translate(-50%,0); left:50%; flex-direction:column; padding:8px; margin-top:10px",  enctype="multipart/form-data")
+        input(type='hidden',value="#{groups[0]['id']}", name='groups')
+        label(for='message') Judul
+          input(style="",type="text", name="judul")    
+        label(for='Hari') Waktu
+           select(id="xxx", name="type")
+            option(value="days") Hari
+            option(value="hour") Jam
+            option(value="minutes") Menit
+        label(for='value') Nilai
+          input(id='value',type='text',value='',name='value')
+        label(for='value') Foto, Video, Doc
+          input(id='value',type='file',value='',name='lampiran', class="form-control")
+        label(for='message') Pesan
+        textarea(id='messages',type='text', name='messages', style="width:100%") @sapaan @nama
+          | 
+          |[PESAN ANDA DI SINI]
 
-        |----------
+          |----------
 
-        | 
-        |Anda menerima pesan ini karena telah terdaftar di *#{groups[0]['nama']}*, Anda dapat berhenti kapan saja dengan mengetikkan *#{unsub}##{groups[0]['code']}*.                                   
-      br
-      b(style="font-size:12px") Informasi Template / Shortcode: 
-      br
-      li(style="font-size:12px") @nama => Nama
-      li(style="font-size:12px") @sapaan => Sapaan
-      br
-      button(class="btn btn-primary", type='submit') Buat Kampanye
-        i(class="fas fa-paper-plane m-2")
+          | 
+          |Anda menerima pesan ini karena telah terdaftar di *#{groups[0]['nama']}*, Anda dapat berhenti kapan saja dengan mengetikkan *#{unsub}##{groups[0]['code']}*.                                   
+        br
+        b(style="font-size:12px") Informasi Template / Shortcode: 
+        br
+        li(style="font-size:12px") @nama => Nama
+        li(style="font-size:12px") @sapaan => Sapaan
+        br
+        button(class="btn btn-primary", type='submit') Buat Kampanye
+          i(class="fas fa-paper-plane m-2")
 
     br
-  if campaigns
+  if add == undefined
     div(class="container-fluid table-responsive")
       script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
       script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js')
@@ -54,6 +59,7 @@ block content
                   th(scope="col") Nilai
                   th(scope="col") Waktu
                   th(scope="col") Pesan
+                  th(scope="col") Lampiran
                   th(scope="col") Aksi
               tbody
                 for campaign in campaigns
@@ -67,7 +73,7 @@ block content
                         input(type="hidden", name="id", value="#{campaign.k_id}")
                         button(type="submit", class="btn btn-primary") Simpan
                           i(class="fas fa-edit m-2")
-
+                    td #{campaign.lampiran}
                     td 
                       a(class="btn btn-primary", href="/campaign/content/delete/#{campaign.k_id}") Hapus
                         i(class="fas fa-trash-alt m-2")

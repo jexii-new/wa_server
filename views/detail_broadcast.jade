@@ -5,11 +5,14 @@ block content
   div(class="container-fluid")
     h4 Pesan Siaran / Broadcast
     br
-    form(action='/broadcast',method='post')
+    form(action='/broadcast',method='post',  enctype="multipart/form-data")
       div(class="form-group form-check")
         input(type="hidden", name="groups", value="#{groups[0]['id']}")
         label(for='message') Judul
           input(style="",type="text", name="judul")
+        br
+        label(for='value') Foto, Video, Doc
+          input(id='value',type='file',value='',name='lampiran', class="form-control")
         br
         label(for='message', style="width:500px") Pesan
            textarea(id='messages',type='text',name='messages') @sapaan @nama
@@ -37,6 +40,7 @@ block content
               th(scope="col") Judul
               th(scope="col") TGL
               th(scope="col") Pesan
+              th(scope="col") Lampiran
               th(scope="col") Aksi
           tbody
             each broadcast in broadcasts
@@ -44,6 +48,7 @@ block content
                 td #{broadcast.judul}
                 td #{broadcast.createdAt.toLocaleString()}
                 td #{broadcast.pesan}
+                td #{broadcast.lampiran}
                 td 
                   a(class="btn btn-primary", href="/campaign/content/delete/#{broadcast.k_id}") Hapus
                     i(class="fas fa-trash-alt m-2")

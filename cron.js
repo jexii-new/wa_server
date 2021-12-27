@@ -37,7 +37,7 @@ async function job(url){
 										    	if(dateNow == userDateForChecking){
 								  					
 										    		
-										  			await axios.post(`${domain}/wa/send-bulk`, {contact:vals.nomor, message}).then(results => {}).catch(err => err)
+										  			await axios.post(`${domain}/wa/send-bulk`, {contact:vals.nomor, message, lampiran:val.lampiran}).then(results => {}).catch(err => err)
 										  		}
 									    	}
 									    })
@@ -63,7 +63,7 @@ async function job(url){
 										    	if(dateNow == userDateForChecking){
 										    		
 										    		
-										  			await axios.post(`${domain}/wa/send-bulk`, {contact:vals.nomor, message}).then(results => {}).catch(err => err)
+										  			await axios.post(`${domain}/wa/send-bulk`, {contact:vals.nomor, message, lampiran:val.lampiran}).then(results => {}).catch(err => err)
 								  					
 								  					await postCampaignDetail({kontak_id:vals.kontak_id, campaign_id:val.k_id}, (res) => {
 								  						
@@ -93,7 +93,7 @@ async function job(url){
 										    	if(dateNow == userDateForChecking){
 								  					
 
-										  			await axios.post(`${domain}/wa/send-bulk`, {contact:vals.nomor, message}).then(results => {}).catch(err => err)
+										  			await axios.post(`${domain}/wa/send-bulk`, {contact:vals.nomor, message, lampiran:val.lampiran}).then(results => {}).catch(err => err)
 										  		}
 									    	}
 									    })

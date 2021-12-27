@@ -11,8 +11,14 @@ const removeCampaign = async (data, cb) => {
 	await dbs.remove(_id, _rev).then((res) => cb(res))
 }
 
-const postCampaign = async ({groups, messages, type, value, judul},cb) => {
-	let post = {grup_id:groups, judul, pesan:messages, tipe:type, nilai:value, createdAt:new Date()}
+const postCampaign = async ({groups, messages, type, value, judul, lampiran},cb) => {
+	let post = ''
+	if(lampiran != null || lampiran != undefined){
+		post = {grup_id:groups, judul, pesan:messages, tipe:type,lampiran:lampiran, nilai:value, createdAt:new Date()}
+	} else {
+		post = {grup_id:groups, judul, pesan:messages, tipe:type, nilai:value, createdAt:new Date()}
+
+	}
 	var query = connection.query('INSERT INTO kampanyes SET ?', post, function (error, results, fields) {
 	  	if (error) throw error;
 	  	cb(results)

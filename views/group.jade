@@ -2,21 +2,37 @@ extends layout
 
 block content
   div(class="container-fluid")
-    form(action='/group',method='post')
-      label(for='name') Nama Grup
-         input(id='name',type='text',value='',name='name' class="form-label")
-      label(for='grup') Kode Grup
-         input(id='grup',type='text',value='',name='code')
-      label(for='desc') Deskripsi
-         input(id='desc',type='text',value='',name='desc')
-        button(type='submit', class="btn btn-primary") Buat Grup
-          i(class="fas fa-paper-plane m-2")
-
+    br
+    if add == undefined && edit == undefined
+      a(href="/group/add")
+        button(class="btn btn-primary") BUAT GRUP
+          i(class="fas fa-edit m-2")
+    if add
+      form(action='/group',method='post', style="border:2px solid rgba(100,100,100,0.2); display:flex; width:40%; position:absolute; transform: translate(-50%,0); left:50%; flex-direction:column; padding:8px; margin-top:10px")
+        label(for='name') Nama Grup
+           input(id='name',type='text',value='',name='name' class="form-label")
+        label(for='grup') Kode Grup
+           input(id='grup',type='text',value='',name='code')
+        label(for='desc') Deskripsi
+           input(id='desc',type='text',value='',name='desc')
+          button(type='submit', class="btn btn-primary") Buat Grup
+            i(class="fas fa-paper-plane m-2")
+    if edit
+      form(action='/group/edit',method='post', style="border:2px solid rgba(100,100,100,0.2); display:flex; width:40%; position:absolute; transform: translate(-50%,0); left:50%; flex-direction:column; padding:8px; margin-top:10px")
+        label(for='name') Nama 
+          input(id='name',type='text',value='#{group[0].nama}',name='name' class="form-label")
+        label(for='desc') Deskripsi
+          input(id='desc',type='text',value='#{group[0].deskripsi}',name='desc')
+        label(for='grup') Kode Grup
+          input(id='grup',type='text',value='#{group[0].code}',name='code')
+          input(id='grup',type='hidden',value='#{group[0].id}',name='id')
+        button(type='submit', class="btn btn-primary") Edit Grup
+          i(class="fas fa-edit m-2")
   br
   br  
   
   div(class="container-fluid table-responsive")
-    if groups
+    if add == undefined && edit == undefined
       table(class="table table-striped table-light table-bordered")
         thead
           tr
@@ -42,19 +58,19 @@ block content
                   i(class="fas fa-inbox m-2")
                 a(class="btn btn-primary" style="margin-right:4px" href="/broadcast/#{group.g_id}") Broadcast
                   i(class="fas fa-bullhorn m-2")
-                  
+
               td  
-                a(class="btn btn-primary" href="/group/delete/#{group.g_id}") Hapus
-                  i(class="fas fa-trash-alt m-2")
-
-
-    script(type="text/javascript").
-      window.onload = function() {
-        if(!window.location.hash) {
-          window.location = window.location + '#loaded';
-          window.location.reload();
-        }
+                a(class="btn btn-primary" style="margin-right:4px" href="/group/#{group.g_id}") Edit Grup
+                  i(class="fas fa-edit m-2")
+                a(class="btn btn-danger" href="/group/delete/#{group.g_id}") Hapus
+                  i(class="fas fa-trash-alt m-2") 
+  script(type="text/javascript").
+    window.onload = function() {
+      if(!window.location.hash) {
+        window.location = window.location + '#loaded';
+        window.location.reload();
       }
+    }
       
 
 

@@ -8,7 +8,7 @@ const auth = async (req, res, next) => {
 	}
 
 	if(req.session.login == true){
-		require('dns').resolve('www.ruasdigital.id', async function(err) {
+		require('dns').resolve('lisensi.ruasdigital.id', async function(err) {
 		  	if (err) {
 		     	return res.redirect('/connection')
 		  	} else {

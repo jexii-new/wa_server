@@ -25,6 +25,11 @@ router.get('/kontak', ({body}, res, next) => getContact(async (result) => {
 		await res.render('contact', {contacts:result, groups:resGroup})
 	})
 }))
+router.get('/kontak/add', ({body}, res, next) => getContact(async (result) => {
+	getGroup(async(resGroup) => {
+		await res.render('contact', {add :true, contacts:result, groups:resGroup})
+	})
+}))
 router.post('/kontak', async (req, res, next) =>{ 
 	if(req.files != null){
 		const workSheetsFromBuffer = await xlsx.parse(req.files.file.data);
@@ -117,6 +122,7 @@ router.get('/kontak/delete/:id', async (req, res, next) => {
 
 // groups
 router.get('/group', (req, res, next) => getGroup(async (result) => await res.render('group', {groups:result})))
+router.get('/group/add', (req, res, next) => getGroup(async (result) => await res.render('group', {groups:result, add:true})))
 router.post('/group', async (req, res, next) => await postGroup(req.body, async (val) =>  res.redirect('/group')))
 router.get('/group/delete/:id', async (req, res, next) => {
 	await getGroupsDetailsById(req.params.id, async (result) => {
@@ -162,6 +168,13 @@ router.get('/group/delete/:id', async (req, res, next) => {
 		}
 	})
 })
+router.get('/group/:id', (req, res, next) => getGroupsDetailsById(req.params.id,async (result, val) => {
+		await getContact(async (contacts) => {
+			await getGroupById(req.params.id, async (resGroupsDetail) => {
+		 		await res.render('group', {group:resGroupsDetail, contacts, edit:true, groups_detail:result, url:req.headers.host, grup_id:req.params.id})
+			})
+		})
+}))
 
 
 // group detail
@@ -235,6 +248,14 @@ router.get('/campaign/:id', (req, res, next) => getGroupById(req.params.id, asyn
 		})
 	})
 }))
+router.get('/campaign/:id/add', (req, res, next) => getGroupById(req.params.id, async (result) => {
+	console.log(result)
+	await getProfile(async (resultProfile) => {
+		await getCampaignByGroupId(result[0].id, async (resCampaign) => {
+			await res.render('campaign', {groups:result, add:true, campaigns:resCampaign, unsub:resultProfile == undefined ? 'stop' : resultProfile.unsubscribe})
+		})
+	})
+}))
 
 router.get('/campaign', (req, res, next) => getGroup(async (result) => await res.render('campaign_detail', {groups:result})))
 
@@ -243,11 +264,21 @@ router.post('/campaign/edit',async (req, res, next) => {
 		await res.redirect('back')
 	})
 })
-router.post('/campaign', (req, res, next) => {
-	const body = req.body
-	isCampaignExistWithGroup(body.groups, body.value, body.type, async (isCampaignExist) => {
+router.post('/campaign', async (req, res, next) => {
+	const body = await req.body
+	const file = await req.files;
+	var lampiranName = null
+	if(req.files != null){
+		let lampiran = await req.files.lampiran;
+		let uploadPath =await __dirname + '/public/campaign/' + req.files.lampiran.name;
+		lampiranName = lampiran.name
+		await lampiran.mv(uploadPath, async (err)=>{
+			if(err) return res.status(500).send(err)
+		})
+	}
+	await isCampaignExistWithGroup(body.groups, body.value, body.type, async (isCampaignExist) => {
 		if(isCampaignExist.length == 0){
-			await postCampaign(body, async (resultPostCampaign) => {
+			await postCampaign({...body,lampiran:lampiranName}, async (resultPostCampaign) => {
 				await getGroupsDetailsById((body.groups), async (resGroupsDetail) => {
 					await resGroupsDetail.filter(async val => {
 						await getCampaignDetailWithContact(val.kontak_id,body.type, async (result) => {
@@ -257,12 +288,12 @@ router.post('/campaign', (req, res, next) => {
 								let sort = await  result.sort((a,b) => (a.nilai > b.nilai) ? 1 : ((b.nilai > a.nilai) ? -1 : 0));
 								await sort.filter( async values => {
 									if(values.nilai == body.value){
-										await res.redirect('back')
+										await res.redirect(`/campaign/${body.groups}`)
 									}
 								})
 
 								if((body.value - parseInt(sort[sort.length - 1]['nilai'])) < 1){
-									await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor, message})
+									await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor,lampiran:lampiranName, message})
 									await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId}, () => {
 										
 									})
@@ -272,14 +303,14 @@ router.post('/campaign', (req, res, next) => {
 									await calculateDate(val.g_d_date,  async (distanceMinute, distanceDays) => {
 										console.log(distanceMinute)
 										if(distanceMinute > body.value && body.type == 'minutes'){
-											await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor, message})
+											await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor,lampiran:lampiranName, message})
 											await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId}, () => {
 												
 											})	
 										}
 
 										if(distanceDays > body.value && body.type == 'days'){
-											await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor, message})
+											await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor,lampiran:lampiranName, message})
 											await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId}, () => {
 												
 											})	
@@ -293,19 +324,19 @@ router.post('/campaign', (req, res, next) => {
 									let message = body.messages.replace(/@nama/g, val.nama).replace(/@sapaan/g, val.sapaan)
 									console.log(`${req.protocol}://${req.headers.host}/wa/send-bulk`)
 									if(distanceMinute > body.value && body.type == 'minutes'){
-										await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor, message})
+										await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor,lampiran:lampiranName, message})
 										await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId}, () => {
 											
 										})	
 									}
 
 									if(distanceDays > body.value && body.type == 'days'){
-										await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor, message})
+										await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor,lampiran:lampiranName, message})
 										await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId}, () => {
 											
 										})	
 									}
-									await res.redirect('back')	
+									await res.redirect(`/campaign/${body.groups}`)	
 								})
 
 							}
@@ -313,9 +344,9 @@ router.post('/campaign', (req, res, next) => {
 					})
 				})
 			})
-			await res.redirect('back')
+			await res.redirect(`/campaign/${body.groups}`)
 		} else {
-			await res.redirect('back')
+			await res.redirect(`/campaign/${body.groups}`)
 		}
 	})
 })
@@ -338,7 +369,17 @@ router.get('/broadcast/:group_id', (req, res, next) => getGroupById(req.params.g
 }))
 
 router.post('/broadcast', async (req, res, next) => {
-	console.log(req.body.groups)
+	const body = await req.body
+	const file = await req.files;
+	const lampiranName = null
+	if(req.files != null){
+		let lampiran = await req.files.lampiran;
+		let uploadPath =await __dirname + '/public/campaign/' + req.files.lampiran.name;
+		lampiranName = lampiran.name
+		await lampiran.mv(uploadPath, async (err)=>{
+			if(err) return res.status(500).send(err)
+		})
+	}
 	if(req.body.groups == undefined || null){
 		await getGroup(async (result) => {
 			await getBroadcast(async (resBroadcast) => {
@@ -346,7 +387,7 @@ router.post('/broadcast', async (req, res, next) => {
 			})
 		})
 	} else {
-		await postBroadcast({groups:req.body.groups, messages:req.body.messages, url:req.headers.host, second:req.body.second, judul:req.body.judul}, (result) => result)
+		await postBroadcast({groups:req.body.groups,lampiran:lampiranName, messages:req.body.messages, url:req.headers.host, second:req.body.second, judul:req.body.judul}, (result) => result)
 	// }
 
 	await res.redirect('back')
