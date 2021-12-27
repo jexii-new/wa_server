@@ -5,7 +5,7 @@ block content
   div(class="container-fluid")
     h4 Pesan Siaran / Broadcast
     br
-    form(action='/broadcast',method='post')
+    form(action='/broadcast',method='post', enctype="multipart/form-data")
       div(class="form-group form-check")
         if status
          div(class="alert alert-danger",role="alert")
@@ -23,7 +23,9 @@ block content
         label Judul
           input(type="text", name="judul")
         br
-
+        label(for='value') Foto, Video, Doc
+          input(id='value',type='file',value='',name='lampiran', class="form-control", accept=".doc,.docx,.png,.jpg,.jpeg,.mp4,.mp3,.pdf,.xls,.xlsx,.txt,.gif,.3gp,.pptx,.ppt")
+        br
         label(for='message', STYLE="display:inline-block") Pesan
            br
            textarea(required="true", id='messages',type='text',name='messages', style="width:500px; height:200px") @sapaan @nama

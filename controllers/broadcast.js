@@ -8,7 +8,7 @@ const postBroadcast = async ({groups, messages, url, second, judul, lampiran},cb
 
 	if(Array.isArray(groups)){
 		groups.filter(val => {
-			postCampaign({groups:val, messages, type:'broadcast', value:0}, (resultCampaign) => {
+			postCampaign({groups:val, messages, type:'broadcast', value:0, judul, lampiran:lampiran == undefined ? null:lampiran}, (resultCampaign) => {
 
 			})
 		})
