@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Des 2021 pada 06.13
--- Versi server: 10.4.20-MariaDB
--- Versi PHP: 8.0.9
+-- Waktu pembuatan: 27 Des 2021 pada 10.55
+-- Versi server: 10.4.19-MariaDB
+-- Versi PHP: 7.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -39,7 +39,7 @@ CREATE TABLE `grups` (
 --
 
 INSERT INTO `grups` (`id`, `nama`, `deskripsi`, `code`) VALUES
-(29, 'Group Sample', 'sample group - ini bisa anda edit', 'GTEST');
+(31, 'test grup', '...', 'test');
 
 -- --------------------------------------------------------
 
@@ -66,6 +66,7 @@ CREATE TABLE `kampanyes` (
   `judul` varchar(255) DEFAULT NULL,
   `grup_id` int(11) NOT NULL,
   `pesan` text NOT NULL,
+  `lampiran` varchar(255) DEFAULT NULL,
   `tipe` varchar(255) NOT NULL,
   `nilai` varchar(255) NOT NULL,
   `createdAt` datetime DEFAULT NULL
@@ -192,7 +193,7 @@ ALTER TABLE `setting_grups`
 -- AUTO_INCREMENT untuk tabel `grups`
 --
 ALTER TABLE `grups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT untuk tabel `grup_details`
@@ -228,7 +229,31 @@ ALTER TABLE `owner`
 -- AUTO_INCREMENT untuk tabel `setting_grups`
 --
 ALTER TABLE `setting_grups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `grup_details`
+--
+ALTER TABLE `grup_details`
+  ADD CONSTRAINT `grup_details_fk0` FOREIGN KEY (`kontak_id`) REFERENCES `kontaks` (`id`),
+  ADD CONSTRAINT `grup_details_fk1` FOREIGN KEY (`grup_id`) REFERENCES `grups` (`id`);
+
+--
+-- Ketidakleluasaan untuk tabel `kampanyes`
+--
+ALTER TABLE `kampanyes`
+  ADD CONSTRAINT `kampanyes_fk0` FOREIGN KEY (`grup_id`) REFERENCES `grups` (`id`);
+
+--
+-- Ketidakleluasaan untuk tabel `setting_grups`
+--
+ALTER TABLE `setting_grups`
+  ADD CONSTRAINT `setting_grups_fk0` FOREIGN KEY (`grup_id`) REFERENCES `grups` (`id`),
+  ADD CONSTRAINT `setting_grups_fk1` FOREIGN KEY (`grup_out_id`) REFERENCES `grups` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
