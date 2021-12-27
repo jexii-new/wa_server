@@ -23,9 +23,9 @@ block content
               input(style="width:98%", id='wa_number',type='hidden',value='#{owner.id}',name='id')
           div(style="margin:8px; display:flex; justify-content:space-around")
             div(style="width:100%")
-              label Domain
+              label URL
               br
-              input(style="width:98%", id='username',type='text', disabled,value='#{owner.domain}',name='domain')
+              input(style="width:98%", id='username',type='text', disabled,value='#{owner.domain}/wa/send-bulk',name='domain')
             div(style="width:100%")
               label API Key
               input(style="width:98%", id='wa_number',type='text', disabled, value='#{owner.api_key}',name='api_key')
