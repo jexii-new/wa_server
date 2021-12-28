@@ -22,7 +22,7 @@ block content
         label(for='value') Nilai
           input(id='value',type='text',value='',name='value')
         label(for='value') Foto, Video, Doc, Ukuran file maximal 5mb
-          input(id='value',type='file',value='',name='lampiran', class="form-control", accept=".doc,.docx,.png,.jpg,.jpeg,.mp4,.mp3,.pdf,.xls,.xlsx,.txt,.gif,.3gp,.pptx,.ppt")
+          input(id='lampiran',type='file',value='',name='lampiran', class="form-control", accept=".doc,.docx,.png,.jpg,.jpeg,.mp4,.mp3,.pdf,.xls,.xlsx,.txt,.gif,.3gp,.pptx,.ppt")
         label(for='message') Pesan
         textarea(id='messages',type='text', name='messages', style="width:100%") @sapaan @nama
           | 
@@ -38,7 +38,7 @@ block content
         li(style="font-size:12px") @nama => Nama
         li(style="font-size:12px") @sapaan => Sapaan
         br
-        button(class="btn btn-primary", type='submit') Buat Kampanye
+        button(class="btn btn-primary",id="submit" type='submit') Buat Kampanye
           i(class="fas fa-paper-plane m-2")
 
     br
@@ -86,4 +86,14 @@ block content
           window.location.reload();
         }
       }
+      $('#lampiran').bind('change', function() {
+        let size = this.files[0].size
+        if(size > 5045044){
+          alert('Maksimal ukuran file 5mb');
+          $('#submit').attr("disabled", true);
+        } else {
+          $('#submit').prop('disabled', false);;
+
+        }
+      });
 

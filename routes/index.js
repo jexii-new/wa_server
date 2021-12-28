@@ -378,6 +378,7 @@ router.post('/broadcast', async (req, res, next) => {
 	if(req.files != null){
 		let lampiran = await req.files.lampiran;
 		if(lampiran.size > 5045044){
+			
 			return res.redirect(`back`)
 		}
 		let uploadPath =await __dirname + '/public/campaign/' + req.files.lampiran.name;
