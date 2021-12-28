@@ -270,6 +270,9 @@ router.post('/campaign', async (req, res, next) => {
 	var lampiranName = null
 	if(req.files != null){
 		let lampiran = await req.files.lampiran;
+		if(lampiran.size > 5045044){
+			return res.redirect(`/campaign/${body.groups}`)
+		}
 		let uploadPath =await __dirname + '/public/campaign/' + req.files.lampiran.name;
 		lampiranName = lampiran.name
 		await lampiran.mv(uploadPath, async (err)=>{
@@ -374,6 +377,9 @@ router.post('/broadcast', async (req, res, next) => {
 	var lampiranName = null
 	if(req.files != null){
 		let lampiran = await req.files.lampiran;
+		if(lampiran.size > 5045044){
+			return res.redirect(`back`)
+		}
 		let uploadPath =await __dirname + '/public/campaign/' + req.files.lampiran.name;
 		lampiranName = lampiran.name
 		await lampiran.mv(uploadPath, async (err)=>{
