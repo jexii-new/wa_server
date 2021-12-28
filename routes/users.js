@@ -73,20 +73,6 @@ async function run () {
  		}
  	})
 
- 	// await reconnectProfile((val) => {})
-
-
-    await conn.on('chats-received', async ({ hasNewChats }) => {
-        console.log(`you have ${conn.chats.length} chats, new chats available: ${hasNewChats}`)
-
-        const unread = await conn.loadAllUnreadMessages ()
-        console.log ("you have " + unread.length + " unread messages")
-    })
-    // called when WA sends chats
-    // this can take up to a few minutes if you have thousands of contacts!
-    conn.on('contacts-received', () => {
-        console.log('you have ' + Object.keys(conn.contacts).length + ' contacts')
-    })
 
     conn.on('qr', qr => {
     // Now, use the 'qr' string to display in QR UI or send somewhere
@@ -151,7 +137,7 @@ async function run () {
 	    }
   	});
 
-
+	conn.on('contacts-received', async (val) => console.log(val, 'received'))
 
     conn.on('chat-update', async chatUpdate => {
         // `chatUpdate` is a partial object, containing the updated properties of the chat
@@ -234,32 +220,10 @@ async function run () {
 				}
 			})
 		    
-        } else console.log (chatUpdate.messages) // see updates (can be archived, pinned etc.)
+        } else {
+        	// console.log (await chatUpdate.messages.all()[0])
+        } // see updates (can be archived, pinned etc.)
     })
-
-    router.get('/send', async (req, res, next) => { 
-  		await conn.sendMessage(`6285882843337@s.whatsapp.net`, 'req.body.message', MessageType.text);
-  		await res.send('berhasil')
- 
-    	// getProfile((result) => {
-    	// 	if(result == undefined){
-    	// 		res.send('gagal')
-    	// 	} else {
-    	// 		isApiExist(req.body.key, async (res) => {
-    	// 			if(res.length > 0){
-					// 	if(req.body.contact != undefined){
-					// 	    await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`, req.body.message, MessageType.text);
-					// 	    return res.send(req.body.contact);
-					// 	}
-    	// 			} 
-    	// 			else {
-    	// 				res.send('api key tidak cocok')    					
-    	// 			}
-    	// 		})
-    	// 	}
-    	// })
-  		await conn.sendMessage(`6285882843337@s.whatsapp.net`, 'connect', MessageType.text);
-	})
 
 	router.get('/close', async (req, res,next) => {
 		console.log(conn.user)
