@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path')
 var router = express.Router();
+const spin = require('../helper/spintax')
 var {verifyContact, checkIfContactExist, postContact} = require('../controllers/contact')
 var {getGroupByCode, postGroupsDetails, getGroupsDetailWithContact, editGroupDetails, removeContactInGroupDetail, isGroupExist, getGroupsDetailWithId} = require('../controllers/group')
 var fs = require('fs')
@@ -263,34 +264,36 @@ async function run () {
 	})
 
 	router.post('/send-bulk', async (req, res, next) => {  
-		if(req.body.lampiran != undefined){
-			const ext = path.extname(__dirname + `/public/campaign/${req.body.lampiran}`)
-			if(ext == '.mp4' || ext == '.3gp'){
-				await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.video, { caption: req.body.message });
+		spin(req.body.message, async (message) => {
+			if(req.body.lampiran != undefined){
+				const ext = path.extname(__dirname + `/public/campaign/${req.body.lampiran}`)
+				if(ext == '.mp4' || ext == '.3gp'){
+					await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.video, { caption: message });
+				    return res.send(req.body.contact);
+				} 
+				if(ext.toLowerCase() == '.mp3'){
+					await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.audio, { mimetype: Mimetype.mp4Audio });
+				    return res.send(req.body.contact);	
+				}
+				if(ext.toLowerCase() == '.png' || ext.toLowerCase() == '.jpg' || ext.toLowerCase() == '.jpeg') {
+					await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.image, { caption: message });
+				    return res.send(req.body.contact);	
+				}
+				if(ext.toLowerCase() == '.pdf' || ext.toLowerCase() == '.doc' || ext.toLowerCase() == '.docx' || ext.toLowerCase() == '.xlsx' || ext.toLowerCase() == '.xls' || ext.toLowerCase() == '.zip' ){
+					await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.document, { mimetype:Mimetype+'.'+ext, caption: message });
+				    return res.send(req.body.contact);	
+				}
+			}
+			if(req.body.contact != undefined){
+				console.log(req.body)
+			    await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`, message, MessageType.text);
 			    return res.send(req.body.contact);
-			} 
-			if(ext.toLowerCase() == '.mp3'){
-				await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.audio, { mimetype: Mimetype.mp4Audio });
-			    return res.send(req.body.contact);	
 			}
-			if(ext.toLowerCase() == '.png' || ext.toLowerCase() == '.jpg' || ext.toLowerCase() == '.jpeg') {
-				await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.image, { caption: req.body.message });
-			    return res.send(req.body.contact);	
+			else {
+				console.log('gagal')
+				return res.send('gagal')
 			}
-			if(ext.toLowerCase() == '.pdf' || ext.toLowerCase() == '.doc' || ext.toLowerCase() == '.docx' || ext.toLowerCase() == '.xlsx' || ext.toLowerCase() == '.xls' || ext.toLowerCase() == '.zip' ){
-				await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.document, { mimetype:Mimetype+'.'+ext, caption: req.body.message });
-			    return res.send(req.body.contact);	
-			}
-		}
-		if(req.body.contact != undefined){
-			console.log(req.body)
-		    await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`, req.body.message, MessageType.text);
-		    return res.send(req.body.contact);
-		}
-		else {
-			console.log('gagal')
-			return res.send('gagal')
-		}
+		})
 	})
 }
 // run in main file

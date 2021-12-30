@@ -97,7 +97,6 @@ router.post('/kontak/group', async (req, res, next) => await postContact(req.bod
 		
 		return await res.redirect(`${req.body.url}/?status=success`)
 	}
-
 	
 }))
 router.get('/kontak/delete/:id', async (req, res, next) => {
@@ -175,7 +174,6 @@ router.get('/group/:id', (req, res, next) => getGroupsDetailsById(req.params.id,
 			})
 		})
 }))
-
 
 // group detail
 router.get('/groups/detail/:id', (req, res, next) => getGroupsDetailsById(req.params.id,async (result, val) => {
@@ -325,7 +323,7 @@ router.post('/campaign', async (req, res, next) => {
 								await calculateDate(val.g_d_date,  async (distanceMinute, distanceDays) => {
 									console.log(distanceMinute)
 									let message = body.messages.replace(/@nama/g, val.nama).replace(/@sapaan/g, val.sapaan)
-									console.log(`${req.protocol}://${req.headers.host}/wa/send-bulk`)
+									console.log(`${req.protocol}://${req.headers.host}/wa/send-bulk`, lampiranName)
 									if(distanceMinute > body.value && body.type == 'minutes'){
 										await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor,lampiran:lampiranName, message})
 										await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId}, () => {
@@ -339,7 +337,7 @@ router.post('/campaign', async (req, res, next) => {
 											
 										})	
 									}
-									await res.redirect(`/campaign/${body.groups}`)	
+									return res.redirect(`/campaign/${body.groups}`)	
 								})
 
 							}
