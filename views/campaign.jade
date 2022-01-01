@@ -24,7 +24,7 @@ block content
         label(for='value') Foto, Video, Doc, Ukuran file maximal 5mb
           input(id='lampiran',type='file',value='',name='lampiran', class="form-control", accept=".doc,.docx,.png,.jpg,.jpeg,.mp4,.mp3,.pdf,.xls,.xlsx,.txt,.gif,.3gp,.pptx,.ppt")
         label(for='message') Pesan
-        textarea(id='messages',type='text', name='messages', style="width:100%") @sapaan @nama
+        textarea(id='messages',type='text', name='messages', style="width:100%") {Halo|Salam} @sapaan @nama,
           | 
           |[PESAN ANDA DI SINI]
 
@@ -37,6 +37,8 @@ block content
         br
         li(style="font-size:12px") @nama => Nama
         li(style="font-size:12px") @sapaan => Sapaan
+        li(style="font-size:12px") Aplikasi pesan ini mendukung spintax, contoh: {Halo|Salam}
+
         br
         button(class="btn btn-primary",id="submit" type='submit') Buat Kampanye
           i(class="fas fa-paper-plane m-2")

@@ -28,7 +28,7 @@ block content
         br
         label(for='message', STYLE="display:inline-block") Pesan
            br
-           textarea(required="true", id='messages',type='text',name='messages', style="width:500px; height:200px") @sapaan @nama
+           textarea(required="true", id='messages',type='text',name='messages', style="width:500px; height:200px") {Halo|Salam} @sapaan @nama,
              | 
              |[PESAN ANDA DI SINI]
 
@@ -42,7 +42,8 @@ block content
         li(style="font-size:12px") @sapaan => Sapaan 
         li(style="font-size:12px") @grup => Nama Grup
         li(style="font-size:12px") @unsubscribe => Kode Text untuk berhenti berlangganan (unsubscribe)
-        li(style="font-size:12px") @code => Kode Grup
+        li(style="font-size:12px") @code => Kode Grup Aplikasi pesan ini mendukung spintax, contoh: {Halo|Salam}
+        li(style="font-size:12px") Aplikasi pesan ini mendukung spintax, contoh: {Halo|Salam}
         br
         label Jeda Waktu Antar Pesan (dalam detik, gunakan koma untuk menambah variasi waktu)
           br
