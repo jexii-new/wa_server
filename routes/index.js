@@ -66,11 +66,11 @@ router.post('/kontak', async (req, res, next) =>{
 })
 router.post('/kontak/group', async (req, res, next) => await postContact(req.body, async (valContact) =>  {
 	console.log(req.body.url)
-	if(valContact == false){
-		return res.redirect(`${req.body.url}?status=failed`)
-	} else {
-
-		await postGroupsDetails({groups:req.body.group, contacts:valContact.insertId, validate:true}, async (val)=> {
+		getGroupsDetailsById(req.body.group, (result) => {
+			if(result.nomor == req.body.wa_number){
+				return res.redirect(`${req.body.url}?status=failed`)
+			} else {
+						await postGroupsDetails({groups:req.body.group, contacts:valContact.insertId, validate:true}, async (val)=> {
 			await getSettingGroupById(req.body.group, async (result) => {
 				await result.filter(async val => {
 					if(val.grup_id != undefined){
@@ -96,7 +96,8 @@ router.post('/kontak/group', async (req, res, next) => await postContact(req.bod
 		})
 		
 		return await res.redirect(`${req.body.url}/?status=success`)
-	}
+			}
+		})
 	
 }))
 router.get('/kontak/delete/:id', async (req, res, next) => {
