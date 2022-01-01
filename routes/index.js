@@ -65,38 +65,39 @@ router.post('/kontak', async (req, res, next) =>{
 	}
 })
 router.post('/kontak/group', async (req, res, next) => await postContact(req.body, async (valContact) =>  {
-	console.log(req.body.url)
 		getGroupsDetailsById(req.body.group, (result) => {
-			if(result.nomor == req.body.wa_number){
-				return res.redirect(`${req.body.url}?status=failed`)
-			} else {
-						await postGroupsDetails({groups:req.body.group, contacts:valContact.insertId, validate:true}, async (val)=> {
-			await getSettingGroupById(req.body.group, async (result) => {
-				await result.filter(async val => {
-					if(val.grup_id != undefined){
-						await getGroupsDetailsById(val.grup_out_id, (result)=>{
-							result.filter(val => {
-								 if(val.nomor == req.body.wa_number){
-								 	removeContactInGroupDetail({groups:val.g_d_id}, (res) => {
-								 		res.redirect(`${req.body.url}?status=success`)
-								 		return res
-								 	})
-								 	removeContact({id:val.kontak_id}, (res) => {
-								 		res.redirect(`${req.body.url}?status=success`)
-								 		return res
-								 	})
-								 } else {
-								 	return res.redirect(`${req.body.url}?status=success`)
-								 }
-							})
+			result.filter(res_g_d => {
+				if(res_g_d.nomor == req.body.wa_number){
+					return res.redirect(`${req.body.url}?status=failed`)
+				} else {
+					await postGroupsDetails({groups:req.body.group, contacts:valContact.insertId, validate:true}, async (val)=> {
+						await getSettingGroupById(req.body.group, async (result) => {
+							await result.filter(async val => {
+								if(val.grup_id != undefined){
+									await getGroupsDetailsById(val.grup_out_id, (result)=>{
+										result.filter(val => {
+											 if(val.nomor == req.body.wa_number){
+											 	removeContactInGroupDetail({groups:val.g_d_id}, (res) => {
+											 		res.redirect(`${req.body.url}?status=success`)
+											 		return res
+											 	})
+											 	removeContact({id:val.kontak_id}, (res) => {
+											 		res.redirect(`${req.body.url}?status=success`)
+											 		return res
+											 	})
+											 } else {
+											 	return res.redirect(`${req.body.url}?status=success`)
+											 }
+										})
+									})
+								}
+							}) 
 						})
-					}
-				}) 
+					})
+				
+					return await res.redirect(`${req.body.url}/?status=success`)
+				}
 			})
-		})
-		
-		return await res.redirect(`${req.body.url}/?status=success`)
-			}
 		})
 	
 }))
