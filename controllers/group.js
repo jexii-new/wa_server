@@ -96,7 +96,7 @@ const getGroupsDetailWithId = async ({g_id, c_id, }, cb) => {
 }
 
 const getGroupsDetailWithContact = async ({c_id}, cb) => {
-	var query = connection.query(`SELECT grup_details.id as g_d_id, grup_details.grup_id as g_id, status_grup FROM grup_details WHERE grup_details.kontak_id = '${c_id}'`, function (error, results, fields) {
+	var query = connection.query(`SELECT grup_details.id as g_d_id, grup_details.grup_id as g_id, status_grup  FROM grup_details WHERE grup_details.kontak_id = '${c_id}'`, function (error, results, fields) {
 	  	if (error) throw error;
 	  	cb(results)
 	});

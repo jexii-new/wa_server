@@ -85,8 +85,12 @@ const getContact = async (cb) => {
 }
 
 const sendContactVerify=async (number, cb)=> {
-	getProfile(async({domain}) => {
-		await axios.post(`${domain}/wa/send-bulk`, {contact:`${number}`, message:'silahkan ketik *daftar* untuk menverifikasi'}).then(results => cb(results)).catch(err => err)
+	getProfile(async({domain, status}) => {
+		if(status == null || status == undefined || status == 0 || status == '0' || status == false){
+			return cb(false)
+		} else {
+			await axios.post(`${domain}/wa/send-bulk`, {contact:`${number}`, message:'silahkan ketik *daftar* untuk menverifikasi'}).then(results => cb(results)).catch(err => err)
+		}
 	})
 }
 

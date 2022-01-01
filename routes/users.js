@@ -2,7 +2,7 @@ var express = require('express');
 var path = require('path')
 var router = express.Router();
 const spin = require('../helper/spintax')
-var {verifyContact, checkIfContactExist, postContact} = require('../controllers/contact')
+var {verifyContact, checkIfContactExist, postContact, getContact} = require('../controllers/contact')
 var {getGroupByCode, postGroupsDetails, getGroupsDetailWithContact, editGroupDetails, removeContactInGroupDetail, isGroupExist, getGroupsDetailWithId} = require('../controllers/group')
 var fs = require('fs')
 var qrcode = require('qrcode')
@@ -138,7 +138,23 @@ async function run () {
 	    }
   	});
 
-	conn.on('contacts-received', async (val) => console.log(val, 'received'))
+	conn.on('contacts-received', async (val) => {
+		getContact((c) => {
+			console.log(c)
+			c.filter(({id, nomor}) => {
+				getGroupsDetailWithContact({c_id:id}, async(r_g) => {
+					console.log(r_g)
+					r_g.filter((val) => {
+							console.log(val, 'val')
+						if(val.status_grup == '0'){
+							console.log('sama')
+							conn.sendMessage(`${nomor}@s.whatsapp.net`, 'Silahkan Ketik Daftar Untuk Menverifikasi', MessageType.text)
+						}
+					})
+				})
+			})
+		})
+	})
 
     conn.on('chat-update', async chatUpdate => {
         // `chatUpdate` is a partial object, containing the updated properties of the chat
