@@ -22,7 +22,7 @@ const postContact = async (data, cb) => {
 						});
 					})
 				} else {
-					cb(false)
+					cb(result)
 				}
 			})
 		})
@@ -37,7 +37,7 @@ const postContact = async (data, cb) => {
 					  	cb(results)
 					});
 				} else {
-					cb(false)
+					cb(result)
 				}
 
 			})
