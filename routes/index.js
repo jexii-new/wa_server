@@ -65,8 +65,8 @@ router.post('/kontak', async (req, res, next) =>{
 	}
 })
 router.post('/kontak/group', async (req, res, next) => await postContact(req.body, async (valContact) =>  {
-		getGroupsDetailsById(req.body.group, (result) => {
-			result.filter(res_g_d => {
+		await getGroupsDetailsById(req.body.group, async(result) => {
+			result.filter(async res_g_d => {
 				if(res_g_d.nomor == req.body.wa_number){
 					return res.redirect(`${req.body.url}?status=failed`)
 				} else {
