@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var {postContact, getContact, removeContact, getContactById} = require('../controllers/contact')
+var {postContact, getContact, removeContact, getContactById, sendContactVerify} = require('../controllers/contact')
 var {postBroadcast, getBroadcast, getBroadcastById} = require('../controllers/broadcast')
 var {postProfile, putProfile, getProfile, login, register} = require('../controllers/setting')
 var {postCampaign, getBroadcastByGroupId, removeContentOfCampaignDetail, getCampaign,getCampaignByGroupId, postCampaignDetail,editCampaignById, isCampaignExistWithGroup, getCampaignDetailWithContact, removeCampaign,removeContentOfCampaign, isCampaignDetailexist} = require('../controllers/campaign')
@@ -66,7 +66,8 @@ router.post('/kontak', async (req, res, next) =>{
 	}
 })
 router.post('/kontak/group', async (req, res, next) => await postContact(req.body, async (valContact) =>  {
-		valContact = await valContact.length == 1 ? {insertId: valContact[0]['id']} : valContact
+		valContact = await valContact.length == 1 ? {insertId: valContact[0]['id'], verify:true} : valContact
+
 		await getGroupsDetailsById(req.body.group, async(result) => {
 			numberVerify(req.body.wa_number, '', async (nomor) => {
 				let resSame = [];
@@ -81,6 +82,9 @@ router.post('/kontak/group', async (req, res, next) => await postContact(req.bod
 						return res.redirect(`${req.body.url}?status=failed`)
 					} 
 				else{
+					if(valContact.verify == true){
+						sendContactVerify(nomor, () =>{})
+					}
 					await postGroupsDetails({groups:req.body.group, contacts:valContact.insertId, validate:true}, async (val)=> {
 						await getSettingGroupById(req.body.group, async (result) => {
 							await result.filter(async val => {

@@ -115,6 +115,6 @@ const verifyContact=async(number, cb)=>{
 }
 
 
-module.exports = {postContact, getContact, getContactById, removeContact, verifyContact, checkIfContactExist};
+module.exports = {postContact, getContact, getContactById, sendContactVerify, removeContact, verifyContact, checkIfContactExist};
 
 
