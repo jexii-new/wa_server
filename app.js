@@ -27,7 +27,7 @@ async function runWa(){
   } )
 }
 app.use('/reconnect', async (req, res, next) => {
-	await runWa()
+	runWa()
 	res.redirect('/setting')
 });
 
