@@ -166,7 +166,7 @@ async function run () {
 			let a = message.message.conversation.split('#')
 
 			await getProfile(async (profile) => {
-				if(reg == 'daftar'){
+				if(reg.toLowerCase() == profile.subscribe.toLowerCase()){
 					let contacts = message.key.remoteJid.substr(0, message.key.remoteJid.length - 15);
 					await checkIfContactExist(contacts, async(result) => {
 						if(result.length > 0){
@@ -194,7 +194,7 @@ async function run () {
 						if(resultGrup.length > 0){
 							let contacts = await message.key.remoteJid.substr(0, message.key.remoteJid.length - 15);
 							checkIfContactExist(contacts, async (result) => {
-								if(result.length == []){
+								if(result.length == 0){
 									await postContact({wa_number:contacts, address:a[4], username:a[2], called:a[3]}, async (result) => {
 										await postGroupsDetails({groups:resultGrup[0].id, contacts:result.insertId},async (res) => {
 											await conn.sendMessage(message.key.remoteJid, `Selamat ${a[3]} ${a[2]} anda sudah Terdaftar di grup ${resultGrup[0]['nama']}`, MessageType.text)
