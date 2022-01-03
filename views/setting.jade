@@ -54,7 +54,7 @@ block content
               i(class="fas fa-save m-2")
 
 
-    if owner.session == null && password == false || owner.session == '' && password == undefined
+    if owner.session == null && password == false || owner.session == null && password == undefined
       div(style="margin:8px; display:flex; flex-direction:column; align-items:center; justify-content:space-between")
         h1  QR Code 
         img(src="/wa/qr", width="300px")
@@ -71,7 +71,7 @@ block content
 
         button(type='submit', class="btn btn-primary") Simpan Password
           i(class="fas fa-edit m-2")
-    if owner.session == null && password == false || owner.session == '' && password == undefined
+    if owner.session == null && password == false || owner.session == null && password == undefined
       script(type="text/javascript").
         setTimeout(() => {
           window.location.reload()
