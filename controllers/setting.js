@@ -110,6 +110,16 @@ const login = async (username, password, cb) => {
 	});	
 }
 
+const editPassword = async (password, cb)=>{
+	await getProfile(async res => {
+		
+		if(res != undefined){
+			await connection.query(`UPDATE owner SET password='${password}' WHERE id=${res.id}`, (err, results, field) => {
+				cb(results)
+			})
+		}
+	})
+}
 const register = async (username, nomor, password,domain, lisensi, code, cb) => {
 	nomor = 'kosong'
 		let query = connection.query(`INSERT INTO owner SET ?`,{product_code:code, lisensi, username:username, nomor, password:password, subscribe:'daftar', unsubscribe:'stop', domain}, function (error, results, fields) {
@@ -117,7 +127,7 @@ const register = async (username, nomor, password,domain, lisensi, code, cb) => 
 		  	cb(results)
 	    });	
 }
-module.exports = {register, reconnectProfile, deleteProfile,connect, postProfile, getProfile, getProfileById, removeProfile, putProfile, isApiExist, login};
+module.exports = {register, editPassword, reconnectProfile, deleteProfile,connect, postProfile, getProfile, getProfileById, removeProfile, putProfile, isApiExist, login};
 
 
 

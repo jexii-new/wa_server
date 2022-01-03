@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var {postContact, getContact, removeContact, getContactById, sendContactVerify} = require('../controllers/contact')
 var {postBroadcast, getBroadcast, getBroadcastById} = require('../controllers/broadcast')
-var {postProfile, putProfile, getProfile, login, register} = require('../controllers/setting')
+var {postProfile, putProfile, getProfile, login, register, editPassword} = require('../controllers/setting')
 var {postCampaign, getBroadcastByGroupId, removeContentOfCampaignDetail, getCampaign,getCampaignByGroupId, postCampaignDetail,editCampaignById, isCampaignExistWithGroup, getCampaignDetailWithContact, removeCampaign,removeContentOfCampaign, isCampaignDetailexist} = require('../controllers/campaign')
 var {postGroup, getGroupByCode,getGroupsDetailWithContact, editGroupById, removeSettingGroupById, putSubGroup, getGroupsDetailsById,getSettingGroupById, removeContactInGroupDetail, getGroupById, getGroup, getGroupsDetails, postGroupsDetails, getDetailsGroup, removeGroup, removeGroupDetail} = require('../controllers/group')
 var axios = require('axios')
@@ -249,7 +249,7 @@ router.post('/group_detail/delete', async (req, res, next) => await removeGroupD
 router.get('/group_detail/contact/:group_detail_id', async (req, res, next) => await removeContactInGroupDetail({groups:req.params.group_detail_id}, async (val) =>  res.redirect('back')))
 router.post('/group/edit', async(req, res, next) => {
 	await editGroupById(req.body, async(result) => {
-		await res.redirect('back')
+		await res.redirect('/group')
 	})
 })
 
@@ -425,6 +425,8 @@ router.post('/broadcast', async (req, res, next) => {
 router.get('/setting', (req, res, next) => getProfile((result) =>  res.render('setting', {owner:result})))
 router.post('/setting', (req, res, next) => postProfile(req.body, ()=>res.redirect('/setting')))
 router.post('/setting/edit', (req, res, next) => putProfile(4, req.body, ()=>res.redirect('/setting')))
+router.get('/setting/password', (req, res)=> res.render('setting', {password:true, owner:{}}))
+router.post('/setting/password', (req, res)=> editPassword(req.body.password, (result)=>res.redirect('/setting/password?status=success')))
 
 // setting group
 router.get('/setting/group/:group_id', async (req, res, next) => getGroup(async (result, val) => {
