@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 27 Des 2021 pada 10.55
+-- Waktu pembuatan: 03 Jan 2022 pada 09.08
 -- Versi server: 10.4.19-MariaDB
 -- Versi PHP: 7.4.19
 
@@ -39,7 +39,7 @@ CREATE TABLE `grups` (
 --
 
 INSERT INTO `grups` (`id`, `nama`, `deskripsi`, `code`) VALUES
-(31, 'test grup', '...', 'test');
+(31, 'test grup', '...', 'test123');
 
 -- --------------------------------------------------------
 
@@ -81,7 +81,9 @@ CREATE TABLE `kampanyes` (
 CREATE TABLE `kampanyes_detail` (
   `id` int(11) NOT NULL,
   `kontak_id` int(11) NOT NULL,
-  `campaign_id` int(11) NOT NULL
+  `campaign_id` int(11) NOT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `message_id` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -199,31 +201,31 @@ ALTER TABLE `grups`
 -- AUTO_INCREMENT untuk tabel `grup_details`
 --
 ALTER TABLE `grup_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT untuk tabel `kampanyes`
 --
 ALTER TABLE `kampanyes`
-  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT untuk tabel `kampanyes_detail`
 --
 ALTER TABLE `kampanyes_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT untuk tabel `kontaks`
 --
 ALTER TABLE `kontaks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `owner`
 --
 ALTER TABLE `owner`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `setting_grups`

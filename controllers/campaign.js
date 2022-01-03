@@ -74,8 +74,8 @@ const removeContentOfCampaignDetail = async ({campaign, kontak}, cb) => {
 	});
 }
 
-const postCampaignDetail = async ({kontak_id, campaign_id, tipe, status}, cb) => {
-	let post = {kontak_id, campaign_id}
+const postCampaignDetail = async ({kontak_id, campaign_id, tipe, status, message_id}, cb) => {
+	let post = {kontak_id, campaign_id, status, message_id}
 	await isCampaignDetailExist(kontak_id, campaign_id, async (result) => {
 		if(result.length == 0){
 			var query = connection.query('INSERT INTO kampanyes_detail SET ?', post, function (error, results, fields) {
@@ -98,6 +98,13 @@ const isCampaignDetailExist = async (kontak_id,campaign_id, cb) => {
 
 
 const getCampaignDetailWithContact = async (kontak_id,type, cb) => {
+	if(type == 'kampanye'){
+		query = connection.query(`SELECT * FROM kampanyes_detail INNER JOIN kampanyes ON kampanyes.id = kampanyes_detail.campaign_id WHERE kampanyes_detail.kontak_id='${kontak_id}' AND kampanyes.tipe != 'broadcast'`, async function (error, results, fields) {
+	  	if (error) throw error;
+	  	
+	  	return await cb(results)
+	});	
+	}
 	var query = connection.query(`SELECT * FROM kampanyes_detail INNER JOIN kampanyes ON kampanyes.id = kampanyes_detail.campaign_id WHERE kampanyes_detail.kontak_id='${kontak_id}' AND kampanyes.tipe = '${type}'`, async function (error, results, fields) {
 	  	if (error) throw error;
 	  	
@@ -118,5 +125,13 @@ const editCampaignById = async (data, cb) => {
 
 }
 
-module.exports = {getBroadcastByGroupId, removeContentOfCampaign,removeContentOfCampaignDetail, isCampaignExistWithGroup,editCampaignById, getCampaign, postCampaign,removeCampaign, postCampaignDetail, getCampaignByGroupId, isCampaignDetailExist, getCampaignDetailWithContact};
+const updateChatReceived = async (message_id,status, cb) =>{
+	var query = await connection.query(`UPDATE kampanyes_detail SET status='${status}' WHERE message_id ='${message_id}'`,  function (error, results, fields) {
+	  	if (error) throw error;
+	  	
+	  	cb(results)
+	})
+}
+
+module.exports = {getBroadcastByGroupId, updateChatReceived, removeContentOfCampaign,removeContentOfCampaignDetail, isCampaignExistWithGroup,editCampaignById, getCampaign, postCampaign,removeCampaign, postCampaignDetail, getCampaignByGroupId, isCampaignDetailExist, getCampaignDetailWithContact};
 

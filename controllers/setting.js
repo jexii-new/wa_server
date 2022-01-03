@@ -7,7 +7,7 @@ const postProfile = async (data,id, cb) => {
 
 	const {username, wa_number, subscribe, unsubscribe, session} = await data
 
-	var query = connection.query(`UPDATE owner SET status=true, nomor='${wa_number}', nama='${username}', session='${session}', api_key='${api_key.apiKey}' WHERE id=${id}`, function (error, results, fields) {
+	var query = connection.query(`UPDATE owner SET status=true,subscribe='${subscribe}', unsubscribe='${unsubscribe}', nomor='${wa_number}', nama='${username}', session='${session}', api_key='${api_key.apiKey}' WHERE id=${id}`, function (error, results, fields) {
 	  	if (error) throw error;
 	  	cb(results)
 	});

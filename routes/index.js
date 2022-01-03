@@ -310,9 +310,11 @@ router.post('/campaign', async (req, res, next) => {
 								})
 
 								if((body.value - parseInt(sort[sort.length - 1]['nilai'])) < 1){
-									await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor,lampiran:lampiranName, message})
-									await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId}, () => {
-										
+									await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor,lampiran:lampiranName, message}).then(async(result) => {
+										await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId,  status:result.data.success, message_id:result.data.messageID}, () => {
+											return res.redirect(`/campaign/${body.groups}`)	
+
+										})
 									})
 								}
 
@@ -320,17 +322,20 @@ router.post('/campaign', async (req, res, next) => {
 									await calculateDate(val.g_d_date,  async (distanceMinute, distanceDays) => {
 										console.log(distanceMinute)
 										if(distanceMinute > body.value && body.type == 'minutes'){
-											await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor,lampiran:lampiranName, message})
-											await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId}, () => {
-												
-											})	
+											await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor,lampiran:lampiranName, message}).then(async(result) => {
+												await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId,  status:result.data.success, message_id:result.data.messageID}, () => {
+													return res.redirect(`/campaign/${body.groups}`)	
+
+												})	
+											})
 										}
 
 										if(distanceDays > body.value && body.type == 'days'){
-											await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor,lampiran:lampiranName, message})
-											await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId}, () => {
-												
-											})	
+											await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor,lampiran:lampiranName, message}).then(async(result) => {
+												await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId,  status:result.data.success, message_id:result.data.messageID}, () => {
+													return res.redirect(`/campaign/${body.groups}`)		
+												})	
+											})
 										}
 									})
 								}
@@ -341,17 +346,20 @@ router.post('/campaign', async (req, res, next) => {
 									let message = body.messages.replace(/@nama/g, val.nama).replace(/@sapaan/g, val.sapaan)
 									console.log(`${req.protocol}://${req.headers.host}/wa/send-bulk`, lampiranName)
 									if(distanceMinute > body.value && body.type == 'minutes'){
-										await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor,lampiran:lampiranName, message})
-										await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId}, () => {
-											
-										})	
+										await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor,lampiran:lampiranName, message}).then(async(result) => {
+											await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId,  status:result.data.success, message_id:result.data.messageID}, () => {
+												
+											})	
+										})
 									}
 
 									if(distanceDays > body.value && body.type == 'days'){
-										await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor,lampiran:lampiranName, message})
-										await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId}, () => {
-											
-										})	
+										await axios.post(`${req.protocol}://${req.headers.host}/wa/send-bulk`, {contact:val.nomor,lampiran:lampiranName, message}).then(async(result) => {
+											await postCampaignDetail({kontak_id:val.kontak_id, campaign_id:resultPostCampaign.insertId, status:result.data.success, message_id:result.data.messageID}, () => {
+												return res.redirect(`/campaign/${body.groups}`)	
+
+											})	
+										})
 									}
 									return res.redirect(`/campaign/${body.groups}`)	
 								})
@@ -361,7 +369,6 @@ router.post('/campaign', async (req, res, next) => {
 					})
 				})
 			})
-			await res.redirect(`/campaign/${body.groups}`)
 		} else {
 			await res.redirect(`/campaign/${body.groups}`)
 		}
@@ -419,6 +426,15 @@ router.post('/broadcast', async (req, res, next) => {
 	// 		postBroadcast({groups:val, messages:req.body.messages, url:req.headers.host, second:req.body.second}, (result) => result)
 	// 	})
 	// } else {
+})
+
+router.get('/pesan/:id/:tipe/:username', async(req, res)=>{
+	const id = await req.params.id
+	const username = await req.params.username
+	const tipe = await req.params.tipe
+	await getCampaignDetailWithContact(id, tipe, (result)=>{
+		res.render('group_detail', {broadcast_detail:result,username, tipe })
+	})
 })
 
 // owner

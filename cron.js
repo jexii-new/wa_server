@@ -12,13 +12,9 @@ async function job(url){
     		if(result != undefined){
 
 	    		let domain = result == undefined ? 'null' : result.domain
-	    		axios.get(`${domain}/wa/status`).then(status => {
-	    			
-	    			if(!status){
-	    				reconnectProfile(() => {})
-	    			}
-	    		}) 	
+	    		console.log(domain, 'domainnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn')
 				getCampaign((resCamp)=> {
+	    			console.log(resCamp, 'rescampppppppppppppppppppppppppppppppppppppppppppppppppppppp')
 					resCamp.filter(val => {		
 							
 							if(val.tipe == 'hour'){
@@ -37,7 +33,9 @@ async function job(url){
 										    	if(dateNow == userDateForChecking){
 								  					
 										    		
-										  			await axios.post(`${domain}/wa/send-bulk`, {contact:vals.nomor, message, lampiran:val.lampiran}).then(results => {}).catch(err => err)
+										  			await axios.post(`${domain}/wa/send-bulk`, {contact:vals.nomor, message, lampiran:val.lampiran}).then(async results => {
+										  				await postCampaignDetail({kontak_id:vals.kontak_id, campaign_id:val.k_id, status:result.data.success, message_id:result.data.messageID}, (res) => {})
+										  			}).catch(err => err)
 										  		}
 									    	}
 									    })
@@ -61,13 +59,12 @@ async function job(url){
 												let dateNow = new Date().toLocaleTimeString([], time)
 												
 										    	if(dateNow == userDateForChecking){
-										    		
-										    		
-										  			await axios.post(`${domain}/wa/send-bulk`, {contact:vals.nomor, message, lampiran:val.lampiran}).then(results => {}).catch(err => err)
+										    		console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk')
+										  			await axios.post(`${domain}/wa/send-bulk`, {contact:vals.nomor, message, lampiran:val.lampiran}).then(async results => {
+										  				await postCampaignDetail({kontak_id:vals.kontak_id, campaign_id:val.k_id, status:result.data.success, message_id:result.data.messageID}, (res) => {})
+										  			}).catch(err => err)
 								  					
-								  					await postCampaignDetail({kontak_id:vals.kontak_id, campaign_id:val.k_id}, (res) => {
-								  						
-								  					})
+								  					
 										  		} 
 									    	}
 											
@@ -90,10 +87,11 @@ async function job(url){
 												let userDateForChecking = new Date(userDateFuture).toLocaleTimeString([],time)
 												let dateNow = new Date().toLocaleTimeString([], time)
 										    	
-										    	if(dateNow == userDateForChecking){
-								  					
+										    	if(dateNow == userDateForChecking){								  					
 
-										  			await axios.post(`${domain}/wa/send-bulk`, {contact:vals.nomor, message, lampiran:val.lampiran}).then(results => {}).catch(err => err)
+										  			await axios.post(`${domain}/wa/send-bulk`, {contact:vals.nomor, message, lampiran:val.lampiran}).then(async results => {
+										  				await postCampaignDetail({kontak_id:vals.kontak_id, campaign_id:val.k_id, status:result.data.success, message_id:result.data.messageID}, (res) => {})
+										  			}).catch(err => err)
 										  		}
 									    	}
 									    })

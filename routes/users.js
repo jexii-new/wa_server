@@ -12,7 +12,7 @@ var { WAConnection, MessageType, ReconnectMode, MessageOptions, Mimetype  } = re
 __dirname = path.resolve();
 
 const {getProfile, putProfile, postProfile, removeProfile, isApiExist, reconnectProfile, connect} = require('../controllers/setting')
-
+const {updateChatReceived} = require('../controllers/campaign')
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -238,7 +238,13 @@ async function run () {
 			})
 		    
         } else {
-        	// console.log (await chatUpdate.messages.all()[0])
+        	if(await chatUpdate.messages != undefined && chatUpdate.messages.all() != undefined){
+        		const message = chatUpdate.messages.all()[0]
+        		console.log(message.key.id, message.status, 'get better')
+        		updateChatReceived(message.key.id, message.status, (res) => {
+        			console.log(res.insertId, 'testttttttttttttttttttttttttt')
+        		})
+        	}
         } // see updates (can be archived, pinned etc.)
     })
 
@@ -284,30 +290,30 @@ async function run () {
 			if(req.body.lampiran != undefined){
 				const ext = path.extname(__dirname + `/public/campaign/${req.body.lampiran}`)
 				if(ext == '.mp4' || ext == '.3gp'){
-					await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.video, { caption: message });
-				    return res.send(req.body.contact);
+					const response = await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.video, { caption: message });
+				    return res.send({messageID:response.key.id, success:true, status:200});
 				} 
 				if(ext.toLowerCase() == '.mp3'){
-					await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.audio, { mimetype: Mimetype.mp4Audio });
-				    return res.send(req.body.contact);	
+					const response = await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.audio, { mimetype: Mimetype.mp4Audio });
+				    return res.send({messageID:response.key.id, success:true, status:200});	
 				}
 				if(ext.toLowerCase() == '.png' || ext.toLowerCase() == '.jpg' || ext.toLowerCase() == '.jpeg') {
-					await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.image, { caption: message });
-				    return res.send(req.body.contact);	
+					const response = await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.image, { caption: message });
+				    return res.send({messageID:response.key.id, success:true, status:200});	
 				}
 				if(ext.toLowerCase() == '.pdf' || ext.toLowerCase() == '.doc' || ext.toLowerCase() == '.docx' || ext.toLowerCase() == '.xlsx' || ext.toLowerCase() == '.xls' || ext.toLowerCase() == '.zip' ){
-					await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.document, { mimetype:Mimetype+'.'+ext, caption: message });
-				    return res.send(req.body.contact);	
+					const response = await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`,  fs.readFileSync(`${__dirname + `/public/campaign/${req.body.lampiran}`}`), MessageType.document, { mimetype:Mimetype+'.'+ext, caption: message });
+				    return res.send({messageID:response.key.id, success:true, status:200});	
 				}
 			}
 			if(req.body.contact != undefined){
-				console.log(req.body)
-			    await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`, message, MessageType.text);
-			    return res.send(req.body.contact);
+			    const response = await conn.sendMessage(`${req.body.contact}@s.whatsapp.net`, message, MessageType.text);
+				await console.log(response.key.id, 'llllllllllllllllllllllllllllllllllllllllllllllllllll')
+				return res.send({messageID:response.key.id, success:true, status:200});	
 			}
 			else {
 				console.log('gagal')
-				return res.send('gagal')
+				return res.send({messageID:null, success:false, status:204})
 			}
 		})
 	})
