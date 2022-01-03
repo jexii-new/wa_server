@@ -49,6 +49,13 @@ block content
             div(style="width:100%")
               label Unsubscribe
               input(style="width:98%", id='unsubscribe',type='text',value='#{owner.unsubscribe}',name='unsubscribe')
+          div(style="margin:8px; display:flex; justify-content:space-around")
+            div(style="width:100%")
+              label Forward Pesan
+              input(style="width:98%", id='forward',type='text',value='#{owner.forward}',name='forward') 
+            div(style="width:100%")
+              label Email
+              input(style="width:98%", id='email',type='text',value='#{owner.email}',name='email') 
           div(style="margin:8px; display:flex; justify-content:flex-start")
             button(style="width:50%; height:48px; margin-right:8px",type="submit", class="btn btn-primary") Simpan Setelan
               i(class="fas fa-save m-2")

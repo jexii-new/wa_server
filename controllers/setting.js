@@ -1,6 +1,7 @@
 const PouchDB =  require('pouchdb')
 let {connection} = require('../conn')
 const uuidAPIKey = require('uuid-apikey');
+const verifyNumber = require('../helper/number')
 
 const postProfile = async (data,id, cb) => {
 	let api_key = await uuidAPIKey.create()
@@ -16,13 +17,14 @@ const postProfile = async (data,id, cb) => {
 const putProfile = async (type, body, cb) => {
 
 	if(type == 4){
-		const {username, address, wa_number, subscribe, unsubscribe, id} = await body
-
-		
-		const post = { nama:username, alamat:'value', nomor:wa_number, status:true, subscribe, unsubscribe} 
-		await connection.query(`UPDATE owner SET subscribe='${subscribe}', unsubscribe='${unsubscribe}' WHERE id=${id}`, (err, results, field) => {
-			cb(results)
+		const {username, address, wa_number, subscribe, unsubscribe, id, forward, email} = await body
+		verifyNumber(forward,'',async(res)=>{
+			const post = { nama:username, alamat:'value', nomor:wa_number, status:true, subscribe, unsubscribe, forward} 
+			await connection.query(`UPDATE owner SET subscribe='${subscribe}', forward='${res}', email='${email}', unsubscribe='${unsubscribe}' WHERE id=${id}`, (err, results, field) => {
+				cb(results)
+			})
 		})
+		
 	}
 
 }

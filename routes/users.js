@@ -166,6 +166,9 @@ async function run () {
 			let a = message.message.conversation.split('#')
 
 			await getProfile(async (profile) => {
+				let contact = await message.key.remoteJid.substr(0, message.key.remoteJid.length - 15);
+				const forMes = await `Ada pesan dari https://wa.me/${contact} : ${reg}`
+				await conn.sendMessage(`${profile.forward}@s.whatsapp.net`, forMes, MessageType.text)
 				if(reg.toLowerCase() == profile.subscribe.toLowerCase()){
 					let contacts = message.key.remoteJid.substr(0, message.key.remoteJid.length - 15);
 					await checkIfContactExist(contacts, async(result) => {
