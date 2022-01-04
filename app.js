@@ -42,7 +42,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(fileUpload());
 app.use('/wa', usersRouter.router);
-// app.use(authMiddleware)
+app.use(authMiddleware)
 app.use('/', indexRouter,);
 app.use('/start', async (req, res, next) => {
   await getProfile(async ({domain}) => {

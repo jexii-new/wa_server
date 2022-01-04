@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Jan 2022 pada 09.08
+-- Waktu pembuatan: 04 Jan 2022 pada 01.09
 -- Versi server: 10.4.19-MariaDB
 -- Versi PHP: 7.4.19
 
@@ -121,7 +121,9 @@ CREATE TABLE `owner` (
   `domain` varchar(255) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
   `product_code` varchar(255) NOT NULL,
-  `lisensi` text NOT NULL
+  `lisensi` text NOT NULL,
+  `forward` varchar(15) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -225,7 +227,7 @@ ALTER TABLE `kontaks`
 -- AUTO_INCREMENT untuk tabel `owner`
 --
 ALTER TABLE `owner`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `setting_grups`

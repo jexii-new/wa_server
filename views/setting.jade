@@ -52,16 +52,16 @@ block content
           div(style="margin:8px; display:flex; justify-content:space-around")
             div(style="width:100%")
               label Forward Pesan
-              input(style="width:98%", id='forward',type='text',value='#{owner.forward}',name='forward') 
+              input(style="width:98%", id='forward',type='text',value='#{owner.forward == null ? "Belum di Setting" : owner.forward}',name='forward') 
             div(style="width:100%")
               label Email
-              input(style="width:98%", id='email',type='text',value='#{owner.email}',name='email') 
+              input(style="width:98%", id='email',type='text',value='#{owner.email == null ? "Belum di Setting" : owner.email }',name='email') 
           div(style="margin:8px; display:flex; justify-content:flex-start")
             button(style="width:50%; height:48px; margin-right:8px",type="submit", class="btn btn-primary") Simpan Setelan
               i(class="fas fa-save m-2")
 
 
-    if owner.session == null && password == false || owner.session == null && password == undefined
+    if owner.session == null && password == undefined  || owner.session == '' && password == undefined
       div(style="margin:8px; display:flex; flex-direction:column; align-items:center; justify-content:space-between")
         h1  QR Code 
         img(src="/wa/qr", width="300px")
@@ -78,18 +78,18 @@ block content
 
         button(type='submit', class="btn btn-primary") Simpan Password
           i(class="fas fa-edit m-2")
-    if owner.session == null && password == false || owner.session == null && password == undefined
+    if owner.session == null && password == undefined || owner.session == '' && password == undefined
       script(type="text/javascript").
         setTimeout(() => {
           window.location.reload()
         }, 4000)
-
-    script(type="text/javascript").
-        const params = new URL(location.href).searchParams;
-        const status = params.get('status');
-        if(status == 'success') document.getElementById('alert').style.display = 'block'; 
-        if(status == 'success') document.getElementById('form').style.display = 'none';
-        document.getElementById('alert-red').style.display = 'block'
+    if password == true
+      script(type="text/javascript").
+          const params = new URL(location.href).searchParams;
+          const status = params.get('status');
+          if(status == 'success') document.getElementById('alert').style.display = 'block'; 
+          if(status == 'success') document.getElementById('form').style.display = 'none';
+          document.getElementById('alert-red').style.display = 'block'
 
 
 
